@@ -10,18 +10,18 @@ package model;
 enum Block {
 	/** Empty */
 	EMPTY,
-	/** A unit block from the 'I' tetris piece */
+	/** The 'I' enum block tetris piece */
 	I,
-	/** A unit block from the 'J' tetris piece */
+	/** The 'J' enum block tetris piece */
 	J,
-	/** A unit block from the 'L' tetris piece */
+	/** The 'L' enum block tetris piece */
 	L,
-	/** A unit block from the square tetris piece */
+	/** The 'O' enum block tetris piece */
 	O,
-	/** A unit block from the 'S' tetris piece */
+	/** The 'S' enum block tetris piece */
 	S,
-	/** A unit block from the 'T' tetris piece */
+	/** The 'T' enum block tetris piece */
 	T,
-	/** A unit block from the 'Z' tetris piece */
+	/** The 'Z' enum block tetris piece */
 	Z;
 }
