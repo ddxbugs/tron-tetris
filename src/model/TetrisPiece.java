@@ -42,21 +42,21 @@ enum TetrisPiece {
 			new Point (1, 1),
 			new Point (2, 1)),
 	
-	/** The 'S' TetrisPiece. */
+	/** The 'S' TetrisPiece */
     S(3, 2, Block.S,
     		new Point (1, 2), 
 			new Point (2, 2), 
 			new Point (0, 1), 
 			new Point (1, 1)),
     
-    /** The 'T' TetrisPiece. */
+    /** The 'T' TetrisPiece */
     T(3, 2, Block.T,
     		new Point (1, 2), 
     		new Point (0, 1), 
     		new Point (1, 1), 
     		new Point (2, 1)),
 
-    /** The 'Z' TetrisPiece. */
+    /** The 'Z' TetrisPiece */
     Z(3, 2, Block.Z,
     		new Point (0, 2), 
     		new Point (1, 2), 
