@@ -15,7 +15,7 @@ public class T extends TetrisPiece {
 	/**
 	 * The TetrisPiece enum type representation
 	 */
-	private final TETRIS_PIECE myTetrisPiece;
+	private final BlockType myTetrisPiece;
 	
 	private final Point myPosition;
 	/**

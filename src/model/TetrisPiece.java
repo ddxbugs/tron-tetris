@@ -19,7 +19,7 @@ abstract class TetrisPiece {
 	/**
 	 * TetrisPiece enum type
 	 */
-	private final TETRIS_PIECE myTetrisPiece;
+	private final BlockType myTetrisPiece;
 	/**
 	 * TetrisPiece current position on board
 	 */
@@ -37,7 +37,7 @@ abstract class TetrisPiece {
 	 * @param thePosition the TetrisPiece starting point
 	 * @param theRotation the TetrisPiece initial angle
 	 */
-	public TetrisPiece(final TETRIS_PIECE theTetrisPiece,
+	public TetrisPiece(final BlockType theTetrisPiece,
 			final Point thePosition,
 			final Rotation theRotation) {
 		myTetrisPiece = Objects.requireNonNull(theTetrisPiece, 
@@ -55,7 +55,7 @@ abstract class TetrisPiece {
 	 * @param theTetrisPiece enum type
 	 * @param thePosition the TetrisPiece position on board
 	 */
-	public TetrisPiece(final TETRIS_PIECE theTetrisPiece,
+	public TetrisPiece(final BlockType theTetrisPiece,
 			final Point thePosition) {
 		this(theTetrisPiece, thePosition, Rotation.START);
 	}
@@ -106,9 +106,10 @@ abstract class TetrisPiece {
 				blocks[width][height] = " ";
 			}
 		}
-		for (final Point : block : getLocalPoints()) {
+		for (final Point block : getLocalPoints()) {
 			blocks[block.getY()][block.getX()] = myTetrisPiece.getBlock().toString();
 		}
+		return sb.toString();
 	}
 	
 	/**
@@ -121,6 +122,7 @@ abstract class TetrisPiece {
 	
 	private Point[] getPoints(final Point thePoint) {
 		final Point[] blocks = myTetrisPiece.getPoints();
+		return blocks;
 	}
 }
 
