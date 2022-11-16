@@ -3,6 +3,7 @@
  */
 package model;
 
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -78,11 +79,11 @@ enum TetrisPiece {
 	 * @param theHeight TetrisPiece block height
 	 * @param theBlock TetrisPiece block Enum type
 	 */
-	TetrisPiece(final int theWidth, final int theHeight, final Block theBlock, final Point.. thePoints) {
+	TetrisPiece(final int theWidth, final int theHeight, final Block theBlock, final Point... thePoints) {
 		myWidth = theWidth;
 		myHeight = theHeight;
 		myBlock = theBlock;
-		myPoints = Objects.requirenonnull(thePoints).clone();
+		myPoints = Objects.requireNonNull(thePoints).clone();
 	}
 	
 	/**
