@@ -7,39 +7,39 @@ import java.util.Random;
 
 /**
  * 
- * Tetris Piece enum type
+ * TetrisPiece Enum type
  * @author ddxbugs@github.com
  *
  */
 enum TetrisPiece {
 	
-	/** The 'I' Tetris piece */
+	/** The 'I' TetrisPiece */
 	I(4, 1, Block.I, 
 			new Point (0, 2),
 			new Point (1, 2),
 			new Point (2, 2),
 			new Point (3, 2)),
 	
-	/** The 'J' Tetris Piece */
+	/** The 'J' TetrisPiece */
 	J(3, 2, Block.J,
 			new Point (0, 2),
 			new Point (0, 1),
 			new Point (1, 1),
 			new Point (2, 1)),
 	
-	/** The 'L' Tetris Piece */
+	/** The 'L' TetrisPiece */
 	L(3, 2, Block.L,
 			new Point (2, 2),
 			new Point (0, 1),
 			new Point (1, 1),
 			new Point (2, 1)),
 	
-	/** The 'O' Tetris Piece */
+	/** The 'O' TetrisPiece */
 	O(2, 2, Block.O,
 			new Point (1, 2),
-			new point (2, 2),
-			new point (1, 1),
-			new point (2, 1)),
+			new Point (2, 2),
+			new Point (1, 1),
+			new Point (2, 1)),
 	
 	/** The 'S' TetrisPiece. */
     S(3, 2, Block.S,
@@ -68,7 +68,7 @@ enum TetrisPiece {
 	private final int myWidth;
 	/** The block height of the TetrisPiece */
 	private final int myHeight;
-	/** The TetrisPiece Block enum type */
+	/** The TetrisPiece Block Enum type */
 	private final Block myBlock;
 	/** The TetrisPiece points array */
 	private final Point[] myPoints;
@@ -76,7 +76,7 @@ enum TetrisPiece {
 	 * TetrisPiece default constructor
 	 * @param theWidth TetrisPiece block width
 	 * @param theHeight TetrisPiece block height
-	 * @param theBlock TetrisPiece block enum type
+	 * @param theBlock TetrisPiece block Enum type
 	 */
 	TetrisPiece(final int theWidth, final int theHeight, final Block theBlock, final Point.. thePoints) {
 		myWidth = theWidth;
@@ -102,8 +102,8 @@ enum TetrisPiece {
 	}
 	
 	/**
-	 * Return the TetrisPiece Block enum type
-	 * @return the Block enum type
+	 * Return the TetrisPiece Block Enum type
+	 * @return the Block Enum type
 	 */
 	protected Block getBlock() {
 		return myBlock;
@@ -118,8 +118,8 @@ enum TetrisPiece {
 	}
 	
 	/**
-	 * Return a random tetris piece
-	 * @return a random Tetris piece
+	 * Return a random TetrisPiece
+	 * @return a random TetrisPiece
 	 */
 	protected TetrisPiece getRandomPiece() {
 		return values()[RAND.nextInt(values().length)];
