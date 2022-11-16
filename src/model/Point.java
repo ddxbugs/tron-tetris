@@ -56,6 +56,17 @@ final class Point {
 	}
 	
 	/**
+	 * Creates a new immutable Point with
+	 * respective transformation
+	 * @param thePoint the Point X,Y shift and translation
+	 * @return
+	 */
+	public Point transform(final Point thePoint) {
+		return transform(myX + thePoint.getX(),
+				myY + thePoint.getY());
+	}
+	
+	/**
 	 * Overrides Object inherited equals method
 	 * @return the result of the comparison operation
 	 */
