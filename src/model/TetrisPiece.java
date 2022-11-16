@@ -1,18 +1,19 @@
 /**
- * 
+ * MutableTetrisPiece.java
  */
 package model;
 
 /**
- * @author User
+ * Abstract mutable TetrisPiece
+ * @author ddxbugs@github.com
  *
  */
-abstract class MutableTetrisPiece {
+abstract class TetrisPiece {
 
 	/**
 	 * 
 	 */
-	public MutableTetrisPiece() {
+	public TetrisPiece() {
 		// TODO Auto-generated constructor stub
 	}
 	

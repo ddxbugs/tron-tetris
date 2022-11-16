@@ -7,8 +7,17 @@ package model;
  * @author User
  *
  */
-public class T extends MutableTetrisPiece {
-
+public class T extends TetrisPiece {
+	/**
+	 * The number of TetrisPiece unit blocks
+	 */
+	private static final int NBLOCKS = 4;
+	/**
+	 * The TetrisPiece enum type representation
+	 */
+	private final TETRIS_PIECE myTetrisPiece;
+	
+	private final Point myPosition;
 	/**
 	 * 
 	 */
@@ -29,3 +38,4 @@ public class T extends MutableTetrisPiece {
 	}
 
 }
+

@@ -12,7 +12,7 @@ import java.util.Random;
  * @author ddxbugs@github.com
  *
  */
-enum TetrisPiece {
+enum TETRIS_PIECE {
 	
 	/** The 'I' TetrisPiece */
 	I(4, 1, Block.I, 
@@ -79,7 +79,7 @@ enum TetrisPiece {
 	 * @param theHeight TetrisPiece block height
 	 * @param theBlock TetrisPiece block Enum type
 	 */
-	TetrisPiece(final int theWidth, final int theHeight, final Block theBlock, final Point... thePoints) {
+	TETRIS_PIECE(final int theWidth, final int theHeight, final Block theBlock, final Point... thePoints) {
 		myWidth = theWidth;
 		myHeight = theHeight;
 		myBlock = theBlock;
@@ -122,7 +122,7 @@ enum TetrisPiece {
 	 * Return a random TetrisPiece
 	 * @return a random TetrisPiece
 	 */
-	protected TetrisPiece getRandomPiece() {
+	protected TETRIS_PIECE getRandomPiece() {
 		return values()[RAND.nextInt(values().length)];
 	}
 }
