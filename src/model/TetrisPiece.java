@@ -10,7 +10,7 @@ import java.util.Objects;
  * @author ddxbugs@github.com
  *
  */
-abstract class TetrisPiece {
+public class TetrisPiece {
 
 	/**
 	 * Number of block units in a TetrisPiece
@@ -111,7 +111,34 @@ abstract class TetrisPiece {
 		}
 		return sb.toString();
 	}
-	
+	/**
+	 * Returns this object's TetrisPiece 
+	 * @return the TetrisPiece's enum BlockType
+	 */
+	protected BlockType getTetrisPiece() {
+		return myTetrisPiece;
+	}
+	/**
+	 * Returns the TetrisPiece's current position on the board
+	 * @return the TetrisPiece position
+	 */
+	protected Point getPosition() {
+		return myPosition;
+	}
+	/**
+	 * Return the current rotation of the TetrisPiece
+	 * @return the TetrisPiece rotation state
+	 */
+	protected Rotation getRotation() {
+		return myRotation;
+	}
+	/**
+	 * Returns all the TetrisPiece block positions on the board
+	 * @return an array of Points 
+	 */
+	protected Point[] getBoardPoints() {
+		return getPoints(myPosition);
+	}
 	/**
 	 * Retrieve local block Point positions
 	 * @return array of TetrisPiece block points
@@ -124,5 +151,18 @@ abstract class TetrisPiece {
 		final Point[] blocks = myTetrisPiece.getPoints();
 		return blocks;
 	}
+	
+	/*********************************************************
+	 * TetrisPiece movements
+	 ********************************************************/
+	
+	protected TetrisPiece rotate() { 
+		return new TetrisPiece(myTetrisPiece, myPosition, myRotation.clockwise());
+	}
+	
+	protected TetrisPiece left() {
+		return new TetrisPiece(myTetrisPiece, myPosition.transform(-1, 0), myRotation);
+	}
+	
 }
 
