@@ -7,7 +7,7 @@ package model;
  * @author ddxbugs@github.com
  *	The different type of blocks that can be stored in a Board's grid.
  */
-enum Block {
+enum Block {	
 	/** Empty */
 	EMPTY,
 	/** The 'I' enum block tetris piece */
