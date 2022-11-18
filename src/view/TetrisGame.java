@@ -4,8 +4,10 @@
 package view;
 
 import java.awt.Dimension;
-import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
@@ -22,6 +24,18 @@ public class TetrisGame extends JFrame {
 	private static final int DEFAULT_HEIGHT = 600;
 	/** */
 	private static final int TIME_DELAY = 1000;
+	
+	/** Full screen configuration settings and variables */
+	private static final int BLOCK_SIZE = 1;
+	private static final int SCALE = 1;
+	/** Full screen dimension */
+	private static final Dimension FULL_SCREEN_SIZE = 
+			Toolkit.getDefaultToolkit().getScreenSize();
+	// TODO multiplayer mode
+	private static final GraphicsDevice MONITOR_DISPLAY = 
+			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+	
+
 	/**
 	 * @throws HeadlessException
 	 */
