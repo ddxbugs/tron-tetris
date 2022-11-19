@@ -3,6 +3,7 @@
  */
 package view;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.LayoutManager;
@@ -18,7 +19,7 @@ import javax.swing.JPanel;
  */
 public class Background extends JPanel {
 	private static Image image = 
-			Toolkit.getDefaultToolkit().getImage("\\src\\res\\background.jpg");
+			Toolkit.getDefaultToolkit().getImage(".\\src\\res\\background.jpg");
 	private static JLabel label;
 	/**
 	 * Generated serial version UID
@@ -40,6 +41,7 @@ public class Background extends JPanel {
 	public Background(LayoutManager layout) {
 		super(layout);
 		// TODO Auto-generated constructor stub
+		setBackground(Color.BLACK);
 		label = new JLabel(new ImageIcon(image));
 		add(label);
 	}
@@ -64,6 +66,6 @@ public class Background extends JPanel {
 	public void paintComponents(Graphics g) {
 		super.paintComponents(g);
 		System.out.println(getFocusCycleRootAncestor());
-//		g.drawImage(image, ALLBITS, ABORT, label);
+//		g.drawImage(image, label.getIcon().getIconWidth(), label.getIcon().getIconHeight(), label);
 	}
 }
