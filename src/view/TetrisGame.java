@@ -35,19 +35,16 @@ public class TetrisGame extends JFrame {
 		super("Disney's Tron: Legacy Tetris");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setIconImage(ICON.getImage());
-//		setResizable(false);
-//		setLocationRelativeTo(null);
-		
-		init();
-		setup();
-		pack();
-		
+		setResizable(false);
+		setLocationRelativeTo(null);
 	}
 	
 	/** 
 	 * Invokes new Runnable configuration
 	 */
 	public void start() {
+		initialize();
+		setUp();
 		pack();
 		setVisible(true);
 	}
@@ -55,11 +52,11 @@ public class TetrisGame extends JFrame {
 	/** 
 	 * Initialize JComponent and event handlers
 	 */
-	private void init() {
+	private void initialize() {
 		bg = new Background(new FlowLayout());
 	}
 	
-	private void setup() {
+	private void setUp() {
 		add(bg);
 	}
 	
