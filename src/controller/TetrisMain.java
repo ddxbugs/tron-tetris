@@ -9,6 +9,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import view.TetrisGame;
 
@@ -27,7 +29,7 @@ public class TetrisMain {
 	private static final GraphicsDevice MONITOR_DISPLAY = 
 			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	
-	// private constructor prevents instantiation and throws exception
+	// private constructor prevents instantiation throws exception
 	private TetrisMain() {
 		System.err.println("error:" + IllegalStateException.class);
 		throw new IllegalStateException();
@@ -42,13 +44,32 @@ public class TetrisMain {
 			public void run() {
 				TetrisGame game = new TetrisGame();
 				try {
-					MONITOR_DISPLAY.setFullScreenWindow(game);
+//					UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+//					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//					UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+//					UIManager.setLookAndFeel("javax.swing.plaf.synth.SynthLookAndFeel");
+					UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+//					UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+					
 //					game.setSize(FULL_SCREEN_SIZE);
+					MONITOR_DISPLAY.setFullScreenWindow(game);
+				} catch (final UnsupportedLookAndFeelException e) {
+					System.err.println("UnsupportedLookAndFeelException:" + e);
+					e.printStackTrace();
+				} catch (final ClassNotFoundException e) {
+					System.err.println("ClassFoundException:" + e);
+					e.printStackTrace();
+				} catch (final InstantiationException e) {
+					System.err.println("InstantiationException:" + e);
+					e.printStackTrace();
+				} catch (final IllegalAccessException e) {
+					System.err.println("IllegalAccessException:" + e);
+					e.printStackTrace();
 				} finally {
-					MONITOR_DISPLAY.setFullScreenWindow(null);
-//					game.setMinimumSize(new Dimension(MIN_H, MIN_W));
+					game.setMinimumSize(new Dimension(MIN_H, MIN_W));
+//					MONITOR_DISPLAY.setFullScreenWindow(null);
 				}
-				
+				game.start();
 			}
 			
 		});
