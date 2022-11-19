@@ -3,12 +3,10 @@
  */
 package view;
 
-import java.awt.Dimension;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
+import java.awt.FlowLayout;
 import java.awt.HeadlessException;
-import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -25,7 +23,9 @@ public class TetrisGame extends JFrame {
 	/** Full screen configuration settings and variables */
 	private static final int BLOCK_SIZE = 1;
 	private static final int SCALE = 1;
-	
+	/** Window bar icon decoration */
+	private static final ImageIcon ICON = new ImageIcon(".\\src\\res\\icon.jpg");
+	private static Background bg;
 
 	/**
 	 * @throws HeadlessException
@@ -34,18 +34,33 @@ public class TetrisGame extends JFrame {
 		// TODO Auto-generated constructor stub
 		super("Disney's Tron: Legacy Tetris");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setIconImage(ICON.getImage());
 //		setResizable(false);
-		setLocationRelativeTo(null);
+//		setLocationRelativeTo(null);
 		
+		init();
+		setup();
 		pack();
 		
 	}
-
+	
 	/** 
 	 * Invokes new Runnable configuration
 	 */
 	public void start() {
+		pack();
 		setVisible(true);
+	}
+	
+	/** 
+	 * Initialize JComponent and event handlers
+	 */
+	private void init() {
+		bg = new Background(new FlowLayout());
+	}
+	
+	private void setup() {
+		add(bg);
 	}
 	
 }
