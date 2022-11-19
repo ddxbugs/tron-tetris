@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  */
 public class Background extends JPanel {
 	private static Image image = 
-			Toolkit.getDefaultToolkit().getImage("G:\\code\\git\\tron-tetris\\src\\res\\background.jpg");
+			Toolkit.getDefaultToolkit().getImage("\\src\\res\\background.jpg");
 	private static JLabel label;
 	/**
 	 * Generated serial version UID
