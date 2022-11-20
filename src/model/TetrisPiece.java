@@ -19,7 +19,7 @@ public class TetrisPiece {
 	/**
 	 * TetrisPiece enum type
 	 */
-	private final BlockType myTetrisPiece;
+	private final ImmutableTetrisPiece myTetrisPiece;
 	/**
 	 * TetrisPiece current position on board
 	 */
@@ -37,7 +37,7 @@ public class TetrisPiece {
 	 * @param thePosition the TetrisPiece starting point
 	 * @param theRotation the TetrisPiece initial angle
 	 */
-	public TetrisPiece(final BlockType theTetrisPiece,
+	public TetrisPiece(final ImmutableTetrisPiece theTetrisPiece,
 			final Point thePosition,
 			final Rotation theRotation) {
 		myTetrisPiece = Objects.requireNonNull(theTetrisPiece, 
@@ -55,7 +55,7 @@ public class TetrisPiece {
 	 * @param theTetrisPiece enum type
 	 * @param thePosition the TetrisPiece position on board
 	 */
-	public TetrisPiece(final BlockType theTetrisPiece,
+	public TetrisPiece(final ImmutableTetrisPiece theTetrisPiece,
 			final Point thePosition) {
 		this(theTetrisPiece, thePosition, Rotation.START);
 	}
@@ -115,7 +115,7 @@ public class TetrisPiece {
 	 * Returns this object's TetrisPiece 
 	 * @return the TetrisPiece's enum BlockType
 	 */
-	protected BlockType getTetrisPiece() {
+	protected ImmutableTetrisPiece getTetrisPiece() {
 		return myTetrisPiece;
 	}
 	/**

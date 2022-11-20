@@ -23,7 +23,7 @@ public class T extends TetrisPiece {
 	 * T BlockType extends TetrisPiece
 	 */
 	public T() {
-		super(BlockType.T, new Point(0, 0), Rotation.START);
+		super(ImmutableTetrisPiece.T, new Point(0, 0), Rotation.START);
 	}
 	
 	/**
@@ -31,7 +31,7 @@ public class T extends TetrisPiece {
 	 * T BlockType extends TetrisPiece
 	 */
 	public T(final Point thePoint, final Rotation theRotation) {
-		super(BlockType.T, thePoint, theRotation);
+		super(ImmutableTetrisPiece.T, thePoint, theRotation);
 	}
 }
 
