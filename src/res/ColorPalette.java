@@ -37,7 +37,7 @@ public enum ColorPalette {
 		b = B;
 	}
 	/**
-	 * Returns an enum ColorPalette 
+	 * Returns the enum Color
 	 * @return the RGB value (0-255)
 	 */
 	public Color getColor() {
