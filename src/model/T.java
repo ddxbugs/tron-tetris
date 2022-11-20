@@ -3,6 +3,10 @@
  */
 package model;
 
+import java.awt.Color;
+
+import res.ColorPalette;
+
 /**
  * T class extends TetrisPiece
  * TODO: implement final class
@@ -12,6 +16,8 @@ package model;
  *
  */
 public class T extends TetrisPiece {
+	/** T TetrisPiece default color */
+	private static final Color cyan = ColorPalette.CYAN.getColor();
 	/** 
 	 * Default T constructor
 	 * T BlockType extends TetrisPiece
