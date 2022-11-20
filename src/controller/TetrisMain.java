@@ -22,6 +22,8 @@ import view.TetrisGame;
 public class TetrisMain {
 	/** Borderless screen min width and height */
 	private static final int MIN_H = 300, MIN_W = 300;
+	/** Borderless screen min dimension */
+	private static final Dimension MIN_SCREEN_SIZE = new Dimension(MIN_W, MIN_H);
 	/** Full screen dimension */
 	private static final Dimension FULL_SCREEN_SIZE = 
 			Toolkit.getDefaultToolkit().getScreenSize();
@@ -44,15 +46,12 @@ public class TetrisMain {
 			public void run() {
 				TetrisGame game = new TetrisGame();
 				try {
-//					UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-//					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//					UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-//					UIManager.setLookAndFeel("javax.swing.plaf.synth.SynthLookAndFeel");
-					UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-//					UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 					
-//					game.setSize(FULL_SCREEN_SIZE);
+					UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");					
+					game.setPreferredSize(FULL_SCREEN_SIZE);
+					game.setMinimumSize(MIN_SCREEN_SIZE);
 					MONITOR_DISPLAY.setFullScreenWindow(game);
+					
 				} catch (final UnsupportedLookAndFeelException e) {
 					System.err.println("UnsupportedLookAndFeelException:" + e);
 					e.printStackTrace();
@@ -66,8 +65,7 @@ public class TetrisMain {
 					System.err.println("IllegalAccessException:" + e);
 					e.printStackTrace();
 				} finally {
-					game.setMinimumSize(new Dimension(MIN_H, MIN_W));
-//					MONITOR_DISPLAY.setFullScreenWindow(null);
+					MONITOR_DISPLAY.setFullScreenWindow(null);
 				}
 				game.start();
 			}
