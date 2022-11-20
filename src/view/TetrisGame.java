@@ -3,6 +3,7 @@
  */
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 
@@ -25,8 +26,10 @@ public class TetrisGame extends JFrame {
 	private static final int SCALE = 1;
 	/** Window bar icon decoration */
 	private static final ImageIcon ICON = new ImageIcon(".\\src\\res\\icon.jpg");
-	private static Background bg;
-
+	/** Dynamic changing background wallpaper */ // TODO implements with JLayeredPane
+	private static Background myBackground;
+	/** Tetris board container view */
+	private static BoardView myBoardView;
 	/**
 	 * @throws HeadlessException
 	 */
@@ -36,7 +39,7 @@ public class TetrisGame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setIconImage(ICON.getImage());
 		setResizable(false);
-		setLocationRelativeTo(null);
+//		setLocationRelativeTo(null);
 	}
 	
 	/** 
@@ -53,11 +56,19 @@ public class TetrisGame extends JFrame {
 	 * Initialize JComponent and event handlers
 	 */
 	private void initialize() {
-		bg = new Background(new FlowLayout());
+		myBackground = new Background(new FlowLayout());
+		myBoardView = new BoardView();
+		// TODO init menu option
+		// TODO init preview window
+		// TODO init windowfocuslistener
+		// TODO init keyboardlistener
 	}
 	
 	private void setUp() {
-		add(bg);
+		add(myBackground);
+//		add(myBoardView);
+		// TODO add windowfocuslistener
+		// TODO add keyboardlistener
 	}
 	
 }
