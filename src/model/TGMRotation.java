@@ -1,13 +1,14 @@
 package model;
 
 /**
- * WallKick rotations offsets TetrisPiece positions
- * TetrisPiece  
+ * TGMRotations offsets TetrisPiece positions
+ * Based on TGM3 mechanics
+ * @author ddxbugs 
  */
 final class TGMRotation {
     
     /**
-     * The kick offsets for rotations of J, L, S, T, and Z pieces 
+     * The clockwise and counter offsets for rotating J, L, S, T, and Z TetrisPieces 
      */
     private static final Point[][] JLSTZ_OFFSETS = {
 		{ new Point(0, 0), new Point(-1, 0), new Point(-1, +1), new Point(0, -2), new Point(-1, -2) }, // START to QUARTER
@@ -21,7 +22,7 @@ final class TGMRotation {
     };
     
     /**
-     * The kick offsets for rotations of I piece
+     * The clockwise and counter offsets for rotating I TetrisPieces
      */
     private static final Point[][] I_OFFSETS = {
 		{ new Point(0, 0), new Point(-2, 0), new Point(+1, 0), new Point(-2, -1), new Point(+1, +2) }, // START to QUARTER
@@ -35,7 +36,7 @@ final class TGMRotation {
     };
     
     /**
-     * Empty private constructor 
+     * Empty no args private constructor 
      */
     private TGMRotation() {
         // do nothing
@@ -49,111 +50,73 @@ final class TGMRotation {
      * @param theRotationAngle the next rotation angle 
      * @return the points offset by wall kick
      */
-    public static Point[] getKickOffset(final ImmutableTetrisPiece thePiece,
+    public static Point[] getOffset(final ImmutableTetrisPiece thePiece,
                                        final Rotation theCurrentRotation,
                                        final Rotation theRotationAngle) {
-        
         Point[] points = new Point[0];
-        
-        if (thePiece == ImmutableTetrisPiece.I) {
-            points = getIPieceKicks(theCurrentRotation, theRotationAngle);
-        } else if (thePiece != ImmutableTetrisPiece.O) {
-            points = getJLSTZKicks(theCurrentRotation, theRotationAngle);
-        }
-        
+        points = thePiece == ImmutableTetrisPiece.I ? 
+        		getIPieceOffset(theCurrentRotation, theRotationAngle) : getJLSTZOffset(theCurrentRotation, theRotationAngle);
         return points;
     }
 
     /**
-     * Returns an array of Points representing the wall kick offsets
+     * Returns Points offset by TetrisPiece wall kicks
      * for J, L, S, T, and Z TetrisPieces
      * 
      * @param theCurrentRotation the current rotation angle
      * @param theRotationAngle the next rotation angle
      * @return the points offset by wall kick
      */
-    private static Point[] getJLSTZKicks(final Rotation theCurrentRotation,
+    private static Point[] getJLSTZOffset(final Rotation theCurrentRotation,
                                          final Rotation theRotationAngle) {
         Point[] points = new Point[0];
         switch (theCurrentRotation) {
             case START:
-                if (theRotationAngle == Rotation.QUARTER) {
-                    points = JLSTZ_OFFSETS[0];	// CW START TO QUARTER
-                } else if (theRotationAngle == Rotation.THREEQUARTER) {
-                    points = JLSTZ_OFFSETS[7];	// CCW START TO THREEQUARTER
-                }
+            	points = theRotationAngle == Rotation.QUARTER ? JLSTZ_OFFSETS[0] : JLSTZ_OFFSETS[7];
                 break;
             case QUARTER:
-                if (theRotationAngle == Rotation.HALF) {
-                    points = JLSTZ_OFFSETS[2];	// CW QUARTER TO HALF
-                } else if (theRotationAngle == Rotation.START) {
-                    points = JLSTZ_OFFSETS[1];	// CCW QUARTER TO START
-                }
+            	points = theRotationAngle == Rotation.QUARTER ? JLSTZ_OFFSETS[2] : JLSTZ_OFFSETS[1];
                 break;
             case HALF:
-                if (theRotationAngle == Rotation.THREEQUARTER) {
-                    points = JLSTZ_OFFSETS[4];	// CW HALF TO THREEQUARTER
-                } else if (theRotationAngle == Rotation.QUARTER) {
-                    points = JLSTZ_OFFSETS[3];	// CCW HALF TO QUARTER
-                }
+                points = theRotationAngle == Rotation.QUARTER ? JLSTZ_OFFSETS[4] : JLSTZ_OFFSETS[3];
                 break;
             case THREEQUARTER:
-                if (theRotationAngle == Rotation.START) {
-                    points = JLSTZ_OFFSETS[6];	// CW THREEQUARTER TO START
-                } else if (theRotationAngle == Rotation.HALF) {
-                    points = JLSTZ_OFFSETS[5];	// CCW THREEQUARTER TO HALF
-                }
+                points = theRotationAngle == Rotation.QUARTER ? JLSTZ_OFFSETS[6] : JLSTZ_OFFSETS[5];
                 break;
             default:
-            	// do nothing
+            	points = null;
                 break;
         }
         return points;
     }
 
     /**
-     * Returns an array of Points representing the wall kick offsets
+     * Returns Points offset by TetrisPiece wall kicks
      * for IPieces
      * 
      * @param theCurrentRotation the current rotation angle
      * @param theRotationAngle the next rotation angle
      * @return The wall kick offsets for these conditions
      */
-    private static Point[] getIPieceKicks(final Rotation theCurrentRotation,
+    private static Point[] getIPieceOffset(final Rotation theCurrentRotation,
                                           final Rotation theRotationAngle) {
         Point[] points = new Point[0];
         switch (theCurrentRotation) {
-            case START:
-                if (theRotationAngle == Rotation.QUARTER) {
-                    points = I_OFFSETS[0];	// CW START TO QUARTER
-                } else if (theRotationAngle == Rotation.THREEQUARTER) {
-                    points = I_OFFSETS[7];	// CCW START TO THREEQUARTER
-                }
-                break;
-            case QUARTER:
-                if (theRotationAngle == Rotation.HALF) {
-                    points = I_OFFSETS[2];	// CW HALF TO THREEQUARTER
-                } else if (theRotationAngle == Rotation.START) {
-                    points = I_OFFSETS[1];	// CCW QUARTER TO START
-                }
-                break;
-            case HALF:
-                if (theRotationAngle == Rotation.THREEQUARTER) {
-                    points = I_OFFSETS[4];	// CW HALF TO THREEQUARTER
-                } else if (theRotationAngle == Rotation.QUARTER) {	
-                    points = I_OFFSETS[3];	// CCW HALF TO QUARTER
-                }
-                break;
-            case THREEQUARTER:
-                if (theRotationAngle == Rotation.START) {
-                    points = I_OFFSETS[6];	// CW THREEQUARTER TO START
-                } else if (theRotationAngle == Rotation.HALF) {
-                    points = I_OFFSETS[5];	// CCW THREEQUARTER TO HALF
-                }
-                break;
-            default:
-                // do nothing
-                break;
+	        case START:
+	        	points = theRotationAngle == Rotation.QUARTER ? I_OFFSETS[0] : I_OFFSETS[7];
+	            break;
+	        case QUARTER:
+	        	points = theRotationAngle == Rotation.QUARTER ? I_OFFSETS[2] : I_OFFSETS[1];
+	            break;
+	        case HALF:
+	            points = theRotationAngle == Rotation.QUARTER ? I_OFFSETS[4] : I_OFFSETS[3];
+	            break;
+	        case THREEQUARTER:
+	            points = theRotationAngle == Rotation.QUARTER ? I_OFFSETS[6] : I_OFFSETS[5];
+	            break;
+	        default:
+	        	points = null;
+	            break;
         }
         return points;
     }
