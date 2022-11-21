@@ -125,6 +125,17 @@ public class TetrisPiece {
 	protected Point getPosition() {
 		return myPosition;
 	}
+	
+	// TODO implement method for 'wall kicking'
+	/**
+	 * Returns new TetrisPiece of current type, rotation and new position
+	 * 
+	 * @param thePosition the new tetris piece position
+	 * @return the new TetrisPiece at specified position
+	 */
+	protected TetrisPiece setPosition(final Point thePosition) {
+		return new TetrisPiece(myTetrisPiece, thePosition, myRotation);
+	}
 	/**
 	 * Return the current rotation of the TetrisPiece
 	 * @return the TetrisPiece rotation state
@@ -149,6 +160,23 @@ public class TetrisPiece {
 	
 	private Point[] getPoints(final Point thePoint) {
 		final Point[] blocks = myTetrisPiece.getPoints();
+		for (int i = 0; i < blocks.length; i++) {
+			final Point block = blocks[i];
+			switch(myRotation) {
+			// TODO bug Tetris Piece 'O' rotation 
+				case QUARTER: blocks[i] = new Point(block.getY(),
+						myTetrisPiece.getWidth() - block.getX() - 1);
+					break;
+				case HALF: blocks[i] = new Point(myTetrisPiece.getWidth() - block.getX() - 1,
+						myTetrisPiece.getWidth() - block.getY() - 1);
+					break;
+				case THREEQUARTER: blocks[i] = new Point(myTetrisPiece.getWidth() - block.getY() - 1,
+						block.getX());
+					break;
+				default: 
+					break;
+			}
+		}
 		return blocks;
 	}
 	
@@ -156,13 +184,34 @@ public class TetrisPiece {
 	 * TetrisPiece movements
 	 ********************************************************/
 	
+	/**
+	 * Rotate the tetris piece clockwise 90 degrees
+	 * @return new rotated tetris piece
+	 */
 	protected TetrisPiece rotate() { 
 		return new TetrisPiece(myTetrisPiece, myPosition, myRotation.clockwise());
 	}
-	
+	/**
+	 * Moves the tetris piece to the left 1 unit
+	 * @return new tetris piece shifted to left
+	 */
 	protected TetrisPiece left() {
 		return new TetrisPiece(myTetrisPiece, myPosition.transform(-1, 0), myRotation);
 	}
-	
+	/**
+	 * Moves the tetris piece to the right 1 unit
+	 * @return new tetris piece shifted to right 
+	 */
+	protected TetrisPiece right() {
+		return new TetrisPiece(myTetrisPiece, myPosition.transform(1, 0), myRotation);
+	}
+	/**
+	 * Moves the tetris piece down 1 unit
+	 * @return new tetris piece position
+	 */
+	protected TetrisPiece down() {
+		return new TetrisPiece(myTetrisPiece, myPosition.transform(0, -1), myRotation);
+		
+	}
 }
 
