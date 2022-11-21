@@ -10,28 +10,28 @@ final class TGMRotation {
      * The kick offsets for rotations of J, L, S, T, and Z pieces 
      */
     private static final Point[][] JLSTZ_OFFSETS = {
-		{ new Point(0, 0), new Point(-1, 0), new Point(-1, +1), new Point(0, -2), new Point(-1, -2) }, // NONE to QUARTER
-	    { new Point(0, 0), new Point(+1, 0), new Point(+1, -1), new Point(0, +2), new Point(+1, +2) }, // QUARTER to NONE
+		{ new Point(0, 0), new Point(-1, 0), new Point(-1, +1), new Point(0, -2), new Point(-1, -2) }, // START to QUARTER
+	    { new Point(0, 0), new Point(+1, 0), new Point(+1, -1), new Point(0, +2), new Point(+1, +2) }, // QUARTER to START
 	    { new Point(0, 0), new Point(+1, 0), new Point(+1, -1), new Point(0, +2), new Point(+1, +2) }, // QUARTER to HALF
 	    { new Point(0, 0), new Point(-1, 0), new Point(-1, +1), new Point(0, -2), new Point(-1, -2) }, // HALF to QUARTER
 	    { new Point(0, 0), new Point(+1, 0), new Point(+1, +1), new Point(0, -2), new Point(+1, -2) }, // HALF to THREEQUARTER
 	    { new Point(0, 0), new Point(-1, 0), new Point(-1, -1), new Point(0, +2), new Point(-1, +2) }, // THREEQUARTER to HALF
-	    { new Point(0, 0), new Point(-1, 0), new Point(-1, -1), new Point(0, +2), new Point(-1, +2) }, // THREEQUARTER to NONE
-	    { new Point(0, 0), new Point(+1, 0), new Point(+1, +1), new Point(0, -2), new Point(+1, -2) }  // NONE to THREEQUARTER
+	    { new Point(0, 0), new Point(-1, 0), new Point(-1, -1), new Point(0, +2), new Point(-1, +2) }, // THREEQUARTER to START
+	    { new Point(0, 0), new Point(+1, 0), new Point(+1, +1), new Point(0, -2), new Point(+1, -2) }  // START to THREEQUARTER
     };
     
     /**
      * The kick offsets for rotations of I piece
      */
     private static final Point[][] I_OFFSETS = {
-		{ new Point(0, 0), new Point(-2, 0), new Point(+1, 0), new Point(-2, -1), new Point(+1, +2) }, // NONE to QUARTER
-        { new Point(0, 0), new Point(+2, 0), new Point(-1, 0), new Point(+2, +1), new Point(-1, -2) }, // QUARTER to NONE    
+		{ new Point(0, 0), new Point(-2, 0), new Point(+1, 0), new Point(-2, -1), new Point(+1, +2) }, // START to QUARTER
+        { new Point(0, 0), new Point(+2, 0), new Point(-1, 0), new Point(+2, +1), new Point(-1, -2) }, // QUARTER to START    
         { new Point(0, 0), new Point(-1, 0), new Point(+2, 0), new Point(-1, +2), new Point(+2, -1) }, // QUARTER to HALF
         { new Point(0, 0), new Point(+1, 0), new Point(-2, 0), new Point(+1, -2), new Point(-2, +1) }, // HALF to QUARTER
         { new Point(0, 0), new Point(+2, 0), new Point(-1, 0), new Point(+2, +1), new Point(-1, -2) }, // HALF to THREEQUARTER
         { new Point(0, 0), new Point(-2, 0), new Point(+1, 0), new Point(-2, -1), new Point(+1, +2) }, // THREEQUARTER to HALF
-        { new Point(0, 0), new Point(+1, 0), new Point(-2, 0), new Point(+1, -2), new Point(-2, +1) }, // THREEQUARTER to NONE 
-        { new Point(0, 0), new Point(-1, 0), new Point(+2, 0), new Point(-1, +2), new Point(+2, -1) }  // NONE to THREEQUARTER
+        { new Point(0, 0), new Point(+1, 0), new Point(-2, 0), new Point(+1, -2), new Point(-2, +1) }, // THREEQUARTER to START 
+        { new Point(0, 0), new Point(-1, 0), new Point(+2, 0), new Point(-1, +2), new Point(+2, -1) }  // START to THREEQUARTER
     };
     
     /**
