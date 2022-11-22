@@ -75,13 +75,13 @@ final class TGMRotation {
             	points = theNewRotation == Rotation.QUARTER ? JLSTZ_OFFSETS[0] : JLSTZ_OFFSETS[7];
                 break;
             case QUARTER:
-            	points = theNewRotation == Rotation.QUARTER ? JLSTZ_OFFSETS[2] : JLSTZ_OFFSETS[1];
+            	points = theNewRotation == Rotation.HALF ? JLSTZ_OFFSETS[2] : JLSTZ_OFFSETS[1];
                 break;
             case HALF:
-                points = theNewRotation == Rotation.QUARTER ? JLSTZ_OFFSETS[4] : JLSTZ_OFFSETS[3];
+                points = theNewRotation == Rotation.THREEQUARTER ? JLSTZ_OFFSETS[4] : JLSTZ_OFFSETS[3];
                 break;
             case THREEQUARTER:
-                points = theNewRotation == Rotation.QUARTER ? JLSTZ_OFFSETS[6] : JLSTZ_OFFSETS[5];
+                points = theNewRotation == Rotation.START ? JLSTZ_OFFSETS[6] : JLSTZ_OFFSETS[5];
                 break;
             default:
             	points = null;
@@ -106,13 +106,13 @@ final class TGMRotation {
 	        	points = theNewRotation == Rotation.QUARTER ? I_OFFSETS[0] : I_OFFSETS[7];
 	            break;
 	        case QUARTER:
-	        	points = theNewRotation == Rotation.QUARTER ? I_OFFSETS[2] : I_OFFSETS[1];
+	        	points = theNewRotation == Rotation.HALF ? I_OFFSETS[2] : I_OFFSETS[1];
 	            break;
 	        case HALF:
-	            points = theNewRotation == Rotation.QUARTER ? I_OFFSETS[4] : I_OFFSETS[3];
+	            points = theNewRotation == Rotation.THREEQUARTER ? I_OFFSETS[4] : I_OFFSETS[3];
 	            break;
 	        case THREEQUARTER:
-	            points = theNewRotation == Rotation.QUARTER ? I_OFFSETS[6] : I_OFFSETS[5];
+	            points = theNewRotation == Rotation.START ? I_OFFSETS[6] : I_OFFSETS[5];
 	            break;
 	        default:
 	        	points = null;
