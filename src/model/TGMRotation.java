@@ -2,7 +2,7 @@ package model;
 
 /**
  * TGMRotations offsets TetrisPiece positions
- * Based on TGM3 mechanics
+ * Based on TGM mechanics
  * @author ddxbugs 
  */
 final class TGMRotation {
@@ -47,15 +47,15 @@ final class TGMRotation {
      * 
      * @param thePiece the piece type being rotated
      * @param theCurrentRotation the current rotation angle
-     * @param theRotationAngle the next rotation angle 
+     * @param theNewRotation the next rotation angle 
      * @return the points offset by wall kick
      */
     public static Point[] getOffset(final ImmutableTetrisPiece thePiece,
                                        final Rotation theCurrentRotation,
-                                       final Rotation theRotationAngle) {
+                                       final Rotation theNewRotation) {
         Point[] points = new Point[0];
         points = thePiece == ImmutableTetrisPiece.I ? 
-        		getIPieceOffset(theCurrentRotation, theRotationAngle) : getJLSTZOffset(theCurrentRotation, theRotationAngle);
+        		getIPieceOffset(theCurrentRotation, theNewRotation) : getJLSTZOffset(theCurrentRotation, theNewRotation);
         return points;
     }
 
@@ -64,24 +64,24 @@ final class TGMRotation {
      * for J, L, S, T, and Z TetrisPieces
      * 
      * @param theCurrentRotation the current rotation angle
-     * @param theRotationAngle the next rotation angle
+     * @param theNewRotation the next rotation angle
      * @return the points offset by wall kick
      */
     private static Point[] getJLSTZOffset(final Rotation theCurrentRotation,
-                                         final Rotation theRotationAngle) {
+                                         final Rotation theNewRotation) {
         Point[] points = new Point[0];
         switch (theCurrentRotation) {
             case START:
-            	points = theRotationAngle == Rotation.QUARTER ? JLSTZ_OFFSETS[0] : JLSTZ_OFFSETS[7];
+            	points = theNewRotation == Rotation.QUARTER ? JLSTZ_OFFSETS[0] : JLSTZ_OFFSETS[7];
                 break;
             case QUARTER:
-            	points = theRotationAngle == Rotation.QUARTER ? JLSTZ_OFFSETS[2] : JLSTZ_OFFSETS[1];
+            	points = theNewRotation == Rotation.QUARTER ? JLSTZ_OFFSETS[2] : JLSTZ_OFFSETS[1];
                 break;
             case HALF:
-                points = theRotationAngle == Rotation.QUARTER ? JLSTZ_OFFSETS[4] : JLSTZ_OFFSETS[3];
+                points = theNewRotation == Rotation.QUARTER ? JLSTZ_OFFSETS[4] : JLSTZ_OFFSETS[3];
                 break;
             case THREEQUARTER:
-                points = theRotationAngle == Rotation.QUARTER ? JLSTZ_OFFSETS[6] : JLSTZ_OFFSETS[5];
+                points = theNewRotation == Rotation.QUARTER ? JLSTZ_OFFSETS[6] : JLSTZ_OFFSETS[5];
                 break;
             default:
             	points = null;
@@ -95,24 +95,24 @@ final class TGMRotation {
      * for IPieces
      * 
      * @param theCurrentRotation the current rotation angle
-     * @param theRotationAngle the next rotation angle
+     * @param theNewRotation the next rotation angle
      * @return The wall kick offsets for these conditions
      */
     private static Point[] getIPieceOffset(final Rotation theCurrentRotation,
-                                          final Rotation theRotationAngle) {
+                                          final Rotation theNewRotation) {
         Point[] points = new Point[0];
         switch (theCurrentRotation) {
 	        case START:
-	        	points = theRotationAngle == Rotation.QUARTER ? I_OFFSETS[0] : I_OFFSETS[7];
+	        	points = theNewRotation == Rotation.QUARTER ? I_OFFSETS[0] : I_OFFSETS[7];
 	            break;
 	        case QUARTER:
-	        	points = theRotationAngle == Rotation.QUARTER ? I_OFFSETS[2] : I_OFFSETS[1];
+	        	points = theNewRotation == Rotation.QUARTER ? I_OFFSETS[2] : I_OFFSETS[1];
 	            break;
 	        case HALF:
-	            points = theRotationAngle == Rotation.QUARTER ? I_OFFSETS[4] : I_OFFSETS[3];
+	            points = theNewRotation == Rotation.QUARTER ? I_OFFSETS[4] : I_OFFSETS[3];
 	            break;
 	        case THREEQUARTER:
-	            points = theRotationAngle == Rotation.QUARTER ? I_OFFSETS[6] : I_OFFSETS[5];
+	            points = theNewRotation == Rotation.QUARTER ? I_OFFSETS[6] : I_OFFSETS[5];
 	            break;
 	        default:
 	        	points = null;
