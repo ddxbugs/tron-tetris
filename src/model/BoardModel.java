@@ -53,40 +53,58 @@ public class BoardModel {
 	 * Moves the TetrisPiece left
 	 */
 	public void left() {
-		
+		myTetrisPiece.left();
 	}
 	
 	/**
 	 * Moves the TetrisPiece right
 	 */
 	public void right() {
-		
+		myTetrisPiece.right();
 	}
 	
 	/** 
 	 * Rotate the TetrisPiece clockwise 90 degrees
 	 */
 	public void rotate() {
-		
+		final TetrisPiece piece = myTetrisPiece.rotate();
+		final Point[] offsets = TGMRotation.getOffset(piece.getTetrisPiece(),
+				myTetrisPiece.getRotation(),
+				piece.getRotation());
 	}
 	
 	/**
 	 * Move the TetrisPiece down
 	 */
 	public void down() {
-		
+		// TODO implement freeze blocks, clear lines, update listeners
+		myTetrisPiece.down();
 	}
 	
 	/**
 	 * Call down() until TetrisPiece freezes
 	 */
 	public void drop() {
-		
+		// TODO while piece can still move down => down()
+		myTetrisPiece.down();
 	}
 	
+	/**
+	 * Checks the current piece movement logic for collision, freeze, wallkicking, boundaries
+	 * @param theTetrisPiece Current piece in play
+	 * @return Returns true if the piece is able to move in the specified direction
+	 */
 	private boolean isMovable(final TetrisPiece theTetrisPiece) {
+		Block b;
 		boolean isMovable = false;
-		
+		for (final Point p : theTetrisPiece.getBoardPoints()) {
+			b = myFrozenBlocks.get(p.getY())[p.getX()];	// block should be null, else collision detected at point p
+			if (b == null 
+					&& p.getX() >= 0 && p.getX() <= myWidth 
+					&& p.getY() <= 0 && p.getY() >= myHeight) {
+				isMovable = true;	// within board dimension and no collision detected
+			}
+		}
 		return isMovable;
 	}
 	
@@ -96,8 +114,8 @@ public class BoardModel {
 	 */
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
 		
+		final StringBuilder sb = new StringBuilder();
 		// TODO sb.append(function: create ceiling buffer)
 		// for each row
 		for (int i = myHeight; i >= 0; i--) {
@@ -107,11 +125,11 @@ public class BoardModel {
 			
 			// for each column
 			for (int j = 0; j < myWidth - 1; j++) {
-				final Block b = row[j];
-				if (b == null) {
+				final Block col = row[j];
+				if (col == null) {
 					sb.append(' ');	// empty block space on board
 				} else {
-					sb.append(b);
+					sb.append(col);
 				}
 			}	
 			sb.append("|\n");	// start new row
