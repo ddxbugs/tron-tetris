@@ -67,10 +67,18 @@ public class BoardModel {
 	 * Rotate the TetrisPiece clockwise 90 degrees
 	 */
 	public void rotate() {
+		// TODO if(ImmutableTetrisPiece.O) rotate()
 		final TetrisPiece piece = myTetrisPiece.rotate();
 		final Point[] offsets = TGMRotation.getOffset(piece.getTetrisPiece(),
 				myTetrisPiece.getRotation(),
 				piece.getRotation());
+		for (final Point p : offsets) {
+			final Point offset = piece.getPosition().transform(p);
+			final TetrisPiece t = piece.setPosition(offset);
+			if (isMovable(t)) {
+				break;	// breaks if Block 't' is legal move after rotation
+			}
+		}
 	}
 	
 	/**
@@ -106,6 +114,15 @@ public class BoardModel {
 			}
 		}
 		return isMovable;
+	}
+	
+	private void checkRows() {
+		for (final Block[] row : myFrozenBlocks) {
+			System.out.println(row);
+			System.out.println(row.length);
+			// TODO check each row for completion
+			
+		}
 	}
 	
 	/**
