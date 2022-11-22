@@ -41,6 +41,10 @@ enum Rotation {
 		return values()[(this.ordinal() + 1 ) % values().length];
 	}
 	
+	/**
+	 * Randomly selects the rotation angle
+	 * @return Returns an enum type Rotation
+	 */
 	protected Rotation random() {
 		return values()[RAND.nextInt(values().length)];
 	}
