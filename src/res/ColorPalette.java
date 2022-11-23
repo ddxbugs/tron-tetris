@@ -14,11 +14,11 @@ import java.awt.Color;
  *
  */
 public enum ColorPalette {
-	CYAN(111, 195, 223),
-	ORANGE(223, 116, 12),
+	CYAN_TRON_LEGACY(111, 195, 223),
+	ORANGE_TRON_LEGACY(223, 116, 12),
 	BASESTAR(12, 20, 31),
 	PANE(230, 255, 255),
-	YELLOW(255, 230, 77);
+	SWEET_YELLOW(255, 230, 77);
 	/** Red 0-255 */
 	private final int r; 
 	/** Green 0-255 */
