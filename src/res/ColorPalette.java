@@ -1,12 +1,13 @@
-/**
+/*
  * ColorPalette.java
- * Tron Tetris theme color profile
+ * @author ddxbugs
  */
 package res;
 
 import java.awt.Color;
 
 /**
+ * Tron Tetris theme color profile
  * enum ColorPalette
  * @source https://www.colourlovers.com/palette/1406402/Tron_Legacy_2
  * @source https://www.colourlovers.com/palette/969512/Annoy-A-Tron_2.0
@@ -49,7 +50,9 @@ public enum ColorPalette {
 	 * Returns the enum Color
 	 * @return the RGB value (0-255)
 	 */
-	public Color getColor() {
+	public Color getColor(final String theColor) {
 		return new Color(r, g, b);
 	}
+	
+	
 }
