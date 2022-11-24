@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * T.java
+ * @author ddxbugs
  */
 package model;
 
@@ -12,12 +13,11 @@ import res.ColorPalette;
  * TODO: implement final class
  * TODO: T class implements special function/methods 
  * Example: T, L, S, O, Z TetrisPiece extends abstract TetrisPiece
- * @author User
  *
  */
 public class T extends TetrisPiece {
 	/** T TetrisPiece default color */
-	private static final Color cyan = ColorPalette.CYAN.getColor();
+//	private static final Color cyan = ColorPalette.CYAN_TRON_LEGACY.getColor();
 	/** 
 	 * Default T constructor
 	 * T BlockType extends TetrisPiece
