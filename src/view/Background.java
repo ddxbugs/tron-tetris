@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Background.java 
+ * @author ddxbugs 
  */
 package view;
 
@@ -14,8 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * @author User
- *
+ * Background class displays Tron Legacy images
  */
 public class Background extends JPanel {
 	private static Image image = 
@@ -26,20 +26,10 @@ public class Background extends JPanel {
 	 */
 	private static final long serialVersionUID = -4143335180036947216L;
 	/**
-	 * Private constructor 
-	 */
-	@SuppressWarnings("unused")
-	private Background() {
-		// TODO Auto-generated constructor stub
-		System.err.println("error:" + IllegalStateException.class);
-		throw new IllegalStateException();
-	}
-
-	/**
 	 * @param layout
 	 */
-	public Background(LayoutManager layout) {
-		super(layout);
+	public Background() {
+		super();
 		// TODO Auto-generated constructor stub
 		setBackground(Color.BLACK);
 		label = new JLabel(new ImageIcon(image));
