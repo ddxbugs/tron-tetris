@@ -1,5 +1,6 @@
-/**
+/*
  * Point.java
+ * @author Alan Folwer
  */
 package model;
 
@@ -9,8 +10,6 @@ import java.util.Objects;
  * Represent a Point with x and y coordinates.
  * Point objects are immutable.
  * (java.awt.Point are mutable)
- * @author ddxbugs@github.com
- *
  */
 final class Point {
 	/** The tetris block X coordinate */

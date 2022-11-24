@@ -1,10 +1,10 @@
-/**
- * 
+/*
+ * Z.java
+ * @author ddxbugs
  */
 package model;
 
 /**
- * @author User
  *
  */
 public class Z extends TetrisPiece {

@@ -1,10 +1,12 @@
+/*
+ * TGMRotation.java
+ * @author Alan Fowler
+ */
 package model;
 
 /**
  * TGMRotations offsets TetrisPiece positions
- * Based on TGM mechanics
- * @author Alan Fowler
- * @modified ddxbugs 
+ * Based on Tetris Grand Master game mechanics
  */
 final class TGMRotation {
     

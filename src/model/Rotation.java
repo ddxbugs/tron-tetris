@@ -1,5 +1,6 @@
-/**
+/*
  * Rotation.java
+ * @author Alan Fowler
  */
 package model;
 
@@ -7,8 +8,6 @@ import java.util.Random;
 
 /**
  * Tetris piece Rotation type enum
- * @author ddxbugs@github.com
- *
  */
 enum Rotation {
 	/**

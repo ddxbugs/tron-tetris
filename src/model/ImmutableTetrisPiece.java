@@ -1,5 +1,6 @@
-/**
+/*
  * TetrisPiece.java
+ * @author Alan Fowler
  */
 package model;
 

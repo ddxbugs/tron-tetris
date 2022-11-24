@@ -1,5 +1,6 @@
-/**
- * MutableTetrisPiece.java
+/*
+ * TetrisPiece.java
+ * @author Alan Fowler
  */
 package model;
 
@@ -7,8 +8,6 @@ import java.util.Objects;
 
 /**
  * Abstract mutable TetrisPiece with Point and Rotation
- * @author ddxbugs@github.com
- *
  */
 public class TetrisPiece {
 
@@ -160,8 +159,12 @@ public class TetrisPiece {
 	
 	private Point[] getPoints(final Point thePoint) {
 		final Point[] blocks = myTetrisPiece.getPoints();
+		// for each Point in blocks
 		for (int i = 0; i < blocks.length; i++) {
+			
 			final Point block = blocks[i];
+			
+			// case: myRotation current state
 			switch(myRotation) {
 			// TODO bug Tetris Piece 'O' rotation 
 				case QUARTER: blocks[i] = new Point(block.getY(),
