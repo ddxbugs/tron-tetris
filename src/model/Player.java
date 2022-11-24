@@ -43,7 +43,7 @@ final class Player {
 	 * Return the highest score in saved game
 	 * @return The highest score earned
 	 */
-	protected int highestScore() {
+	protected int getHighestScore() {
 		return myHighestScore;
 	}
 	
@@ -51,7 +51,7 @@ final class Player {
 	 * Return the three letter initials
 	 * @return The player post game initials
 	 */
-	protected String myInitials() {
+	protected String getInitials() {
 		return myInitials.toString().toUpperCase();
 	}
 }
