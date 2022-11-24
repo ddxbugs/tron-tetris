@@ -4,6 +4,7 @@
  */
 package view;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -45,24 +46,37 @@ public class BoardView extends JPanel {
 		drawBlocks(g2D);
 	}
 	
+	/**
+	 * Colorizes the individual blocks in the game board
+	 * @param theGraphics2D Returns corresponding piece color for the block
+	 */
 	private void drawBlocks(final Graphics2D theGraphics2D) {
 		for (final Block block : myBoard) {
-			
 			switch(block) {
-			case I: theGraphics2D.setColor(); break;
-			case J: theGraphics2D.setColor(); break;
-			case L: theGraphics2D.setColor(); break;
-			case O: theGraphics2D.setColor(); break;
-			case S: theGraphics2D.setColor(); break;
-			case T: theGraphics2D.setColor(); break;
-			case Z: theGraphics2D.setColor(); break;
-			default: break;
+			case I: 
+				theGraphics2D.setColor(ColorPalette.BASESTAR.getColor()); 
+				break;
+			case J: 
+				theGraphics2D.setColor(ColorPalette.PANE.getColor()); 
+				break;
+			case L: theGraphics2D.setColor(ColorPalette.SWEET_YELLOW.getColor()); 
+				break;
+			case O: 
+				theGraphics2D.setColor(ColorPalette.FAR_AWAY_SKY.getColor()); 
+				break;
+			case S: 
+				theGraphics2D.setColor(ColorPalette.MEANWHILE.getColor()); 
+				break;
+			case T: 
+				theGraphics2D.setColor(ColorPalette.TRON_BLUE.getColor()); 
+				break;
+			case Z: 
+				theGraphics2D.setColor(ColorPalette.WIPE_OUT.getColor()); 
+				break;
+			default: 
+				theGraphics2D.setColor(Color.RED);	// Debug, remove me
+				break;
 			}
-			
 		}
-	}
-	
-	private void setColor(final Graphics2D theG2D, final Block block) {
-		
 	}
 }
