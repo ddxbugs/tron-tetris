@@ -9,12 +9,6 @@ import java.awt.Color;
 /**
  * Tron Tetris theme color profile
  * enum ColorPalette
- * @source https://www.colourlovers.com/palette/1406402/Tron_Legacy_2
- * @source https://www.colourlovers.com/palette/969512/Annoy-A-Tron_2.0
- * @source https://www.colourlovers.com/palette/1526474/Tron 
- * @author ddxbugs
- * @version 0.0.1
- *
  */
 public enum ColorPalette {
 	CYAN_TRON_LEGACY(111, 195, 223),	// @source https://www.colourlovers.com/palette/1406402/Tron_Legacy_2
@@ -30,28 +24,28 @@ public enum ColorPalette {
 	SIX_SOUND_CHOICES(213, 203, 177),	// @source https://www.colourlovers.com/palette/969512/Annoy-A-Tron_2.0 
 	VOLUME_CONTROL(182, 185, 165);	// @source https://www.colourlovers.com/palette/969512/Annoy-A-Tron_2.0
 	/** Red 0-255 */
-	private final int r; 
+	private final int myR; 
 	/** Green 0-255 */
-	private final int g;
+	private final int myG;
 	/** Blue 0-255 */
-	private final int b;
+	private final int myB;
 	/**
 	 * Private enum ColorPalette constructor
-	 * @param R Red
-	 * @param G Green
-	 * @param B Blue
+	 * @param theR Red
+	 * @param theG Green
+	 * @param theB Blue
 	 */
-	private ColorPalette(final int R, final int G, final int B) {
-		r = R;
-		g = G;
-		b = B;
+	private ColorPalette(final int theR, final int theG, final int theB) {
+		myR = theR;
+		myG = theG;
+		myB = theB;
 	}
 	/**
 	 * Returns the enum Color
 	 * @return the RGB value (0-255)
 	 */
-	public Color getColor(final String theColor) {
-		return new Color(r, g, b);
+	public Color getColor() {
+		return new Color(myR, myG, myB);
 	}
 	
 	
