@@ -3,7 +3,8 @@ package model;
 /**
  * TGMRotations offsets TetrisPiece positions
  * Based on TGM mechanics
- * @author ddxbugs 
+ * @author Alan Fowler
+ * @modified ddxbugs 
  */
 final class TGMRotation {
     
@@ -34,14 +35,6 @@ final class TGMRotation {
         { new Point(0, 0), new Point(+1, 0), new Point(-2, 0), new Point(+1, -2), new Point(-2, +1) }, // THREEQUARTER to START 
         { new Point(0, 0), new Point(-1, 0), new Point(+2, 0), new Point(-1, +2), new Point(+2, -1) }  // START to THREEQUARTER
     };
-    
-    /**
-     * Empty no args private constructor 
-     */
-    private TGMRotation() {
-        // do nothing
-    }
-    
     /**
      * Returns an array of Points representing the wall kick offsets
      * 

@@ -1,21 +1,27 @@
-/**
- * 
+/*
+ * Player.java
+ * @author ddxbugs
  */
 package model;
 
 /**
- * @author User
- *
+ * Persistence player class model 
  */
 final class Player {
 	/** Player game level difficulty */
-	private int myLevel;
+	private int myCurrentLevel;
+	/** Player highest score */
+	private int myHighestScore;
+	/** Player end game initials */
+	private char[] myInitials;
 	/**
-	 * 
+	 * protected class constructor
 	 */
 	protected Player() {
 		// TODO Auto-generated constructor stub
-		myLevel = 0;
+		myCurrentLevel = 0;
+		myHighestScore = 0;
+		myInitials = new char[3];
 	}
 	
 	/**
@@ -23,13 +29,29 @@ final class Player {
 	 * @return Player level 0-99
 	 */
 	protected int getLevel() {
-		return myLevel;
+		return myCurrentLevel;
 	}
 	/** 
 	 * Increment the Player level
 	 * Increases game speed difficulty
 	 */
 	protected void levelUp() {
-		myLevel++;
+		myCurrentLevel++;
+	}
+	
+	/**
+	 * Return the highest score in saved game
+	 * @return The highest score earned
+	 */
+	protected int highestScore() {
+		return myHighestScore;
+	}
+	
+	/**
+	 * Return the three letter initials
+	 * @return The player post game initials
+	 */
+	protected String myInitials() {
+		return myInitials.toString().toUpperCase();
 	}
 }
