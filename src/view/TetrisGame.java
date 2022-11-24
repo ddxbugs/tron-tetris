@@ -3,12 +3,13 @@
  */
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.Timer;
+
+import model.BoardModel;
 
 /**
  * @author User
@@ -30,6 +31,11 @@ public class TetrisGame extends JFrame {
 	private static Background myBackground;
 	/** Tetris board container view */
 	private static BoardView myBoardView;
+	/** Tetris board view model */
+	private static BoardModel myBoardModel;
+	/** Tetris Board swing timer */
+	private static Timer myTimer;
+	
 	/**
 	 * @throws HeadlessException
 	 */
@@ -56,8 +62,9 @@ public class TetrisGame extends JFrame {
 	 * Initialize JComponent and event handlers
 	 */
 	private void initialize() {
-		myBackground = new Background(new FlowLayout());
-		myBoardView = new BoardView();
+		myBackground = new Background();
+		myBoardModel = new BoardModel(getWidth(), getHeight());	// TODO implement scale for board size
+//		myBoardView = new BoardView(); // TODO need class field or getter for tetris board model	
 		// TODO init menu option
 		// TODO init preview window
 		// TODO init windowfocuslistener
@@ -69,6 +76,7 @@ public class TetrisGame extends JFrame {
 //		add(myBoardView);
 		// TODO add windowfocuslistener
 		// TODO add keyboardlistener
+		// TODO add propertychangerlisteners
 	}
 	
 }
