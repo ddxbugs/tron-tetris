@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * BoardModel.java
+ * @author ddxbugs
  */
 package model;
 
@@ -9,13 +10,11 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * BoardModel handles tetris piece movement and logic
- * @author ddxbugs
- *
+ * This class model contains the pieces, handles movement logic for the game
  */
 public class BoardModel {
 
-	/** TetrisGame BoardView dimensions */
+	/** TetrisGame BoardView dimensions for bounds checking*/
 	private int myWidth;
 	private int myHeight;
 	
@@ -141,7 +140,6 @@ public class BoardModel {
 			System.out.println(blocks);
 			System.out.println(blocks.length);
 			// TODO check each row for line completion
-			
 		}
 	}
 	
