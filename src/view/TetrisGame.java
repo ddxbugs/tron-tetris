@@ -24,6 +24,7 @@ public class TetrisGame extends JFrame {
 	
 	/** Full screen configuration settings and variables */
 	private static final int BLOCK_SIZE = 1;
+	/** The block size scale */
 	private static final int SCALE = 1;
 	/** Window bar icon decoration */
 	private static final ImageIcon ICON = new ImageIcon(".\\src\\res\\icon.jpg");
