@@ -13,7 +13,7 @@ import java.util.Objects;
  * This class model contains the pieces, handles movement logic for the game
  */
 public class BoardModel {
-
+	private static final int START_X = 0, START_Y = 0;
 	/** TetrisGame BoardView dimensions for bounds checking*/
 	private int myWidth;
 	private int myHeight;
@@ -25,7 +25,7 @@ public class BoardModel {
 	/** Tetris game player default level 0 */
 	private Player myPlayer;
 	/** The current tetris piece in play */
-	private TetrisPiece myCurrentPiece;
+	private TetrisPiece myCurrentPiece;	
 	/**
 	 * Primary BoardModel constructor
 	 * @param theWidth width of game board
@@ -108,7 +108,7 @@ public class BoardModel {
 			final Point offset = piece.getPosition().transform(p);
 			final TetrisPiece t = piece.setPosition(offset);
 			if (isMovable(t)) {
-				break;	// breaks if 't' is legal move after rotation, else iter next point
+				break;	// break if 't' is legal move after rotation
 			}
 		}
 	}
@@ -136,15 +136,27 @@ public class BoardModel {
 	 * Checks the tetris board for completed lines
 	 */
 	private void checkRows() {
+		boolean[] lines = new boolean[myHeight - 1];
+		boolean linesClear = false;
+		int i = myHeight - 1;
 		for (final Block[] blocks : myFrozenBlocks) {
-			System.out.println(blocks);
-			System.out.println(blocks.length);
-			// TODO check each row for line completion
+			linesClear = false;
+			for (final Block block : blocks) {
+				linesClear = block == null ? true : false;
+				if (linesClear) break;	// slightly faster implementation
+			}
+			lines[i--] = linesClear;	// reverse order for correct board orientation
 		}
 	}
 	
-	// TODO point getter/setter
 	
+	private TetrisPiece nextMovablePiece() {
+		return new TetrisPiece(ImmutableTetrisPiece.getRandomPiece(), new Point(START_X, START_Y), Rotation.START);
+	}
+	
+	private void prepareNextMovablePiece() {
+		
+	}
 	/**
 	 * Returns the board as a string
 	 * @return current tetris board string representation
