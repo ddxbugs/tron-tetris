@@ -52,6 +52,14 @@ public class BoardModel {
 		// TODO reset score
 		// TODO reset tetris piece preview panel
 	}
+	
+	/**
+	 * End the current tetris game
+	 * Close variables
+	 */
+	public void gameOver() {
+		myPlayer = null;
+	}
 	/**
 	 * Moves the TetrisPiece left
 	 */
@@ -82,7 +90,7 @@ public class BoardModel {
 					blocks[p.getX()] = myCurrentPiece.getTetrisPiece().getBlock();
 				}
 			}
-			checkRows();
+			checkRows();	// double check rows for complete lines
 		}
 	}
 	/**
@@ -136,24 +144,45 @@ public class BoardModel {
 	 * Checks the tetris board for completed lines
 	 */
 	private void checkRows() {
-		boolean[] lines = new boolean[myHeight - 1];
+		boolean[] lines = new boolean[myHeight];
 		boolean linesClear = false;
-		int i = myHeight - 1;
+		int i = myHeight;
 		for (final Block[] blocks : myFrozenBlocks) {
 			linesClear = false;
 			for (final Block block : blocks) {
 				linesClear = block == null ? true : false;
-				if (linesClear) break;	// slightly faster implementation
+				if (linesClear) break;	// slightly faster implementation O(n - k - 1)
 			}
 			lines[i--] = linesClear;	// reverse order for correct board orientation
 		}
+		clearLines(lines);	// remove the filled rows from the board, update score
 	}
 	
+	/**
+	 * Clear completed rows from the board
+	 * @param theLines The board as a boolean array of filled/partial/empty blocks
+	 */
+	private void clearLines(final boolean[] theLines) {
+		for (int i = 0; i < theLines.length; i++) {
+			if (theLines[i]) {
+				myFrozenBlocks.remove(i);
+				myFrozenBlocks.add(new Block[myWidth]);
+			}
+		}
+		// notify listeners: scoreboard, player
+	}
 	
+	/**
+	 * Prepare the next random tetris piece in play
+	 * @return Returns a random tetris piece default start position and rotation
+	 */
 	private TetrisPiece nextMovablePiece() {
 		return new TetrisPiece(ImmutableTetrisPiece.getRandomPiece(), new Point(START_X, START_Y), Rotation.START);
 	}
 	
+	/**
+	 * Helper method for preparing next tetris piece
+	 */
 	private void prepareNextMovablePiece() {
 		
 	}
