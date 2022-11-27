@@ -123,7 +123,7 @@ enum ImmutableTetrisPiece {
 	 * Return a random TetrisPiece
 	 * @return a random TetrisPiece
 	 */
-	protected ImmutableTetrisPiece getRandomPiece() {
+	protected static ImmutableTetrisPiece getRandomPiece() {
 		return values()[RAND.nextInt(values().length)];
 	}
 }

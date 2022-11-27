@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * TetrisMain.java
+ * @author ddxbugs 
  */
 package controller;
 
@@ -9,6 +10,9 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -51,15 +55,15 @@ public class TetrisMain {
 		SwingUtilities.invokeLater(new Runnable() {
 			
 			public void run() {
-				GRAPHICS_ENVIRONMENT.registerFont(Font.createFont(Font.TRUETYPE_FONT, TR2N));
-				TetrisGame game = new TetrisGame();
+				TetrisGame game = new TetrisGame(GRAPHICS_ENVIRONMENT);
 				GraphicsDevice device = GRAPHICS_ENVIRONMENT.getDefaultScreenDevice();
-			
-				try {
-					UIManager.setLookAndFeel(NIMBUS);					
+				try {	
+					Path path = Paths.get(TR2N);	// get path to font tff file
+					GRAPHICS_ENVIRONMENT.registerFont(Font.createFont(Font.TRUETYPE_FONT, path.toFile()));	// set font look and feel
+					UIManager.setLookAndFeel(NIMBUS);	// set ui look and feel
 					game.setPreferredSize(FULL_SCREEN_SIZE);
 					game.setMinimumSize(MIN_SCREEN_SIZE);
-					device.setFullScreenWindow(game);
+					device.setFullScreenWindow(game);	// attempt to set game to full screen mode
 				} catch (final FontFormatException e) {
 					System.err.println("FontFormatException:" + e);
 					e.printStackTrace();
@@ -74,6 +78,10 @@ public class TetrisMain {
 					e.printStackTrace();
 				} catch (final IllegalAccessException e) {
 					System.err.println("IllegalAccessException:" + e);
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.err.println("IOException:" + e);
 					e.printStackTrace();
 				} finally {
 					device.setFullScreenWindow(null);
