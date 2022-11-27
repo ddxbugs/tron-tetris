@@ -11,3 +11,10 @@
   </ul>
 
 
+### Sources
+ <ul>
+<li><a href="https://www.1001fonts.com/tr2n-font.html"><strong>Font</strong></a></li>
+<li><a href="https://www.colourlovers.com/lover/polettomichele"><strong>Color 1</strong></a></li>
+<li><a href="https://www.colourlovers.com/palette/1406402/Tron_Legacy_2"><strong>Color 2</strong></a></li>
+<li><a href="https://www.colourlovers.com/palette/1526474/Tron"><strong>Color 3</strong></a></li>
+</ul>
