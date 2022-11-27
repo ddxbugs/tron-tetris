@@ -31,7 +31,7 @@ public class TetrisMain {
 	/** UIManager Nimbus Look and Feel setting*/
 	private static final String NIMBUS = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
 	/** TR2N font file path */
-	private static final String TR2N = "src/res/tr2n.tff";
+	private static final String TR2N = "src/res/CrrNtoutline.ttf";
 	/** Borderless screen min dimension */
 	private static final Dimension MIN_SCREEN_SIZE = new Dimension(MIN_W, MIN_H);
 	/** Full screen dimension */
@@ -51,7 +51,7 @@ public class TetrisMain {
 	 * @param args
 	 */
 	public static void main(String... args) {
-		System.out.println("args: " + args);	// TODO debug, remove
+//		System.out.println("args: " + args);	// TODO debug, remove
 		SwingUtilities.invokeLater(new Runnable() {
 			
 			public void run() {
