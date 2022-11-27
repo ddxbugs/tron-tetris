@@ -3,14 +3,17 @@
  */
 package view;
 
-import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 
 import model.BoardModel;
+import res.ColorPalette;
 
 /**
  * @author User
@@ -27,26 +30,32 @@ public class TetrisGame extends JFrame {
 	private static final int BLOCK_SIZE = 1;
 	/** The block size scale */
 	private static final int SCALE = 1;
-	/** String file path to game image files */
 	
+	/** String file path to game image files */
 	private static final String ICON = "src/res/icon.jpg";
 	private static final String GRID = "src/res/background.jpg";
 	private static final String DISC = "src/res/cyan_disc.png";
 	private static final String BOARD = "src/res/board.png";
 	
+	
+	
+	/** Game graphics environment */
 	private static GraphicsEnvironment myGraphicsEnv;
 	
-	/** Dynamic changing background wallpaper */ // TODO implements with JLayeredPane
-	private static Background myBackground;
 	/** Tetris Board swing timer */
 	private static Timer myTimer;
+	
+	/** Layered pane for game overlays */
+	private static JLayeredPane myLayeredPane;
+	
+	/** Dynamic changing background */
+	private static Background myBackground;
 	
 	/** Tetris board view model */
 	private BoardModel myBoardModel;
 	/** Tetris board container view */
 	private BoardView myBoardView;
-	
-	private Dimension myDimension;
+
 	
 	/**
 	 * @throws HeadlessException
@@ -54,10 +63,9 @@ public class TetrisGame extends JFrame {
 	public TetrisGame(final GraphicsEnvironment theGraphicsEnv) 
 			throws HeadlessException {
 		
-		super("Disney's Tron: Legacy Tetris");
+		super("Disney's Tron: Legacy");
 		
 		myGraphicsEnv = theGraphicsEnv;
-		myDimension = new Dimension();
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
@@ -77,11 +85,11 @@ public class TetrisGame extends JFrame {
 	 * Initialize JComponent and event handlers
 	 */
 	private void initialize() {
-		System.out.println(myGraphicsEnv.getLocalGraphicsEnvironment().getMaximumWindowBounds());	// TODO debug, uncomment remove me				
+		myLayeredPane = new JLayeredPane();
 		
 		myBackground = new Background();
-//		myBoardModel = new BoardModel(0,0);	// TODO implement scale for board size
-//		myBoardView = new BoardView(); // TODO need class field or getter for tetris board model
+//		myBoardModel = new BoardModel();
+//		myBoardView = new BoardView();
 		
 		// TODO init menu option
 		// TODO init preview window
@@ -91,13 +99,19 @@ public class TetrisGame extends JFrame {
 	
 	private void setUp() {
 		
-//		myBoardView.setSize();
-		add(myBackground);
-//		add(myBoardView);
-//		add(myBoardView);
-		// TODO add windowfocuslistener
-		// TODO add keyboardlistener
-		// TODO add propertychangerlisteners
+		myBackground.setSize(myGraphicsEnv.getMaximumWindowBounds().getSize());
+		
+		myLayeredPane.add(myBackground, -1);
+//		myLayeredPane.add(myBoardView, 0);
+//		myLayeredPane.add(myPreviewPanel, 1);
+//		myLayeredPane.add(myScorePanel, 2);
+		
+//		add(myGameOptions);
+		add(myLayeredPane);
+		
+		// TODO add windowfocuslistener event handler
+		// TODO add keyboardlistener event handler
+		// TODO add propertychangerlisteners event handler
 	}
 	
 	
