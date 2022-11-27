@@ -7,8 +7,16 @@ package view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.Block;
@@ -18,22 +26,19 @@ import res.ColorPalette;
  * The view model class displays the current board
  */
 public class BoardView extends JPanel {
-
 	/**
-	 * Generated serialVersionUID
+	 * Default serialVersionUID
 	 */
-	private static final long serialVersionUID = 8563705674683776847L;
-	/** The Tetris board as an array of blocks or rows */
-	private Block[] myBoard;
-	/**
-	 * Default public constructor
-	 * @param theBoard the tetris board block array representation
-	 */
-	public BoardView(final Block[] theBoard) {
-		// default private constructor
-		myBoard = theBoard;
-	}
+	private static final long serialVersionUID = 1L;
 	
+	private Block[] myBoard;
+	
+	/**
+	 * Board view model constructor
+	 */
+	protected BoardView() {
+		// load the image
+	}
 	/**
 	 * Draws the Tetris BoardModel
 	 */
@@ -47,10 +52,12 @@ public class BoardView extends JPanel {
 	}
 	
 	/**
-	 * Colorizes the individual blocks in the game board
+	 * Colorizes the individual blocks in the game board 
 	 * @param theGraphics2D Returns corresponding piece color for the block
 	 */
 	private void drawBlocks(final Graphics2D theGraphics2D) {
+		int x = 0, y = 0, w = 8, h = 15;	// TODO w,h hard coded
+		
 		for (final Block block : myBoard) {
 			switch(block) {
 			case I: 
@@ -77,6 +84,16 @@ public class BoardView extends JPanel {
 				theGraphics2D.setColor(Color.RED);	// Debug, remove me
 				break;
 			}
+			final Rectangle2D r = new Rectangle(x, y, w, h);
+			theGraphics2D.fill(r);
+			theGraphics2D.draw(r);
+			x += w;
+			// reset column counter, increment next row counter
+			if (x % w == 0) {
+				x = 0;	
+				y += h;
+			}
 		}
+		
 	}
 }
