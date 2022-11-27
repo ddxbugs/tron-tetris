@@ -7,7 +7,7 @@ package model;
 /**
  * Persistence player class model 
  */
-final class Player {
+public class Player {
 	/** Player game level difficulty */
 	private int myCurrentLevel;
 	/** Player highest score */
@@ -17,7 +17,7 @@ final class Player {
 	/**
 	 * protected class constructor
 	 */
-	protected Player() {
+	public Player() {
 		// TODO Auto-generated constructor stub
 		myCurrentLevel = 0;
 		myHighestScore = 0;
