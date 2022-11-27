@@ -67,10 +67,9 @@ public class TetrisMain {
 					GRAPHICS_ENVIRONMENT.registerFont(Font.createFont(Font.TRUETYPE_FONT, pathRegularTTF.toFile()));	// set font look and feel
 					GRAPHICS_ENVIRONMENT.registerFont(Font.createFont(Font.TRUETYPE_FONT, pathOutlineTTF.toFile()));	// set font look and feel
 					UIManager.setLookAndFeel(NIMBUS_LAF);	// set ui look and feel
-					game.setPreferredSize(FULL_SCREEN_SIZE);
-					game.setMinimumSize(MIN_SCREEN_SIZE);
+//					game.setPreferredSize(FULL_SCREEN_SIZE);
+//					game.setMinimumSize(MIN_SCREEN_SIZE);
 					device.setFullScreenWindow(game);	// attempt to set game to full screen mode
-					status = 0;
 					
 				} catch (final FontFormatException e) {
 					System.err.println("FontFormatException:" + e);
@@ -93,15 +92,14 @@ public class TetrisMain {
 					e.printStackTrace();
 				} finally {
 					device.setFullScreenWindow(null);
-					
+					status = 0;
 				}
-				game.start();	// run the program
 				
 				if (status == 1) {
 					System.err.println("error code system status");
 					System.exit(status);	// error code
 				}
-					
+				game.start();	// run the program
 			}	
 		});
 		
