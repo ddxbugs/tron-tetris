@@ -5,6 +5,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,9 +14,13 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 
 import res.ColorPalette;
 
@@ -25,6 +30,15 @@ import res.ColorPalette;
 public class Background extends JPanel {
 	/** Default serial version UID */
 	private static final long serialVersionUID = 1L;
+	
+	/** Magic numbers */
+	private static final int FONT_PT_24 = 24;
+	private static final int FONT_PT_18 = 18;
+	private static final int ZERO = 0;
+	private static final int TWO  = 2;
+	private static final int PAD_X = 10;
+	private static final int PAD_Y = 10;
+	
 	/** Official movie release title */
 	private static final String TRON_LEGACY = "Disney's TRON: Legacy";
 	/** Game title */
@@ -40,8 +54,11 @@ public class Background extends JPanel {
 	private static JLabel myTronLabel;
 	/** Cyan disc menu button decoration label */
 	private static JLabel myGameLabel;
-	/** */
+	/** Background image decoration */
 	private static JLabel myBackgroundLabel;
+	/** */
+	private static JLayeredPane myLayeredPane;
+	
 	
 	/**
 	 * @param layout
@@ -53,6 +70,10 @@ public class Background extends JPanel {
 		try {
 			myImage = ImageIO.read(new File("src/res/grid.jpg"));
 			myBackgroundLabel = new JLabel(new ImageIcon(myImage));
+			myBackgroundLabel.setBounds(ZERO, ZERO, myImage.getWidth(), myImage.getHeight());
+			myBackgroundLabel.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED,
+					ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
+			
 		} catch (IOException e) {
 			System.err.println("IOException:" + e);
 			e.printStackTrace();
@@ -60,22 +81,45 @@ public class Background extends JPanel {
 		
 		myTronLabel = new JLabel(TRON_LEGACY);
 		myGameLabel = new JLabel(VERSION_TITLE);
-	
-		myTronLabel.setFont(new Font(OUTLINE, Font.BOLD, 24));
-		myTronLabel.setForeground(ColorPalette.CYAN_TRON_LEGACY.getColor());
-		myGameLabel.setFont(new Font(REGULAR, Font.TRUETYPE_FONT, 18));
-		myGameLabel.setForeground(ColorPalette.TRON_BLUE.getColor());
 		
-		add(myTronLabel);
-		add(myGameLabel);
-		add(myBackgroundLabel);
+		myTronLabel.setSize(myImage.getWidth(), FONT_PT_24 * TWO);
+		myGameLabel.setSize(myImage.getWidth(), FONT_PT_24 * TWO);
+		
+		myTronLabel.setFont(new Font(OUTLINE, Font.BOLD, FONT_PT_24));
+		myTronLabel.setForeground(ColorPalette.CYAN_TRON_LEGACY.getColor());
+		
+		myGameLabel.setFont(new Font(REGULAR, Font.TRUETYPE_FONT, FONT_PT_18));
+		myGameLabel.setForeground(ColorPalette.SIX_SOUND_CHOICES.getColor());
+
+		myLayeredPane = new JLayeredPane();
+		myLayeredPane.setPreferredSize(new Dimension(myImage.getWidth(), myImage.getHeight()));
+		
+		JPanel panel = new JPanel();	// add the game labels
+		panel.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED, 
+				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
+		panel.setSize(myTronLabel.getWidth(), myTronLabel.getHeight());
+		panel.setBackground(Color.BLACK);
+		
+		panel.add(myTronLabel);
+		panel.add(myGameLabel);
+		
+		myLayeredPane.add(panel, JLayeredPane.PALETTE_LAYER);
+		myLayeredPane.add(myBackgroundLabel, JLayeredPane.DEFAULT_LAYER);
+
+		add(myLayeredPane);
+		
 	}
 	
+	/**
+	 * Draw/re-draw background image wallpaper
+	 */
+	@Override
 	public void paintComponents(Graphics theGraphics) {
 		super.paintComponents(theGraphics);
 		final Graphics2D g2d = (Graphics2D) theGraphics;
 		if (myImage != null)
 			g2d.drawImage(myImage, myImage.getWidth(), myImage.getHeight(), this);
+	
 		System.out.println("background="+myImage.getWidth()+","+myImage.getHeight());
 	}
 }
