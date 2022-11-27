@@ -13,7 +13,7 @@
 
 ### Sources
 <ul>
-<li><a href="https://www.colourlovers.com/lover/polettomichele"><strong>"Tron" color palette 1</strong></a></li>
+<li><a href="https://www.colourlovers.com/palette/969512/Annoy-A-Tron_2.0"><strong>"Tron" color palette 1</strong></a></li>
 <li><a href="https://www.colourlovers.com/palette/1526474/Tron"><strong>"Tron" color palette 2</strong></a></li>
 <li><a href="https://www.colourlovers.com/palette/1406402/Tron_Legacy_2"><strong>"Tron Legacy 2" color palette</strong></a></li>
 <li><a href="https://www.1001fonts.com/tr2n-font.html"><strong>TR2N ttf</strong></a></li>
