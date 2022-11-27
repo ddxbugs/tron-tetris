@@ -7,7 +7,7 @@ package model;
 /**
  *
  */
-public class Z extends TetrisPiece {
+public final class Z extends TetrisPiece {
 
 	/**
 	 * @param theTetrisPiece
