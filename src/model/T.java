@@ -15,7 +15,7 @@ import res.ColorPalette;
  * Example: T, L, S, O, Z TetrisPiece extends abstract TetrisPiece
  *
  */
-public class T extends TetrisPiece {
+public final class T extends TetrisPiece {
 	/** T TetrisPiece default color */
 //	private static final Color cyan = ColorPalette.CYAN_TRON_LEGACY.getColor();
 	/** 
