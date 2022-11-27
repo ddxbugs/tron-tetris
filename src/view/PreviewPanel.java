@@ -1,48 +1,39 @@
-/**
- * 
+/*
+ * PreviewPanel.java
+ * @author ddxbugs 
  */
 package view;
 
-import java.awt.LayoutManager;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 
 /**
- * @author User
- *
+ * PreviewPanel class displays next tetris piece on board
  */
 public class PreviewPanel extends JPanel {
-
+	private static final Border bf = BorderFactory.createSoftBevelBorder(BevelBorder.RAISED);
 	/**
 	 * 
 	 */
 	public PreviewPanel() {
 		// TODO Auto-generated constructor stub
+		super();
+		setSize(150, 300);	// TODO debug, remove hard code 
+		setBorder(bf);
+//		setVisible(true);
+		
 	}
-
-	/**
-	 * @param layout
-	 */
-	public PreviewPanel(LayoutManager layout) {
-		super(layout);
-		// TODO Auto-generated constructor stub
+	
+	@Override
+	public void paintComponent(final Graphics theGraphics) {
+		super.paintComponent(theGraphics);
+		final Graphics2D g2d = (Graphics2D) theGraphics;
+		// select tetris piece 
+		// draw
 	}
-
-	/**
-	 * @param isDoubleBuffered
-	 */
-	public PreviewPanel(boolean isDoubleBuffered) {
-		super(isDoubleBuffered);
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @param layout
-	 * @param isDoubleBuffered
-	 */
-	public PreviewPanel(LayoutManager layout, boolean isDoubleBuffered) {
-		super(layout, isDoubleBuffered);
-		// TODO Auto-generated constructor stub
-	}
-
 }
