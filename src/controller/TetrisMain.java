@@ -29,9 +29,11 @@ public class TetrisMain {
 	/** Borderless screen min width and height */
 	private static final int MIN_H = 300, MIN_W = 300;
 	/** UIManager Nimbus Look and Feel setting*/
-	private static final String NIMBUS = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
-	/** TR2N font file path */
-	private static final String TR2N = "src/res/CrrNtoutline.ttf";
+	private static final String NIMBUS_LAF = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
+	/** CrNNtn-regular font relative file path */
+	private static final String PATH_REGULAR_TTF = "src/res/regular.ttf";
+	/** CrNNtn-outline font relative file path */
+	private static final String PATH_OUTLINE_TTF = "src/res/outline.ttf";
 	/** Borderless screen min dimension */
 	private static final Dimension MIN_SCREEN_SIZE = new Dimension(MIN_W, MIN_H);
 	/** Full screen dimension */
@@ -40,6 +42,7 @@ public class TetrisMain {
 	/** The graphics environment */
 	private static final GraphicsEnvironment GRAPHICS_ENVIRONMENT = 
 			GraphicsEnvironment.getLocalGraphicsEnvironment();
+	
 	
 	// private constructor prevents instantiation throws exception
 	private TetrisMain() {
@@ -51,19 +54,24 @@ public class TetrisMain {
 	 * @param args
 	 */
 	public static void main(String... args) {
-//		System.out.println("args: " + args);	// TODO debug, remove
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			
 			public void run() {
 				TetrisGame game = new TetrisGame(GRAPHICS_ENVIRONMENT);
 				GraphicsDevice device = GRAPHICS_ENVIRONMENT.getDefaultScreenDevice();
+				int status = 1;
 				try {	
-					Path path = Paths.get(TR2N);	// get path to font tff file
-					GRAPHICS_ENVIRONMENT.registerFont(Font.createFont(Font.TRUETYPE_FONT, path.toFile()));	// set font look and feel
-					UIManager.setLookAndFeel(NIMBUS);	// set ui look and feel
+					Path pathRegularTTF = Paths.get(PATH_REGULAR_TTF);	// get path to tron regular font file
+					Path pathOutlineTTF = Paths.get(PATH_OUTLINE_TTF);	// get path to tron outline font file
+					GRAPHICS_ENVIRONMENT.registerFont(Font.createFont(Font.TRUETYPE_FONT, pathRegularTTF.toFile()));	// set font look and feel
+					GRAPHICS_ENVIRONMENT.registerFont(Font.createFont(Font.TRUETYPE_FONT, pathOutlineTTF.toFile()));	// set font look and feel
+					UIManager.setLookAndFeel(NIMBUS_LAF);	// set ui look and feel
 					game.setPreferredSize(FULL_SCREEN_SIZE);
 					game.setMinimumSize(MIN_SCREEN_SIZE);
 					device.setFullScreenWindow(game);	// attempt to set game to full screen mode
+					status = 0;
+					
 				} catch (final FontFormatException e) {
 					System.err.println("FontFormatException:" + e);
 					e.printStackTrace();
@@ -85,12 +93,19 @@ public class TetrisMain {
 					e.printStackTrace();
 				} finally {
 					device.setFullScreenWindow(null);
+					
 				}
+				game.start();	// run the program
 				
-				game.start();
-			}
-			
+				if (status == 1) {
+					System.err.println("error code system status");
+					System.exit(status);	// error code
+				}
+					
+			}	
 		});
+		
+		
 	}
 
 }
