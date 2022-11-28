@@ -3,6 +3,7 @@
  */
 package view;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
@@ -48,6 +49,8 @@ public class TetrisGame extends JFrame {
 	/** Layered pane for game overlays */
 	private static JLayeredPane myLayeredPane;
 	
+	private static Dimension myDimension;
+	
 	/** Dynamic changing background */
 	private static Background myBackground;
 	
@@ -63,10 +66,13 @@ public class TetrisGame extends JFrame {
 	public TetrisGame(final GraphicsEnvironment theGraphicsEnv) 
 			throws HeadlessException {
 		
-		super("Disney's Tron: Legacy");
+		super("");
 		
 		myGraphicsEnv = theGraphicsEnv;
-		
+		myDimension = myGraphicsEnv.getMaximumWindowBounds().getSize();
+		System.out.println(myDimension);
+//		setMinimumSize(null);
+		setPreferredSize(myDimension);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 	}
@@ -78,6 +84,7 @@ public class TetrisGame extends JFrame {
 		initialize();
 		setUp();
 		pack();
+//		setSize(myDimension);
 		setVisible(true);
 	}
 	
