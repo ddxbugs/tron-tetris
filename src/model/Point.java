@@ -12,9 +12,9 @@ import java.util.Objects;
  * (java.awt.Point are mutable)
  */
 final class Point {
-	/** The tetris block X coordinate */
+	/** The Mino block X coordinate */
 	private final int myX;
-	/** The tetris block Y coordinate */
+	/** The Mino block Y coordinate */
 	private final int myY;
 	
 	/**
@@ -29,16 +29,16 @@ final class Point {
 	}
 	
 	/**
-	 * Block X coord getter 
-	 * @return the tetris block X coord
+	 * Mino X coord accessor 
+	 * @return the Mino block X coord
 	 */
 	protected int getX() {
 		return myX;
 	}
 	
 	/**
-	 * Block Y coord gettter
-	 * @return the tetris block Y coord
+	 * Mino Y coord accessor
+	 * @return the Mino block Y coord
 	 */
 	protected int getY() {
 		return myY;

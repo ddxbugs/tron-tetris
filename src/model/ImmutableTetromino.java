@@ -80,7 +80,9 @@ enum ImmutableTetromino {
 	 * @param theHeight Tetromino block height
 	 * @param theBlock Tetromino block Enum type
 	 */
-	ImmutableTetromino(final int theWidth, final int theHeight, final Mino theBlock, final Point... thePoints) {
+	ImmutableTetromino(final int theWidth, final int theHeight, 
+			final Mino theBlock, final Point... thePoints) {
+		
 		myWidth = theWidth;
 		myHeight = theHeight;
 		myBlock = theBlock;
