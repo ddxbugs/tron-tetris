@@ -8,19 +8,15 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import model.TetrionViewModel;
-import res.MagicNumber;
 
 /**
- * @author User
- *
+ *	Tetris Frame
  */
 public class TetrisGame extends JFrame {
 	
@@ -60,14 +56,16 @@ public class TetrisGame extends JFrame {
 	private static Dimension myDimension;
 	
 	/** Dynamic changing background */
-	private static Tetrion myBackground;
-	/** Tetris piece preview window */
-	private static PiecePreview myPreviewPanel;
+	private static Tetrion myTetrion;
+	/** Configuration settings menu option */
+	private static ConfigView myConfig;
 	
-	/** Tetris board view model */
-	private TetrionViewModel myBoardModel;
+	/** Next Tetromino preview window */
+	private PiecePreview myPreview;
+	/** Current game score tracker */
+	private ScoreView myScore;
 	/** Tetris board container view */
-	private TetrionView myBoardView;
+	private TetrionView myTetrionView;
 
 	
 	/**
@@ -75,14 +73,14 @@ public class TetrisGame extends JFrame {
 	 */
 	public TetrisGame(final GraphicsEnvironment theGraphicsEnv) 
 			throws HeadlessException {
-		
 		super("");
 		
+		// set window icon decoration
 		final ImageIcon icon = new ImageIcon(ICON);
 		setIconImage(icon.getImage());
 		
+		// Game graphics display for dimension width height settings
 		myGraphicsEnv = theGraphicsEnv;
-		// Game display and board dimension
 		myDimension = myGraphicsEnv.getMaximumWindowBounds().getSize();
 		myWidth = (int) myDimension.getWidth();
 		myHeight = (int) myDimension.getHeight();
@@ -109,35 +107,33 @@ public class TetrisGame extends JFrame {
 	private void initialize() {
 		myLayeredPane = new JLayeredPane();
 		
-		myBackground = new Tetrion();
-		myPreviewPanel = new PiecePreview();
-		
-//		myBoardModel = new TetrionViewModel();
-		myBoardView = new TetrionView();
-		
-		// TODO init menu option
-		// TODO init preview window
-		// TODO init windowfocuslistener
-		// TODO init keyboardlistener
+		myPreview = new PiecePreview();
+		myScore = new ScoreView();
+//		myConfig = new ConfigView();
+		myTetrion = new Tetrion();
+	
+		myTetrionView = new TetrionView(myWidth, myHeight);
+
+		// TODO initialize window focus listener, keyboard listener, mouse listener
 	}
 	
 	private void setUp() {
+		// TODO remove hard coded values
+//		myConfig.setSize(getMaximumSize());
+		myTetrion.setSize(getMaximumSize());
+		myTetrionView.setSize(300, 600);
+		myPreview.setSize(200, 200);
+		myScore.setSize(400, 100);
 		
-		myBackground.setSize(getMaximumSize());
-		myPreviewPanel.setSize(200, 200);
-		myBoardView.setSize(300, 600);
+//		myLayeredPane.add(myConfig, JLayeredPane.MODAL_LAYER);
+		myLayeredPane.add(myTetrion, JLayeredPane.DEFAULT_LAYER);
+		myLayeredPane.add(myTetrionView, JLayeredPane.POPUP_LAYER);
+		myLayeredPane.add(myPreview, JLayeredPane.POPUP_LAYER);
+		myLayeredPane.add(myScore, JLayeredPane.POPUP_LAYER);
 		
-		myLayeredPane.add(myBackground, JLayeredPane.DEFAULT_LAYER);
-		myLayeredPane.add(myBoardView, JLayeredPane.POPUP_LAYER);
-		myLayeredPane.add(myPreviewPanel, JLayeredPane.POPUP_LAYER);
-//		myLayeredPane.add(myScorePanel);
-		
-//		add(myGameOptions);
 		add(myLayeredPane);
 		
-		// TODO add windowfocuslistener event handler
-		// TODO add keyboardlistener event handler
-		// TODO add propertychangerlisteners event handler
+		// TODO add window focus, keyboard, mouse, property change event handler
 	}
 	
 	
