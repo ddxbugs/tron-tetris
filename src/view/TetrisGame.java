@@ -15,7 +15,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
-import model.BoardModel;
+import model.TetrionViewModel;
 import res.MagicNumber;
 
 /**
@@ -60,14 +60,14 @@ public class TetrisGame extends JFrame {
 	private static Dimension myDimension;
 	
 	/** Dynamic changing background */
-	private static Background myBackground;
+	private static Tetrion myBackground;
 	/** Tetris piece preview window */
-	private static PreviewPanel myPreviewPanel;
+	private static PiecePreview myPreviewPanel;
 	
 	/** Tetris board view model */
-	private BoardModel myBoardModel;
+	private TetrionViewModel myBoardModel;
 	/** Tetris board container view */
-	private BoardView myBoardView;
+	private TetrionView myBoardView;
 
 	
 	/**
@@ -109,11 +109,11 @@ public class TetrisGame extends JFrame {
 	private void initialize() {
 		myLayeredPane = new JLayeredPane();
 		
-		myBackground = new Background();
-		myPreviewPanel = new PreviewPanel();
+		myBackground = new Tetrion();
+		myPreviewPanel = new PiecePreview();
 		
-//		myBoardModel = new BoardModel();
-		myBoardView = new BoardView();
+//		myBoardModel = new TetrionViewModel();
+		myBoardView = new TetrionView();
 		
 		// TODO init menu option
 		// TODO init preview window
