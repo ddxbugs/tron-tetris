@@ -4,26 +4,15 @@
  */
 package view;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagLayout;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-import model.Mino;
+import model.TetrionViewModel;
 import res.ColorPalette;
 
 /**
@@ -35,19 +24,21 @@ public class TetrionView extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Mino[] myBoard;
+	private TetrionViewModel myModel;
 	
 	/**
-	 * Board view model constructor
+	 * TetrionView UI class displays current game board or "playfield"  
 	 */
-	protected TetrionView() {
-		// load the image
+	protected TetrionView(final int theWidth, final int theHeight) {
+		myModel = new TetrionViewModel(theWidth, theHeight);
+		
 		setLocation(500, 75);
-		setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED, ColorPalette.PANE.getColor(), ColorPalette.CYAN_TRON_LEGACY.getColor()));
+		setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED, 
+				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
 		setBackground(ColorPalette.MEANWHILE.getColor());
 	}
 	/**
-	 * Draws the Tetris TetrionViewModel
+	 * Draw each individual Tetromino Mino blocks on the playfield
 	 */
 	@Override
 	public void paintComponent(final Graphics theGraphics) {
