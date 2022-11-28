@@ -27,7 +27,7 @@ import res.ColorPalette;
 /**
  * Background class displays Tron Legacy images
  */
-public class Background extends JPanel {
+public class Tetrion extends JPanel {
 	/** Default serial version UID */
 	private static final long serialVersionUID = 1L;
 	
@@ -63,7 +63,7 @@ public class Background extends JPanel {
 	/**
 	 * @param layout
 	 */
-	protected Background() {
+	protected Tetrion() {
 		super();
 //		setBackground(ColorPalette.MEANWHILE.getColor());
 		setBackground(Color.BLACK);
