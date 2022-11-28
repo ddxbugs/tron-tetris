@@ -4,17 +4,15 @@
 package view;
 
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 
 import model.BoardModel;
-import res.ColorPalette;
 
 /**
  * @author User
@@ -37,8 +35,6 @@ public class TetrisGame extends JFrame {
 	private static final String GRID = "src/res/background.jpg";
 	private static final String DISC = "src/res/cyan_disc.png";
 	private static final String BOARD = "src/res/board.png";
-	
-	
 	
 	/** Game graphics environment */
 	private static GraphicsEnvironment myGraphicsEnv;
@@ -68,10 +64,12 @@ public class TetrisGame extends JFrame {
 		
 		super("");
 		
+		final ImageIcon icon = new ImageIcon(ICON);
+		setIconImage(icon.getImage());
+		
 		myGraphicsEnv = theGraphicsEnv;
 		myDimension = myGraphicsEnv.getMaximumWindowBounds().getSize();
-		System.out.println(myDimension);
-//		setMinimumSize(null);
+
 		setPreferredSize(myDimension);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
