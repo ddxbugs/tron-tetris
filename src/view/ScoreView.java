@@ -1,5 +1,5 @@
 /*
- * ScorePanel.java
+ * ScoreView.java
  * @author ddxbugs 
  */
 package view;
@@ -14,7 +14,7 @@ import model.Player;
 /**
  *	Display the current game score
  */
-public class ScorePanel extends JPanel {
+public class ScoreView extends JPanel {
 	/**
 	 * Default serialVersionUID
 	 */
@@ -24,7 +24,7 @@ public class ScorePanel extends JPanel {
 	private JLabel myLevel;
 	private JLabel myLines;
 	
-	protected ScorePanel() {
+	protected ScoreView() {
 		super();
 		
 		myPlayer = new Player();
@@ -34,6 +34,7 @@ public class ScorePanel extends JPanel {
 		
 		myScore.setSize(100, 100);
 		myScore.setFont(new Font("Monospaced", Font.BOLD, 12));
+		
 		
 		setSize(300, 300);
 	}
