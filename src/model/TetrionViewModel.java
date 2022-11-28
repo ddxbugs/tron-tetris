@@ -20,11 +20,11 @@ public class TetrionViewModel {
 	
 	/** List of static Mino array objects currently in view */ 
 	private List<Mino[]> myFrozenBlocks;
-	/** List of predetermined TetrisPieces */
-	private List<Tetromino> myTetrisPieces;
+	/** List of predetermined Tetrominos */
+	private List<Tetromino> myTetrominos;
 	/** Tetris game player default level 0 */
 	private Player myPlayer;
-	/** The current tetris piece in play */
+	/** The current tetromino in play */
 	private Tetromino myCurrentPiece;	
 	/**
 	 * Primary TetrionViewModel constructor
@@ -35,7 +35,7 @@ public class TetrionViewModel {
 		myWidth = theWidth;
 		myHeight = theHeight;
 		myFrozenBlocks = new LinkedList<Mino[]>();
-		myTetrisPieces = new ArrayList<Tetromino>();
+		myTetrominos = new ArrayList<Tetromino>();
 		myPlayer = null;
 		myCurrentPiece = null;
 		
@@ -50,7 +50,7 @@ public class TetrionViewModel {
 	
 		myFrozenBlocks.clear();	// clear the Tetris board
 		// TODO reset score
-		// TODO reset tetris piece preview panel
+		// TODO reset tetromino preview panel
 	}
 	
 	/**
@@ -87,7 +87,7 @@ public class TetrionViewModel {
 			for (final Point p : myCurrentPiece.getBoardPoints()) {
 				if (p.getX() >= 0 && p.getX() <= myWidth && p.getY() >= 0 && p.getY() <= myHeight) {
 					final Mino[] blocks = myFrozenBlocks.get(p.getY());
-					blocks[p.getX()] = myCurrentPiece.getTetrisPiece().getBlock();
+					blocks[p.getX()] = myCurrentPiece.getTetromino().getBlock();
 				}
 			}
 			checkRows();	// double check rows for complete lines
@@ -109,7 +109,7 @@ public class TetrionViewModel {
 	public void rotate() {
 		// TODO if(ImmutableTetromino.O) rotate()
 		final Tetromino piece = myCurrentPiece.rotate();
-		final Point[] offsets = Wallkick.getOffset(piece.getTetrisPiece(),
+		final Point[] offsets = Wallkick.getOffset(piece.getTetromino(),
 				myCurrentPiece.getRotation(),
 				piece.getRotation());
 		for (final Point p : offsets) {
@@ -123,13 +123,13 @@ public class TetrionViewModel {
 	
 	/**
 	 * Checks the current piece movement logic for collision, freeze, boundaries
-	 * @param theTetrisPiece Current piece in play
+	 * @param theTetromino Current piece in play
 	 * @return Returns true if the piece is able to move in the specified direction
 	 */
-	private boolean isMovable(final Tetromino theTetrisPiece) {
+	private boolean isMovable(final Tetromino theTetromino) {
 		Mino b;
 		boolean isMovable = false;
-		for (final Point p : theTetrisPiece.getBoardPoints()) {
+		for (final Point p : theTetromino.getBoardPoints()) {
 			b = myFrozenBlocks.get(p.getY())[p.getX()];	// block should be null, else collision detected at point p
 			if (b == null 
 					&& p.getX() >= 0 && p.getX() <= myWidth 
@@ -173,15 +173,15 @@ public class TetrionViewModel {
 	}
 	
 	/**
-	 * Prepare the next random tetris piece in play
-	 * @return Returns a random tetris piece default start position and rotation
+	 * Prepare the next random tetromino in play
+	 * @return Returns a random tetromino default start position and rotation
 	 */
 	private Tetromino nextMovablePiece() {
 		return new Tetromino(ImmutableTetromino.getRandomPiece(), new Point(START_X, START_Y), Rotation.START);
 	}
 	
 	/**
-	 * Helper method for preparing next tetris piece
+	 * Helper method for preparing next tetromino
 	 */
 	private void prepareNextMovablePiece() {
 		
