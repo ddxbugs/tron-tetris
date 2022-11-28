@@ -1,5 +1,5 @@
 /*
- * TetrisPiece.java
+ * Tetromino.java
  * @author Alan Fowler
  */
 package model;
@@ -7,40 +7,40 @@ package model;
 import java.util.Objects;
 
 /**
- * Abstract mutable TetrisPiece with Point and Rotation
+ * Abstract mutable Tetromino with Point and Rotation
  */
-public class TetrisPiece {
+public class Tetromino {
 
 	/**
-	 * Number of block units in a TetrisPiece
+	 * Number of block units in a Tetromino
 	 */
 	private static final int N_BLOCKS = 4;
 	/**
-	 * TetrisPiece enum type
+	 * Tetromino enum type
 	 */
-	private final ImmutableTetrisPiece myTetrisPiece;
+	private final ImmutableTetromino myTetrisPiece;
 	/**
-	 * TetrisPiece current position on board
+	 * Tetromino current position on board
 	 */
 	private final Point myPosition;
 	/**
-	 * TetrisPiece current rotation angle
+	 * Tetromino current rotation angle
 	 */
 	private final Rotation myRotation;
 	
 	/**
-	 * TetrisPiece constructor allows creation
+	 * Tetromino constructor allows creation
 	 * of movable pieces set to the specified enum
 	 * type, rotation angle, and point position
-	 * @param theTetrisPiece the TetrisPiece enum type
-	 * @param thePosition the TetrisPiece starting point
-	 * @param theRotation the TetrisPiece initial angle
+	 * @param theTetrisPiece the Tetromino enum type
+	 * @param thePosition the Tetromino starting point
+	 * @param theRotation the Tetromino initial angle
 	 */
-	public TetrisPiece(final ImmutableTetrisPiece theTetrisPiece,
+	public Tetromino(final ImmutableTetromino theTetrisPiece,
 			final Point thePosition,
 			final Rotation theRotation) {
 		myTetrisPiece = Objects.requireNonNull(theTetrisPiece, 
-				"NullPointerException.class: TetrisPiece enum type " + theTetrisPiece);
+				"NullPointerException.class: Tetromino enum type " + theTetrisPiece);
 		myPosition = Objects.requireNonNull(thePosition, 
 				"NullPointerException.class: Point.class " + thePosition);
 		myRotation = Objects.requireNonNull(theRotation, 
@@ -49,19 +49,19 @@ public class TetrisPiece {
 	}
 	
 	/**
-	 * Default initial TetrisPiece constructor starting
+	 * Default initial Tetromino constructor starting
 	 * rotation and position on the board
 	 * @param theTetrisPiece enum type
-	 * @param thePosition the TetrisPiece position on board
+	 * @param thePosition the Tetromino position on board
 	 */
-	public TetrisPiece(final ImmutableTetrisPiece theTetrisPiece,
+	public Tetromino(final ImmutableTetromino theTetrisPiece,
 			final Point thePosition) {
 		this(theTetrisPiece, thePosition, Rotation.START);
 	}
 	
 	/**
-	 * Return the absolute height of the moving TetrisPiece
-	 * @return the TetrisPiece block height difference
+	 * Return the absolute height of the moving Tetromino
+	 * @return the Tetromino block height difference
 	 */
 	protected int getHeight() {
 		int min = Integer.MIN_VALUE;
@@ -74,8 +74,8 @@ public class TetrisPiece {
 	}
 	
 	/**
-	 * Return the absolute width of the moving TetrisPiece
-	 * @return the TetrisPiece block width difference
+	 * Return the absolute width of the moving Tetromino
+	 * @return the Tetromino block width difference
 	 */
 	protected int getWidth() {
 		int min = Integer.MIN_VALUE;
@@ -88,10 +88,10 @@ public class TetrisPiece {
 	}
 	
 	/**
-	 * Returns a TetrisPiece enum block type
-	 * @return the Block enum type
+	 * Returns a Tetromino enum block type
+	 * @return the Mino enum type
 	 */
-	public Block getBlock() {
+	public Mino getBlock() {
 		return myTetrisPiece.getBlock();
 	}
 	
@@ -111,15 +111,15 @@ public class TetrisPiece {
 		return sb.toString();
 	}
 	/**
-	 * Returns this object's TetrisPiece 
-	 * @return the TetrisPiece's enum BlockType
+	 * Returns this object's Tetromino 
+	 * @return the Tetromino's enum BlockType
 	 */
-	protected ImmutableTetrisPiece getTetrisPiece() {
+	protected ImmutableTetromino getTetrisPiece() {
 		return myTetrisPiece;
 	}
 	/**
-	 * Returns the TetrisPiece's current position on the board
-	 * @return the TetrisPiece position
+	 * Returns the Tetromino's current position on the board
+	 * @return the Tetromino position
 	 */
 	protected Point getPosition() {
 		return myPosition;
@@ -127,23 +127,23 @@ public class TetrisPiece {
 	
 	// TODO implement method for 'wall kicking'
 	/**
-	 * Returns new TetrisPiece of current type, rotation and new position
+	 * Returns new Tetromino of current type, rotation and new position
 	 * 
 	 * @param thePosition the new tetris piece position
-	 * @return the new TetrisPiece at specified position
+	 * @return the new Tetromino at specified position
 	 */
-	protected TetrisPiece setPosition(final Point thePosition) {
-		return new TetrisPiece(myTetrisPiece, thePosition, myRotation);
+	protected Tetromino setPosition(final Point thePosition) {
+		return new Tetromino(myTetrisPiece, thePosition, myRotation);
 	}
 	/**
-	 * Return the current rotation of the TetrisPiece
-	 * @return the TetrisPiece rotation state
+	 * Return the current rotation of the Tetromino
+	 * @return the Tetromino rotation state
 	 */
 	protected Rotation getRotation() {
 		return myRotation;
 	}
 	/**
-	 * Returns all the TetrisPiece block positions on the board
+	 * Returns all the Tetromino block positions on the board
 	 * @return an array of Points 
 	 */
 	protected Point[] getBoardPoints() {
@@ -151,7 +151,7 @@ public class TetrisPiece {
 	}
 	/**
 	 * Retrieve local block Point positions
-	 * @return array of TetrisPiece block points
+	 * @return array of Tetromino block points
 	 */
 	private Point[] getLocalPoints() {
 		return getPoints(null);
@@ -184,36 +184,36 @@ public class TetrisPiece {
 	}
 	
 	/*********************************************************
-	 * TetrisPiece movements
+	 * Tetromino movements
 	 ********************************************************/
 	
 	/**
 	 * Rotate the tetris piece clockwise 90 degrees
 	 * @return new rotated tetris piece
 	 */
-	protected TetrisPiece rotate() { 
-		return new TetrisPiece(myTetrisPiece, myPosition, myRotation.clockwise());
+	protected Tetromino rotate() { 
+		return new Tetromino(myTetrisPiece, myPosition, myRotation.clockwise());
 	}
 	/**
 	 * Moves the tetris piece to the left 1 unit
 	 * @return new tetris piece shifted to left
 	 */
-	protected TetrisPiece left() {
-		return new TetrisPiece(myTetrisPiece, myPosition.transform(-1, 0), myRotation);
+	protected Tetromino left() {
+		return new Tetromino(myTetrisPiece, myPosition.transform(-1, 0), myRotation);
 	}
 	/**
 	 * Moves the tetris piece to the right 1 unit
 	 * @return new tetris piece shifted to right 
 	 */
-	protected TetrisPiece right() {
-		return new TetrisPiece(myTetrisPiece, myPosition.transform(1, 0), myRotation);
+	protected Tetromino right() {
+		return new Tetromino(myTetrisPiece, myPosition.transform(1, 0), myRotation);
 	}
 	/**
 	 * Moves the tetris piece down 1 unit
 	 * @return new tetris piece position
 	 */
-	protected TetrisPiece down() {
-		return new TetrisPiece(myTetrisPiece, myPosition.transform(0, -1), myRotation);
+	protected Tetromino down() {
+		return new Tetromino(myTetrisPiece, myPosition.transform(0, -1), myRotation);
 		
 	}
 }
