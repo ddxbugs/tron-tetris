@@ -1,14 +1,14 @@
 /*
- * TGMRotation.java
+ * Wallkick.java
  * @author Alan Fowler
  */
 package model;
 
 /**
- * TGMRotations offsets TetrisPiece positions
+ * TGMRotations offsets Tetromino positions
  * Based on Tetris Grand Master game mechanics
  */
-final class TGMRotation {
+final class Wallkick {
     
     /**
      * The clockwise and counter offsets for rotating J, L, S, T, and Z TetrisPieces 
@@ -45,17 +45,17 @@ final class TGMRotation {
      * @param theNewRotation the next rotation angle 
      * @return the points offset by wall kick
      */
-    public static Point[] getOffset(final ImmutableTetrisPiece thePiece,
+    public static Point[] getOffset(final ImmutableTetromino thePiece,
                                        final Rotation theCurrentRotation,
                                        final Rotation theNewRotation) {
         Point[] points = new Point[0];
-        points = thePiece == ImmutableTetrisPiece.I ? 
+        points = thePiece == ImmutableTetromino.I ? 
         		getIPieceOffset(theCurrentRotation, theNewRotation) : getJLSTZOffset(theCurrentRotation, theNewRotation);
         return points;
     }
 
     /**
-     * Returns Points offset by TetrisPiece wall kicks
+     * Returns Points offset by Tetromino wall kicks
      * for J, L, S, T, and Z TetrisPieces
      * 
      * @param theCurrentRotation the current rotation angle
@@ -86,7 +86,7 @@ final class TGMRotation {
     }
 
     /**
-     * Returns Points offset by TetrisPiece wall kicks
+     * Returns Points offset by Tetromino wall kicks
      * for IPieces
      * 
      * @param theCurrentRotation the current rotation angle
