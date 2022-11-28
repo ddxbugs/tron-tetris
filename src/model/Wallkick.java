@@ -40,16 +40,16 @@ final class Wallkick {
     /**
      * Returns an array of Points representing the wall kick offsets
      * 
-     * @param thePiece the piece type being rotated
+     * @param theTetromino the piece type being rotated
      * @param theCurrentRotation the current rotation angle
      * @param theNewRotation the next rotation angle 
      * @return the points offset by wall kick
      */
-    public static Point[] getOffset(final ImmutableTetromino thePiece,
+    public static Point[] getOffset(final ImmutableTetromino theTetromino,
                                        final Rotation theCurrentRotation,
                                        final Rotation theNewRotation) {
         Point[] points = new Point[0];
-        points = thePiece == ImmutableTetromino.I ? 
+        points = theTetromino == ImmutableTetromino.I ? 
         		getIPieceOffset(theCurrentRotation, theNewRotation) : getJLSTZOffset(theCurrentRotation, theNewRotation);
         return points;
     }
