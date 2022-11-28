@@ -4,17 +4,28 @@
  */
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.Player;
+import res.ColorPalette;
 
 /**
  *	Display the current game score
  */
 public class ScoreView extends JPanel {
+	// TODO decompose literal string
+	/** CrNNtn-regular font family name */
+	private static final String REGULAR = "CRRNTN-Regular";
+	/** CrNNtn font family name */
+	private static final String OUTLINE = "CRRNTN-Outline";
+	/** Score text font size */
+	private static final int FONT_PT_14 = 14;
+	private static final int FONT_PT_12 = 12;
+
 	/**
 	 * Default serialVersionUID
 	 */
@@ -28,15 +39,26 @@ public class ScoreView extends JPanel {
 		super();
 		
 		myPlayer = new Player();
-		myScore = new JLabel();
-		myLevel = new JLabel();
-		myLines = new JLabel();
+		myScore = new JLabel("SCORE");
+		myLevel = new JLabel("LEVEL");
+		myLines = new JLabel("LINES");
 		
-		myScore.setSize(100, 100);
-		myScore.setFont(new Font("Monospaced", Font.BOLD, 12));
+		setLocation(800, 100);
+		setBackground(Color.RED);	
 		
+		myScore.setFont(new Font(REGULAR, Font.TRUETYPE_FONT, FONT_PT_14));
+		myLevel.setFont(new Font(REGULAR, Font.TRUETYPE_FONT, FONT_PT_12));
+		myLines.setFont(new Font(REGULAR, Font.TRUETYPE_FONT, FONT_PT_12));
 		
-		setSize(300, 300);
+		myScore.setForeground(ColorPalette.PANE.getColor());
+		myLevel.setForeground(ColorPalette.FAR_AWAY_SKY.getColor());
+		myLines.setForeground(ColorPalette.VOLUME_CONTROL.getColor());
+
+		setOpaque(false);
+		
+		add(myScore);
+		add(myLevel);
+		add(myLines);
 	}
 	
 	private void update() {
