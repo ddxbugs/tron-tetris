@@ -1,5 +1,5 @@
 /*
- * BoardModel.java
+ * TetrionViewModel.java
  * @author ddxbugs
  */
 package model;
@@ -12,30 +12,30 @@ import java.util.Objects;
 /**
  * This class model contains the pieces, handles movement logic for the game
  */
-public class BoardModel {
+public class TetrionViewModel {
 	private static final int START_X = 0, START_Y = 0;
-	/** TetrisGame BoardView dimensions for bounds checking*/
+	/** TetrisGame TetrionView dimensions for bounds checking*/
 	private int myWidth;
 	private int myHeight;
 	
-	/** List of static Block array objects currently in view */ 
-	private List<Block[]> myFrozenBlocks;
+	/** List of static Mino array objects currently in view */ 
+	private List<Mino[]> myFrozenBlocks;
 	/** List of predetermined TetrisPieces */
-	private List<TetrisPiece> myTetrisPieces;
+	private List<Tetromino> myTetrisPieces;
 	/** Tetris game player default level 0 */
 	private Player myPlayer;
 	/** The current tetris piece in play */
-	private TetrisPiece myCurrentPiece;	
+	private Tetromino myCurrentPiece;	
 	/**
-	 * Primary BoardModel constructor
+	 * Primary TetrionViewModel constructor
 	 * @param theWidth width of game board
 	 * @param theHeight height of game board
 	 */
-	public BoardModel(final int theWidth, final int theHeight) {
+	public TetrionViewModel(final int theWidth, final int theHeight) {
 		myWidth = theWidth;
 		myHeight = theHeight;
-		myFrozenBlocks = new LinkedList<Block[]>();
-		myTetrisPieces = new ArrayList<TetrisPiece>();
+		myFrozenBlocks = new LinkedList<Mino[]>();
+		myTetrisPieces = new ArrayList<Tetromino>();
 		myPlayer = null;
 		myCurrentPiece = null;
 		
@@ -61,7 +61,7 @@ public class BoardModel {
 		myPlayer = null;
 	}
 	/**
-	 * Moves the TetrisPiece left
+	 * Moves the Tetromino left
 	 */
 	public void left() {
 		if (isMovable(myCurrentPiece)) {
@@ -69,7 +69,7 @@ public class BoardModel {
 		}
 	}
 	/**
-	 * Moves the TetrisPiece right
+	 * Moves the Tetromino right
 	 */
 	public void right() {
 		if (isMovable(myCurrentPiece)) {
@@ -77,7 +77,7 @@ public class BoardModel {
 		}
 	}
 	/**
-	 * Move the TetrisPiece down
+	 * Move the Tetromino down
 	 */
 	public void down() {
 		// TODO implement freeze blocks, clear lines, update listeners
@@ -86,7 +86,7 @@ public class BoardModel {
 		} else {
 			for (final Point p : myCurrentPiece.getBoardPoints()) {
 				if (p.getX() >= 0 && p.getX() <= myWidth && p.getY() >= 0 && p.getY() <= myHeight) {
-					final Block[] blocks = myFrozenBlocks.get(p.getY());
+					final Mino[] blocks = myFrozenBlocks.get(p.getY());
 					blocks[p.getX()] = myCurrentPiece.getTetrisPiece().getBlock();
 				}
 			}
@@ -103,18 +103,18 @@ public class BoardModel {
 		}
 	}
 	/** 
-	 * Rotate the TetrisPiece clockwise 90 degrees
-	 * Wallkicks offset TetrisPiece points' positions
+	 * Rotate the Tetromino clockwise 90 degrees
+	 * Wallkicks offset Tetromino points' positions
 	 */
 	public void rotate() {
-		// TODO if(ImmutableTetrisPiece.O) rotate()
-		final TetrisPiece piece = myCurrentPiece.rotate();
-		final Point[] offsets = TGMRotation.getOffset(piece.getTetrisPiece(),
+		// TODO if(ImmutableTetromino.O) rotate()
+		final Tetromino piece = myCurrentPiece.rotate();
+		final Point[] offsets = Wallkick.getOffset(piece.getTetrisPiece(),
 				myCurrentPiece.getRotation(),
 				piece.getRotation());
 		for (final Point p : offsets) {
 			final Point offset = piece.getPosition().transform(p);
-			final TetrisPiece t = piece.setPosition(offset);
+			final Tetromino t = piece.setPosition(offset);
 			if (isMovable(t)) {
 				break;	// break if 't' is legal move after rotation
 			}
@@ -126,8 +126,8 @@ public class BoardModel {
 	 * @param theTetrisPiece Current piece in play
 	 * @return Returns true if the piece is able to move in the specified direction
 	 */
-	private boolean isMovable(final TetrisPiece theTetrisPiece) {
-		Block b;
+	private boolean isMovable(final Tetromino theTetrisPiece) {
+		Mino b;
 		boolean isMovable = false;
 		for (final Point p : theTetrisPiece.getBoardPoints()) {
 			b = myFrozenBlocks.get(p.getY())[p.getX()];	// block should be null, else collision detected at point p
@@ -147,9 +147,9 @@ public class BoardModel {
 		boolean[] lines = new boolean[myHeight];
 		boolean linesClear = false;
 		int i = myHeight;
-		for (final Block[] blocks : myFrozenBlocks) {
+		for (final Mino[] blocks : myFrozenBlocks) {
 			linesClear = false;
-			for (final Block block : blocks) {
+			for (final Mino block : blocks) {
 				linesClear = block == null ? true : false;
 				if (linesClear) break;	// slightly faster implementation O(n - k - 1)
 			}
@@ -166,7 +166,7 @@ public class BoardModel {
 		for (int i = 0; i < theLines.length; i++) {
 			if (theLines[i]) {
 				myFrozenBlocks.remove(i);
-				myFrozenBlocks.add(new Block[myWidth]);
+				myFrozenBlocks.add(new Mino[myWidth]);
 			}
 		}
 		// notify listeners: scoreboard, player
@@ -176,8 +176,8 @@ public class BoardModel {
 	 * Prepare the next random tetris piece in play
 	 * @return Returns a random tetris piece default start position and rotation
 	 */
-	private TetrisPiece nextMovablePiece() {
-		return new TetrisPiece(ImmutableTetrisPiece.getRandomPiece(), new Point(START_X, START_Y), Rotation.START);
+	private Tetromino nextMovablePiece() {
+		return new Tetromino(ImmutableTetromino.getRandomPiece(), new Point(START_X, START_Y), Rotation.START);
 	}
 	
 	/**
@@ -198,12 +198,12 @@ public class BoardModel {
 		// for each row
 		for (int row = myHeight; row >= 0; row--) {
 			
-			final Block[] blocks = Objects.requireNonNull(myFrozenBlocks.get(row));
+			final Mino[] blocks = Objects.requireNonNull(myFrozenBlocks.get(row));
 			sb.append('|');	// left border
 			
 			// for each column
 			for (int col = 0; col < myWidth - 1; col++) {
-				final Block b = blocks[col];
+				final Mino b = blocks[col];
 				if (b == null) {
 					sb.append(' ');	// empty block space on board
 				} else {
