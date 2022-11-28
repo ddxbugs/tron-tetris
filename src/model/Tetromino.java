@@ -7,7 +7,7 @@ package model;
 import java.util.Objects;
 
 /**
- * Abstract mutable Tetromino with Point and Rotation
+ * Tetromino class with Point and Rotation
  */
 public class Tetromino {
 
@@ -18,7 +18,7 @@ public class Tetromino {
 	/**
 	 * Tetromino enum type
 	 */
-	private final ImmutableTetromino myTetrisPiece;
+	private final ImmutableTetromino myTetromino;
 	/**
 	 * Tetromino current position on board
 	 */
@@ -32,31 +32,28 @@ public class Tetromino {
 	 * Tetromino constructor allows creation
 	 * of movable pieces set to the specified enum
 	 * type, rotation angle, and point position
-	 * @param theTetrisPiece the Tetromino enum type
+	 * @param theTetromino the Tetromino enum type
 	 * @param thePosition the Tetromino starting point
 	 * @param theRotation the Tetromino initial angle
 	 */
-	public Tetromino(final ImmutableTetromino theTetrisPiece,
+	public Tetromino(final ImmutableTetromino theTetromino,
 			final Point thePosition,
 			final Rotation theRotation) {
-		myTetrisPiece = Objects.requireNonNull(theTetrisPiece, 
-				"NullPointerException.class: Tetromino enum type " + theTetrisPiece);
-		myPosition = Objects.requireNonNull(thePosition, 
-				"NullPointerException.class: Point.class " + thePosition);
-		myRotation = Objects.requireNonNull(theRotation, 
-				"NullPointerException.class: Rotation enum type " + theRotation);
+		myTetromino = Objects.requireNonNull(theTetromino);
+		myPosition = Objects.requireNonNull(thePosition);
+		myRotation = Objects.requireNonNull(theRotation);
 		
 	}
 	
 	/**
 	 * Default initial Tetromino constructor starting
 	 * rotation and position on the board
-	 * @param theTetrisPiece enum type
+	 * @param theTetromino enum type
 	 * @param thePosition the Tetromino position on board
 	 */
-	public Tetromino(final ImmutableTetromino theTetrisPiece,
+	public Tetromino(final ImmutableTetromino theTetromino,
 			final Point thePosition) {
-		this(theTetrisPiece, thePosition, Rotation.START);
+		this(theTetromino, thePosition, Rotation.START);
 	}
 	
 	/**
@@ -92,7 +89,7 @@ public class Tetromino {
 	 * @return the Mino enum type
 	 */
 	public Mino getBlock() {
-		return myTetrisPiece.getBlock();
+		return myTetromino.getBlock();
 	}
 	
 	// override class Object method toString()
@@ -106,7 +103,7 @@ public class Tetromino {
 			}
 		}
 		for (final Point block : getLocalPoints()) {
-			blocks[block.getY()][block.getX()] = myTetrisPiece.getBlock().toString();
+			blocks[block.getY()][block.getX()] = myTetromino.getBlock().toString();
 		}
 		return sb.toString();
 	}
@@ -114,8 +111,8 @@ public class Tetromino {
 	 * Returns this object's Tetromino 
 	 * @return the Tetromino's enum BlockType
 	 */
-	protected ImmutableTetromino getTetrisPiece() {
-		return myTetrisPiece;
+	protected ImmutableTetromino getTetromino() {
+		return myTetromino;
 	}
 	/**
 	 * Returns the Tetromino's current position on the board
@@ -129,11 +126,11 @@ public class Tetromino {
 	/**
 	 * Returns new Tetromino of current type, rotation and new position
 	 * 
-	 * @param thePosition the new tetris piece position
+	 * @param thePosition the new tetromino position
 	 * @return the new Tetromino at specified position
 	 */
 	protected Tetromino setPosition(final Point thePosition) {
-		return new Tetromino(myTetrisPiece, thePosition, myRotation);
+		return new Tetromino(myTetromino, thePosition, myRotation);
 	}
 	/**
 	 * Return the current rotation of the Tetromino
@@ -158,7 +155,7 @@ public class Tetromino {
 	}
 	
 	private Point[] getPoints(final Point thePoint) {
-		final Point[] blocks = myTetrisPiece.getPoints();
+		final Point[] blocks = myTetromino.getPoints();
 		// for each Point in blocks
 		for (int i = 0; i < blocks.length; i++) {
 			
@@ -166,14 +163,14 @@ public class Tetromino {
 			
 			// case: myRotation current state
 			switch(myRotation) {
-			// TODO bug Tetris Piece 'O' rotation 
+			// TODO bug tetromino 'O' rotation 
 				case QUARTER: blocks[i] = new Point(block.getY(),
-						myTetrisPiece.getWidth() - block.getX() - 1);
+						myTetromino.getWidth() - block.getX() - 1);
 					break;
-				case HALF: blocks[i] = new Point(myTetrisPiece.getWidth() - block.getX() - 1,
-						myTetrisPiece.getWidth() - block.getY() - 1);
+				case HALF: blocks[i] = new Point(myTetromino.getWidth() - block.getX() - 1,
+						myTetromino.getWidth() - block.getY() - 1);
 					break;
-				case THREEQUARTER: blocks[i] = new Point(myTetrisPiece.getWidth() - block.getY() - 1,
+				case THREEQUARTER: blocks[i] = new Point(myTetromino.getWidth() - block.getY() - 1,
 						block.getX());
 					break;
 				default: 
@@ -188,32 +185,32 @@ public class Tetromino {
 	 ********************************************************/
 	
 	/**
-	 * Rotate the tetris piece clockwise 90 degrees
-	 * @return new rotated tetris piece
+	 * Rotate the tetromino clockwise 90 degrees
+	 * @return new rotated tetromino
 	 */
 	protected Tetromino rotate() { 
-		return new Tetromino(myTetrisPiece, myPosition, myRotation.clockwise());
+		return new Tetromino(myTetromino, myPosition, myRotation.clockwise());
 	}
 	/**
-	 * Moves the tetris piece to the left 1 unit
-	 * @return new tetris piece shifted to left
+	 * Moves the tetromino to the left 1 unit
+	 * @return new tetromino shifted to left
 	 */
 	protected Tetromino left() {
-		return new Tetromino(myTetrisPiece, myPosition.transform(-1, 0), myRotation);
+		return new Tetromino(myTetromino, myPosition.transform(-1, 0), myRotation);
 	}
 	/**
-	 * Moves the tetris piece to the right 1 unit
-	 * @return new tetris piece shifted to right 
+	 * Moves the tetromino to the right 1 unit
+	 * @return new tetromino shifted to right 
 	 */
 	protected Tetromino right() {
-		return new Tetromino(myTetrisPiece, myPosition.transform(1, 0), myRotation);
+		return new Tetromino(myTetromino, myPosition.transform(1, 0), myRotation);
 	}
 	/**
-	 * Moves the tetris piece down 1 unit
-	 * @return new tetris piece position
+	 * Moves the tetromino down 1 unit
+	 * @return new tetromino position
 	 */
 	protected Tetromino down() {
-		return new Tetromino(myTetrisPiece, myPosition.transform(0, -1), myRotation);
+		return new Tetromino(myTetromino, myPosition.transform(0, -1), myRotation);
 		
 	}
 }
