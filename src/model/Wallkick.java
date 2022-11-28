@@ -5,13 +5,13 @@
 package model;
 
 /**
- * TGMRotations offsets Tetromino positions
+ * Wallkick offsets Tetromino positions
  * Based on Tetris Grand Master game mechanics
  */
 final class Wallkick {
     
     /**
-     * The clockwise and counter offsets for rotating J, L, S, T, and Z TetrisPieces 
+     * The clockwise and counter offsets for rotating J, L, S, T, and Z Tetrominos 
      */
     private static final Point[][] JLSTZ_OFFSETS = {
 		{ new Point(0, 0), new Point(-1, 0), new Point(-1, +1), new Point(0, -2), new Point(-1, -2) }, // START to QUARTER
@@ -25,7 +25,7 @@ final class Wallkick {
     };
     
     /**
-     * The clockwise and counter offsets for rotating I TetrisPieces
+     * The clockwise and counter offsets for rotating I Tetrominos
      */
     private static final Point[][] I_OFFSETS = {
 		{ new Point(0, 0), new Point(-2, 0), new Point(+1, 0), new Point(-2, -1), new Point(+1, +2) }, // START to QUARTER
@@ -56,7 +56,7 @@ final class Wallkick {
 
     /**
      * Returns Points offset by Tetromino wall kicks
-     * for J, L, S, T, and Z TetrisPieces
+     * for J, L, S, T, and Z Tetrominos
      * 
      * @param theCurrentRotation the current rotation angle
      * @param theNewRotation the next rotation angle
