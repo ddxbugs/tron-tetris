@@ -65,6 +65,7 @@ public class Background extends JPanel {
 	 */
 	protected Background() {
 		super();
+//		setBackground(ColorPalette.MEANWHILE.getColor());
 		setBackground(Color.BLACK);
 		
 		try {
@@ -81,24 +82,26 @@ public class Background extends JPanel {
 		
 		myTronLabel = new JLabel(TRON_LEGACY);
 		myGameLabel = new JLabel(VERSION_TITLE);
-		
-		myTronLabel.setSize(myImage.getWidth(), FONT_PT_24 * TWO);
-		myGameLabel.setSize(myImage.getWidth(), FONT_PT_24 * TWO);
+				
+		myTronLabel.setSize(myImage.getWidth(), FONT_PT_24 + PAD_Y * TWO);
+		myGameLabel.setSize(myImage.getWidth(), FONT_PT_24 + PAD_Y * TWO);
 		
 		myTronLabel.setFont(new Font(OUTLINE, Font.BOLD, FONT_PT_24));
 		myTronLabel.setForeground(ColorPalette.CYAN_TRON_LEGACY.getColor());
 		
 		myGameLabel.setFont(new Font(REGULAR, Font.TRUETYPE_FONT, FONT_PT_18));
 		myGameLabel.setForeground(ColorPalette.SIX_SOUND_CHOICES.getColor());
-
+		
 		myLayeredPane = new JLayeredPane();
 		myLayeredPane.setPreferredSize(new Dimension(myImage.getWidth(), myImage.getHeight()));
 		
+		// TODO create menu option bar class
 		JPanel panel = new JPanel();	// add the game labels
 		panel.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED, 
 				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
-		panel.setSize(myTronLabel.getWidth(), myTronLabel.getHeight());
-		panel.setBackground(Color.BLACK);
+		panel.setSize(myImage.getWidth(), FONT_PT_24 * TWO);
+		panel.setBackground(ColorPalette.MEANWHILE.getColor());
+//		panel.setOpaque(false);
 		
 		panel.add(myTronLabel);
 		panel.add(myGameLabel);
