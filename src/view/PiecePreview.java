@@ -1,5 +1,5 @@
 /*
- * PreviewPanel.java
+ * PiecePreview.java
  * @author ddxbugs 
  */
 package view;
@@ -16,13 +16,13 @@ import javax.swing.border.Border;
 import res.ColorPalette;
 
 /**
- * PreviewPanel class displays next tetris piece on board
+ * PiecePreview class displays next tetris piece on board
  */
-public class PreviewPanel extends JPanel {
+public class PiecePreview extends JPanel {
 	/**
 	 * Preview panel class displays next tetris piece during game
 	 */
-	public PreviewPanel() {
+	public PiecePreview() {
 		// TODO Auto-generated constructor stub
 		super();
 		
