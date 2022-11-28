@@ -20,3 +20,8 @@
 <li><a href="https://archive.org/download/CrrNtn"><strong>CrrNtn ttfs</strong></a></li>
 <li><a href="https://fontdrop.info/#/?darkmode=true"><strong>FontDrop! font viewer</strong></a></li>
 </ul>
+
+
+### GUI layout
+
+<ul> <li><a href="i.ytimg.com/vi/EZoxteNcYXI/maxresdefault.jpg"><strong>Layout 1</strong></a></li> </ul>
