@@ -61,14 +61,17 @@ public class TetrisMain {
 				TetrisGame game = new TetrisGame(GRAPHICS_ENVIRONMENT);
 				GraphicsDevice device = GRAPHICS_ENVIRONMENT.getDefaultScreenDevice();
 				int status = 1;
+				
 				try {	
+					
 					Path pathRegularTTF = Paths.get(PATH_REGULAR_TTF);	// get path to tron regular font file
 					Path pathOutlineTTF = Paths.get(PATH_OUTLINE_TTF);	// get path to tron outline font file
+					
 					GRAPHICS_ENVIRONMENT.registerFont(Font.createFont(Font.TRUETYPE_FONT, pathRegularTTF.toFile()));	// set font look and feel
 					GRAPHICS_ENVIRONMENT.registerFont(Font.createFont(Font.TRUETYPE_FONT, pathOutlineTTF.toFile()));	// set font look and feel
+					
 					UIManager.setLookAndFeel(NIMBUS_LAF);	// set ui look and feel
-//					game.setPreferredSize(FULL_SCREEN_SIZE);
-//					game.setMinimumSize(MIN_SCREEN_SIZE);
+
 					device.setFullScreenWindow(game);	// attempt to set game to full screen mode
 					
 				} catch (final FontFormatException e) {
