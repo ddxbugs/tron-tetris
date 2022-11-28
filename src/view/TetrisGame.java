@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * TetrisGame.java
+ * @author ddxbugs 
  */
 package view;
 
@@ -7,18 +8,24 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import model.BoardModel;
+import res.MagicNumber;
 
 /**
  * @author User
  *
  */
 public class TetrisGame extends JFrame {
+	
+	// TODO add MIDI and OST sound
+	
 	/** */
 	private static final long serialVersionUID = 1L;
 	
@@ -29,12 +36,17 @@ public class TetrisGame extends JFrame {
 	private static final int BLOCK_SIZE = 1;
 	/** The block size scale */
 	private static final int SCALE = 1;
+	/** Magic number two */
+	private static final int TWO = 2;
 	
 	/** String file path to game image files */
 	private static final String ICON = "src/res/icon.jpg";
 	private static final String GRID = "src/res/background.jpg";
 	private static final String DISC = "src/res/cyan_disc.png";
 	private static final String BOARD = "src/res/board.png";
+	
+	private static int myWidth;
+	private static int myHeight;
 	
 	/** Game graphics environment */
 	private static GraphicsEnvironment myGraphicsEnv;
@@ -49,6 +61,8 @@ public class TetrisGame extends JFrame {
 	
 	/** Dynamic changing background */
 	private static Background myBackground;
+	/** Tetris piece preview window */
+	private static PreviewPanel myPreviewPanel;
 	
 	/** Tetris board view model */
 	private BoardModel myBoardModel;
@@ -68,9 +82,12 @@ public class TetrisGame extends JFrame {
 		setIconImage(icon.getImage());
 		
 		myGraphicsEnv = theGraphicsEnv;
+		// Game display and board dimension
 		myDimension = myGraphicsEnv.getMaximumWindowBounds().getSize();
-
-		setPreferredSize(myDimension);
+		myWidth = (int) myDimension.getWidth();
+		myHeight = (int) myDimension.getHeight();
+		
+		setMaximumSize(myDimension);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 	}
@@ -82,7 +99,7 @@ public class TetrisGame extends JFrame {
 		initialize();
 		setUp();
 		pack();
-//		setSize(myDimension);
+		setSize(myDimension);
 		setVisible(true);
 	}
 	
@@ -93,8 +110,10 @@ public class TetrisGame extends JFrame {
 		myLayeredPane = new JLayeredPane();
 		
 		myBackground = new Background();
+		myPreviewPanel = new PreviewPanel();
+		
 //		myBoardModel = new BoardModel();
-//		myBoardView = new BoardView();
+		myBoardView = new BoardView();
 		
 		// TODO init menu option
 		// TODO init preview window
@@ -104,12 +123,14 @@ public class TetrisGame extends JFrame {
 	
 	private void setUp() {
 		
-		myBackground.setSize(myGraphicsEnv.getMaximumWindowBounds().getSize());
+		myBackground.setSize(getMaximumSize());
+		myPreviewPanel.setSize(200, 200);
+		myBoardView.setSize(300, 600);
 		
-		myLayeredPane.add(myBackground, -1);
-//		myLayeredPane.add(myBoardView, 0);
-//		myLayeredPane.add(myPreviewPanel, 1);
-//		myLayeredPane.add(myScorePanel, 2);
+		myLayeredPane.add(myBackground, JLayeredPane.DEFAULT_LAYER);
+		myLayeredPane.add(myBoardView, JLayeredPane.POPUP_LAYER);
+		myLayeredPane.add(myPreviewPanel, JLayeredPane.POPUP_LAYER);
+//		myLayeredPane.add(myScorePanel);
 		
 //		add(myGameOptions);
 		add(myLayeredPane);
