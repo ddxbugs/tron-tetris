@@ -7,24 +7,24 @@ package model;
 /**
  *
  */
-public final class Z extends TetrisPiece {
+public final class Z extends Tetromino {
 
 	/**
-	 * @param theTetrisPiece
+	 * @param theTetromino
 	 * @param thePosition
 	 * @param theRotation
 	 */
-	public Z(ImmutableTetrisPiece theTetrisPiece, Point thePosition, Rotation theRotation) {
-		super(theTetrisPiece, thePosition, theRotation);
+	public Z(ImmutableTetromino theTetromino, Point thePosition, Rotation theRotation) {
+		super(theTetromino, thePosition, theRotation);
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @param theTetrisPiece
+	 * @param theTetromino
 	 * @param thePosition
 	 */
-	public Z(ImmutableTetrisPiece theTetrisPiece, Point thePosition) {
-		super(theTetrisPiece, thePosition);
+	public Z(ImmutableTetromino theTetromino, Point thePosition) {
+		super(theTetromino, thePosition);
 		// TODO Auto-generated constructor stub
 	}
 
