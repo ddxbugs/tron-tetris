@@ -24,4 +24,4 @@
 
 ### GUI layout
 
-<ul> <li><a href="i.ytimg.com/vi/EZoxteNcYXI/maxresdefault.jpg"><strong>Layout 1</strong></a></li> </ul>
+<ul> <li><a href="https://www.i.ytimg.com/vi/EZoxteNcYXI/maxresdefault.jpg"><strong>Layout 1</strong></a></li> </ul>
