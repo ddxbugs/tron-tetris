@@ -5,7 +5,7 @@
 package model;
 
 /**
- *	The enum type of Tetromino blocks
+ *	The enum class for Tetromino blocks
  */
 public enum Mino {	
 	/** Empty */
