@@ -5,6 +5,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -87,6 +88,9 @@ public class TetrionViewModel {
 			myCurrentPiece = myCurrentPiece.down();
 		else
 			freezeBlocks();
+		
+		checkRows();	// TODO return boolean
+		clearLines();	// TODO if (checkRows) clearLines()
 	}
 	/**
 	 * Drop the piece instantly to the specified location
@@ -199,13 +203,17 @@ public class TetrionViewModel {
 	private void prepareNextMovablePiece() {
 		
 	}
-	
 	/**
 	 * Returns the current board as array object
 	 * @return Returns the current frozen Mino pieces in game
 	 */
 	public Mino[] getFrozenBlocks() {
-		return (Mino[]) myFrozenBlocks.toArray();
+		Mino[] arr = new Mino[myWidth * myHeight];
+		int i = 0;
+		for (Mino[] blocks : myFrozenBlocks)
+			for (Mino block : blocks) 
+				arr[i++] = block;
+		return arr;
 	}
 	
 	/**
