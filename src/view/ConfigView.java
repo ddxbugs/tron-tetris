@@ -13,7 +13,7 @@ import model.ConfigViewModel;
 public class ConfigView extends JPanel {
 	private ConfigViewModel myModel;
 	
-	protected ConfigView(final int theWidth, final int theHeight) {
-		setSize(theWidth, theHeight);
+	protected ConfigView() {
+		setVisible(false);
 	}
 }
