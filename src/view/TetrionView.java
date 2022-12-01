@@ -7,9 +7,12 @@ package view;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 
 import model.TetrionViewModel;
@@ -18,24 +21,38 @@ import res.ColorPalette;
 /**
  * The view model class displays the current board
  */
-public class TetrionView extends JPanel {
+public class TetrionView extends JPanel implements ActionListener {
 	/**
 	 * Default serialVersionUID
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Set Mino block scale to screen dimension
+	 */
+	private static final double SCALE = 0.0;
 	
+	private static final int DELAY = 0;
+	/**
+	 * Tetrion board view model represent current game board piece position and logic
+	 */
 	private TetrionViewModel myModel;
-	
+	/**
+	 * Set the speed of the piece movement logic
+	 */
+	private Timer myTimer;
 	/**
 	 * TetrionView UI class displays current game board or "playfield"  
 	 */
 	protected TetrionView(final int theWidth, final int theHeight) {
 		myModel = new TetrionViewModel(theWidth, theHeight);
+		myTimer = new Timer(DELAY, this);
 		
 		setLocation(500, 75);
 		setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED, 
 				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
 		setBackground(ColorPalette.MEANWHILE.getColor());
+		
+		
 	}
 	/**
 	 * Draw each individual Tetromino Mino blocks on the playfield
@@ -49,12 +66,21 @@ public class TetrionView extends JPanel {
 		drawBlocks(g2D);
 	}
 	
+	@Override
+	public void actionPerformed(final ActionEvent theActionEvent) {
+		myModel.down();
+		repaint();
+	}
+	
 	/**
 	 * Colorizes the individual blocks in the game board 
 	 * @param theGraphics2D Returns corresponding piece color for the block
 	 */
 	private void drawBlocks(final Graphics2D theGraphics2D) {
-		int x = 0, y = 0, w = 8, h = 15;	// TODO w,h hard coded
+		int x = 0, y = 0;
+		int w, h;	// TODO get board width height
+		System.out.println("drawBlocks()");
+		
 		
 //		for (final Mino block : myBoard) {
 //			switch(block) {

@@ -14,17 +14,18 @@ import java.util.Objects;
  */
 public class TetrionViewModel {
 	private static final int START_X = 0, START_Y = 0;
-	/** TetrisGame TetrionView dimensions for bounds checking*/
+	
+	/** TetrisGame TetrionView dimensions */
 	private int myWidth;
 	private int myHeight;
 	
-	/** List of static Mino array objects currently in view */ 
+	/** List of pieces currently in view */ 
 	private List<Mino[]> myFrozenBlocks;
-	/** List of predetermined Tetrominos */
-	private List<Tetromino> myTetrominos;
-	/** Tetris game player default level 0 */
+	
+	/** Default player level 0 */
 	private Player myPlayer;
-	/** The current tetromino in play */
+	
+	/** The current Tetromino in play */
 	private Tetromino myCurrentPiece;	
 	/**
 	 * Primary TetrionViewModel constructor
@@ -35,7 +36,6 @@ public class TetrionViewModel {
 		myWidth = theWidth;
 		myHeight = theHeight;
 		myFrozenBlocks = new LinkedList<Mino[]>();
-		myTetrominos = new ArrayList<Tetromino>();
 		myPlayer = null;
 		myCurrentPiece = null;
 		
@@ -46,9 +46,12 @@ public class TetrionViewModel {
 	 */
 	public void newGame() {
 		myPlayer = new Player();	// new player
-//		myPlayer = new Player(name);
+//		myPlayer = new Player(name);	// TODO persistence player model
 	
 		myFrozenBlocks.clear();	// clear the Tetris board
+		for (int h = 0; h < myHeight; h++) 
+			myFrozenBlocks.add(new Mino[myWidth]);
+		
 		// TODO reset score
 		// TODO reset tetromino preview panel
 	}
@@ -65,7 +68,7 @@ public class TetrionViewModel {
 	 */
 	public void left() {
 		if (isMovable(myCurrentPiece)) {
-			myCurrentPiece.left();
+			myCurrentPiece = myCurrentPiece.left();
 		}
 	}
 	/**
@@ -73,33 +76,24 @@ public class TetrionViewModel {
 	 */
 	public void right() {
 		if (isMovable(myCurrentPiece)) {
-			myCurrentPiece.right();	
+			myCurrentPiece = myCurrentPiece.right();	
 		}
 	}
 	/**
 	 * Move the Tetromino down
 	 */
 	public void down() {
-		// TODO implement freeze blocks, clear lines, update listeners
-		if (isMovable(myCurrentPiece)) {
-			myCurrentPiece.down();
-		} else {
-			for (final Point p : myCurrentPiece.getBoardPoints()) {
-				if (p.getX() >= 0 && p.getX() <= myWidth && p.getY() >= 0 && p.getY() <= myHeight) {
-					final Mino[] blocks = myFrozenBlocks.get(p.getY());
-					blocks[p.getX()] = myCurrentPiece.getTetromino().getBlock();
-				}
-			}
-			checkRows();	// double check rows for complete lines
-		}
+		if (isMovable(myCurrentPiece))
+			myCurrentPiece = myCurrentPiece.down();
+		else
+			freezeBlocks();
 	}
 	/**
 	 * Drop the piece instantly to the specified location
 	 */
 	public void drop() {
-		// TODO while piece can still move down => down()
 		while (isMovable(myCurrentPiece) ) {
-			myCurrentPiece.down();
+			myCurrentPiece = myCurrentPiece.down();
 		}
 	}
 	/** 
@@ -120,7 +114,20 @@ public class TetrionViewModel {
 			}
 		}
 	}
-	
+	/**
+	 * Set current piece position rotation
+	 * Add to list of current game pieces
+	 */
+	private void freezeBlocks() {
+		Mino[] row;
+		
+		for (final Point p : myCurrentPiece.getBoardPoints()) {
+			row = myFrozenBlocks.get(p.getY());
+			if (isPoint(p)) {
+				row[p.getX()] = myCurrentPiece.getTetromino().getBlock();
+			}
+		}
+	}
 	/**
 	 * Checks the current piece movement logic for collision, freeze, boundaries
 	 * @param theTetromino Current piece in play
@@ -131,44 +138,50 @@ public class TetrionViewModel {
 		boolean isMovable = false;
 		for (final Point p : theTetromino.getBoardPoints()) {
 			b = myFrozenBlocks.get(p.getY())[p.getX()];	// block should be null, else collision detected at point p
-			if (b == null 
-					&& p.getX() >= 0 && p.getX() <= myWidth 
-					&& p.getY() <= 0 && p.getY() >= myHeight) {
+			if (b == null && isPoint(p)) {
 				isMovable = true;	// within board dimension and no collision detected
 			}
 		}
 		return isMovable;
 	}
+	/**
+	 * Determine if a Mino block position is point on board
+	 * @param thePoint
+	 * @return
+	 */
+	private boolean isPoint(final Point thePoint) {
+		return thePoint != null && thePoint.getX() >= 0 && thePoint.getX() < myWidth
+				&& thePoint.getY() >= 0 && thePoint.getY() < myHeight;
+	}
 	
 	/**
 	 * Checks the tetris board for completed lines
 	 */
-	private void checkRows() {
-		boolean[] lines = new boolean[myHeight];
-		boolean linesClear = false;
+	private boolean[] checkRows() {
+		boolean[] rows = new boolean[myHeight];
+		boolean isEmpty = false;
 		int i = myHeight;
 		for (final Mino[] blocks : myFrozenBlocks) {
-			linesClear = false;
+			isEmpty = false;
 			for (final Mino block : blocks) {
-				linesClear = block == null ? true : false;
-				if (linesClear) break;	// slightly faster implementation O(n - k - 1)
+				isEmpty = block == null ? true : false;
+				if (isEmpty) break;	// slightly faster implementation O(n - k - 1)
 			}
-			lines[i--] = linesClear;	// reverse order for correct board orientation
+			rows[i--] = isEmpty;	// reverse order for correct board orientation
 		}
-		clearLines(lines);	// remove the filled rows from the board, update score
+		return rows;
 	}
 	
 	/**
 	 * Clear completed rows from the board
-	 * @param theLines The board as a boolean array of filled/partial/empty blocks
 	 */
-	private void clearLines(final boolean[] theLines) {
-		for (int i = 0; i < theLines.length; i++) {
-			if (theLines[i]) {
-				myFrozenBlocks.remove(i);
-				myFrozenBlocks.add(new Mino[myWidth]);
-			}
-		}
+	private void clearLines() {
+//		for (int i = 0; i < theLines.length; i++) {
+//			if (theLines[i]) {
+//				myFrozenBlocks.remove(i);
+//				myFrozenBlocks.add(new Mino[myWidth]);
+//			}
+//		}
 		// notify listeners: scoreboard, player
 	}
 	
@@ -186,6 +199,15 @@ public class TetrionViewModel {
 	private void prepareNextMovablePiece() {
 		
 	}
+	
+	/**
+	 * Returns the current board as array object
+	 * @return Returns the current frozen Mino pieces in game
+	 */
+	public Mino[] getFrozenBlocks() {
+		return (Mino[]) myFrozenBlocks.toArray();
+	}
+	
 	/**
 	 * Returns the board as a string
 	 * @return current tetris board string representation
