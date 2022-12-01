@@ -9,22 +9,25 @@ import java.awt.Graphics2D;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 
+import model.PiecePreviewModel;
 import res.ColorPalette;
 
 /**
- * PiecePreview class displays next tetris piece on board
+ * PiecePreview class displays next tetromino on board
  */
 public class PiecePreview extends JPanel {
+	
+	private PiecePreviewModel myModel;
 	/**
-	 * Preview panel class displays next tetris piece during game
+	 * Preview panel class displays next tetromino during game
 	 */
 	public PiecePreview() {
 		// TODO Auto-generated constructor stub
 		super();
+		
+		myModel = new PiecePreviewModel();
 		
 		setLocation(900, 300);
 		setBackground(ColorPalette.MEANWHILE.getColor());
@@ -38,7 +41,7 @@ public class PiecePreview extends JPanel {
 	public void paintComponent(final Graphics theGraphics) {
 		super.paintComponent(theGraphics);
 		final Graphics2D g2d = (Graphics2D) theGraphics;
-		// select tetris piece 
+		// select tetromino 
 		// fill and draw the rects
 	}
 }
