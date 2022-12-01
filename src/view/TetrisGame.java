@@ -7,6 +7,8 @@ package view;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -18,36 +20,26 @@ import model.TetrionViewModel;
 /**
  *	Tetris Frame
  */
-public class TetrisGame extends JFrame {
+public class TetrisGame extends JFrame implements ActionListener {
 	
 	// TODO add MIDI and OST sound
 	
 	/** */
 	private static final long serialVersionUID = 1L;
 	
-	/** */
-	private static final int TIME_DELAY = 1000;
-	
-	/** Full screen configuration settings and variables */
-	private static final int BLOCK_SIZE = 1;
-	/** The block size scale */
-	private static final int SCALE = 1;
-	/** Magic number two */
-	private static final int TWO = 2;
-	
 	/** String file path to game image files */
 	private static final String ICON = "src/res/icon.jpg";
-	private static final String GRID = "src/res/background.jpg";
-	private static final String DISC = "src/res/cyan_disc.png";
-	private static final String BOARD = "src/res/board.png";
 	
-	private static int myWidth;
-	private static int myHeight;
+	private static final int M = 1000;
+	
+	private static int width;
+	private static int height;
+	private static int delay;
 	
 	/** Game graphics environment */
 	private static GraphicsEnvironment myGraphicsEnv;
 	
-	/** Tetris Board swing timer */
+	/** Set the speed of the piece movement logic */
 	private static Timer myTimer;
 	
 	/** Layered pane for game overlays */
@@ -82,8 +74,9 @@ public class TetrisGame extends JFrame {
 		// Game graphics display for dimension width height settings
 		myGraphicsEnv = theGraphicsEnv;
 		myDimension = myGraphicsEnv.getMaximumWindowBounds().getSize();
-		myWidth = (int) myDimension.getWidth();
-		myHeight = (int) myDimension.getHeight();
+		width = (int) myDimension.getWidth();
+		height = (int) myDimension.getHeight();
+		delay = M;
 		
 		setMaximumSize(myDimension);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -105,37 +98,49 @@ public class TetrisGame extends JFrame {
 	 * Initialize JComponent and event handlers
 	 */
 	private void initialize() {
-		myLayeredPane = new JLayeredPane();
 		
-		myPreview = new PiecePreview();
-		myScore = new ScoreView();
-//		myConfig = new ConfigView();
-		myTetrion = new Tetrion();
-	
-		myTetrionView = new TetrionView(myWidth, myHeight);
-
+		myTimer = new Timer (delay, this);
+		
+		myLayeredPane = new JLayeredPane(); // layered pane
+		
+		myConfig = new ConfigView();	// game options menu
+		myTetrion = new Tetrion();	// the background
+		
+		myTetrionView = new TetrionView(width, height);	// the 1-Player game board
+		
+		myPreview = new PiecePreview();	// next piece 
+		myScore = new ScoreView();	// score level lines
+		
 		// TODO initialize window focus listener, keyboard listener, mouse listener
+		
 	}
 	
 	private void setUp() {
 		// TODO remove hard coded values
-//		myConfig.setSize(getMaximumSize());
-		myTetrion.setSize(getMaximumSize());
-		myTetrionView.setSize(300, 600);
-		myPreview.setSize(200, 200);
-		myScore.setSize(400, 100);
+		myConfig.setSize(500, 500);	// medium window
+		myTetrion.setSize(getMaximumSize());	// full screen w h
+		myTetrionView.setSize(300, 600);	// half dimension
+		myPreview.setSize(200, 200);	// small window
+		myScore.setSize(400, 100);	// transparent row line
 		
-//		myLayeredPane.add(myConfig, JLayeredPane.MODAL_LAYER);
+		// add components to layered pane
+		myLayeredPane.add(myConfig, JLayeredPane.MODAL_LAYER);
 		myLayeredPane.add(myTetrion, JLayeredPane.DEFAULT_LAYER);
 		myLayeredPane.add(myTetrionView, JLayeredPane.POPUP_LAYER);
 		myLayeredPane.add(myPreview, JLayeredPane.POPUP_LAYER);
 		myLayeredPane.add(myScore, JLayeredPane.POPUP_LAYER);
 		
+		// add layered pane to this frame
 		add(myLayeredPane);
 		
 		// TODO add window focus, keyboard, mouse, property change event handler
 	}
-	
+
+	@Override
+	public void actionPerformed(final ActionEvent theActionEvent) {
+		// TODO Auto-generated method stub
+		myTetrionView.dispatchEvent(theActionEvent);
+	}
 	
 	
 }
