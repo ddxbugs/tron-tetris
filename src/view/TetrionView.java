@@ -35,7 +35,7 @@ public class TetrionView extends JPanel implements ActionListener, KeyListener {
 	/**
 	 * Set Mino block scale to screen dimension
 	 */
-	private static final double SCALE = 0.0;
+	private static final double SCALE = 30.0;
 	/**
 	 * View model represent current game board piece position and logic
 	 */
@@ -69,8 +69,8 @@ public class TetrionView extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void actionPerformed(final ActionEvent theActionEvent) {
 		System.out.println(theActionEvent);
-//		myModel.down();
-//		repaint();
+		myModel.down();
+		repaint();
 	}
 	
 	/**
@@ -79,10 +79,18 @@ public class TetrionView extends JPanel implements ActionListener, KeyListener {
 	 */
 	private void drawBlocks(final Graphics2D theGraphics2D) {
 		int x = 0, y = 0;	// starting x, y 
-		int w = (int) (getWidth() * SCALE);	// mino rectangle scale to x
-		int h = (int) (getHeight() * SCALE); // mino rectangle scale to y
-		for (final Mino block : myModel.getFrozenBlocks()) {
+		int w = (int) (getWidth() * SCALE);	// draw rectangle scale to x 
+		int h = (int) (getHeight() * SCALE); // draw rectangle scale to y 
+		
+		// TODO block throw null error, initialized as null "empty"
+		for (Mino block : myModel.getFrozenBlocks()) {
+			
+			if (block == null) block = Mino.EMPTY;	// TODO error block null initialized, but make block final
+			
 			switch(block) {
+			
+			case EMPTY:
+				theGraphics2D.setColor(ColorPalette.MEANWHILE.getColor());
 			case I: 
 				theGraphics2D.setColor(ColorPalette.BASESTAR.getColor()); 
 				break;
@@ -95,7 +103,7 @@ public class TetrionView extends JPanel implements ActionListener, KeyListener {
 				theGraphics2D.setColor(ColorPalette.FAR_AWAY_SKY.getColor()); 
 				break;
 			case S: 
-				theGraphics2D.setColor(ColorPalette.MEANWHILE.getColor()); 
+				theGraphics2D.setColor(ColorPalette.DEAD_BABY.getColor()); 
 				break;
 			case T: 
 				theGraphics2D.setColor(ColorPalette.TRON_BLUE.getColor()); 
@@ -107,6 +115,7 @@ public class TetrionView extends JPanel implements ActionListener, KeyListener {
 				theGraphics2D.setColor(Color.RED);	// Debug, remove me
 				break;
 			}
+			
 			final Rectangle2D r = new Rectangle(x, y, w, h);
 			theGraphics2D.fill(r);
 			theGraphics2D.draw(r);
