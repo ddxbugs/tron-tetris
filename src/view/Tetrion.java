@@ -86,7 +86,7 @@ public class Tetrion extends JPanel {
 		myTronLabel.setSize(myImage.getWidth(), FONT_PT_24 + PAD_Y * TWO);
 		myGameLabel.setSize(myImage.getWidth(), FONT_PT_24 + PAD_Y * TWO);
 		
-		myTronLabel.setFont(new Font(OUTLINE, Font.BOLD, FONT_PT_24));
+		myTronLabel.setFont(new Font(OUTLINE, Font.TRUETYPE_FONT, FONT_PT_24));
 		myTronLabel.setForeground(ColorPalette.CYAN_TRON_LEGACY.getColor());
 		
 		myGameLabel.setFont(new Font(REGULAR, Font.TRUETYPE_FONT, FONT_PT_18));
