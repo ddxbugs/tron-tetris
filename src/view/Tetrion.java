@@ -19,9 +19,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
+import model.Player;
 import res.ColorPalette;
 
 /**
@@ -59,6 +59,9 @@ public class Tetrion extends JPanel {
 	/** */
 	private static JLayeredPane myLayeredPane;
 	
+//	protected Tetrion(TetrionView theTetrionView, PiecePreview thePreview, ScoreView theScore, Player thePlayer) {
+//		
+//	}
 	
 	/**
 	 * @param layout
