@@ -20,7 +20,7 @@ import model.TetrionViewModel;
 /**
  *	Tetris Frame
  */
-public class TetrisGame extends JFrame implements ActionListener {
+public class TetrisGame extends JFrame {
 	
 	// TODO add MIDI and OST sound
 	
@@ -30,21 +30,16 @@ public class TetrisGame extends JFrame implements ActionListener {
 	/** String file path to game image files */
 	private static final String ICON = "src/res/icon.jpg";
 	
-	private static final int M = 1000;
-	
 	private static int width;
 	private static int height;
-	private static int delay;
 	
 	/** Game graphics environment */
 	private static GraphicsEnvironment myGraphicsEnv;
 	
-	/** Set the speed of the piece movement logic */
-	private static Timer myTimer;
-	
 	/** Layered pane for game overlays */
 	private static JLayeredPane myLayeredPane;
 	
+	/** Game graphics display dimension */
 	private static Dimension myDimension;
 	
 	/** Dynamic changing background */
@@ -76,7 +71,6 @@ public class TetrisGame extends JFrame implements ActionListener {
 		myDimension = myGraphicsEnv.getMaximumWindowBounds().getSize();
 		width = (int) myDimension.getWidth();
 		height = (int) myDimension.getHeight();
-		delay = M;
 		
 		setMaximumSize(myDimension);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -98,9 +92,6 @@ public class TetrisGame extends JFrame implements ActionListener {
 	 * Initialize JComponent and event handlers
 	 */
 	private void initialize() {
-		
-		myTimer = new Timer (delay, this);
-		
 		myLayeredPane = new JLayeredPane(); // layered pane
 		
 		myConfig = new ConfigView();	// game options menu
@@ -134,13 +125,5 @@ public class TetrisGame extends JFrame implements ActionListener {
 		add(myLayeredPane);
 		
 		// TODO add window focus, keyboard, mouse, property change event handler
-	}
-
-	@Override
-	public void actionPerformed(final ActionEvent theActionEvent) {
-		// TODO Auto-generated method stub
-		myTetrionView.dispatchEvent(theActionEvent);
-	}
-	
-	
+	}	
 }
