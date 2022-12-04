@@ -28,23 +28,30 @@ import res.ColorPalette;
  * The view model class displays the current board
  */
 public class TetrionView extends JPanel implements ActionListener, KeyListener {
-	/**
-	 * Default serialVersionUID
-	 */
+	
+	/** Default serialVersionUID */
 	private static final long serialVersionUID = 1L;
-	/**
-	 * Set Mino block scale to screen dimension
-	 */
-	private static final double SCALE = 30.0;
-	/**
-	 * View model represent current game board piece position and logic
-	 */
+	/** Set Mino block scale to screen dimension */
+	private static final int SCALE = 1;
+	/** Magic number 1 second delay */
+	private static final int THOUSAND = 1000;
+	
+	/** Set the speed of the piece movement logic */
+	private static Timer myTimer;
+	/** Game timer move sequence delay */
+	private static int delay;
+	
+	/** View model represent current game board piece position and logic */
 	private TetrionViewModel myModel;
+	
 	/**
 	 * TetrionView UI class displays current game board or "playfield"  
 	 */
 	protected TetrionView(final int theWidth, final int theHeight) {
-		myModel = new TetrionViewModel(theWidth, theHeight);
+		delay = THOUSAND;
+//		myModel = new TetrionViewModel(theWidth, theHeight);	// TODO remove, hard code vals
+		myModel = new TetrionViewModel(10, 20);
+		myTimer = new Timer (delay, this);
 		
 		setFocusable(true);	// KeyListener
 		setLocation(500, 75);
@@ -52,6 +59,7 @@ public class TetrionView extends JPanel implements ActionListener, KeyListener {
 				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
 		setBackground(ColorPalette.MEANWHILE.getColor());
 		
+		addKeyListener(this);
 		
 	}
 	/**
@@ -65,22 +73,14 @@ public class TetrionView extends JPanel implements ActionListener, KeyListener {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		drawBlocks(g2D);
 	}
-	
-	@Override
-	public void actionPerformed(final ActionEvent theActionEvent) {
-		System.out.println(theActionEvent);
-		myModel.down();
-		repaint();
-	}
-	
 	/**
 	 * Colorizes the individual blocks in the game board 
 	 * @param theGraphics2D Returns corresponding piece color for the block
 	 */
 	private void drawBlocks(final Graphics2D theGraphics2D) {
 		int x = 0, y = 0;	// starting x, y 
-		int w = (int) (getWidth() * SCALE);	// draw rectangle scale to x 
-		int h = (int) (getHeight() * SCALE); // draw rectangle scale to y 
+		int w = (int) (getWidth() / SCALE);	// draw rectangle scale to x 
+		int h = (int) (getHeight() / SCALE); // draw rectangle scale to y 
 		
 		// TODO block throw null error, initialized as null "empty"
 		for (Mino block : myModel.getFrozenBlocks()) {
@@ -116,7 +116,7 @@ public class TetrionView extends JPanel implements ActionListener, KeyListener {
 				break;
 			}
 			
-			final Rectangle2D r = new Rectangle(x, y, w, h);
+			final Rectangle2D r = new Rectangle(w, y, w, h);
 			theGraphics2D.fill(r);
 			theGraphics2D.draw(r);
 			x += w;
@@ -128,20 +128,33 @@ public class TetrionView extends JPanel implements ActionListener, KeyListener {
 		}
 		
 	}
+	
+	@Override
+	public void actionPerformed(final ActionEvent theActionEvent) {
+//		System.out.println("TetrionView ActionEvent: " + theActionEvent);
+		myModel.down();
+//		repaint();
+//		System.out.println(myModel.toString());
+	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("KEY_TYPED: " + e);
-		
+//		System.out.println("KEY_TYPED: " + e);		
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("KEY_PRESSED: " + e);
+//		System.out.println("KEY_PRESSED: " + e);
+		if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+			myModel.newGame();
+			myTimer.start();
+		} else {
+			myTimer.stop();
+		}
+		
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("KEY_RELEASED: " + e);
+//		System.out.println("KEY_RELEASED: " + e);
+		
 	}
 }
