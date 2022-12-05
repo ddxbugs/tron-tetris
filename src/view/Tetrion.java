@@ -47,7 +47,8 @@ public class Tetrion extends JPanel {
 	private static final String REGULAR = "CRRNTN-Regular";
 	/** CrNNtn font family name */
 	private static final String OUTLINE = "CRRNTN-Outline";
-	
+	/** Background buffered image relative file path */
+	private static final String IMG_FILE_PATH = "src/res/grid.jpg"; 
 	/** Background buffered image */
 	private static BufferedImage myImage;
 	/** Tron Legacy decoration label */
@@ -68,11 +69,10 @@ public class Tetrion extends JPanel {
 	 */
 	protected Tetrion() {
 		super();
-//		setBackground(ColorPalette.MEANWHILE.getColor());
 		setBackground(Color.BLACK);
 		
 		try {
-			myImage = ImageIO.read(new File("src/res/grid.jpg"));
+			myImage = ImageIO.read(new File(IMG_FILE_PATH));
 			myBackgroundLabel = new JLabel(new ImageIcon(myImage));
 			myBackgroundLabel.setBounds(ZERO, ZERO, myImage.getWidth(), myImage.getHeight());
 			myBackgroundLabel.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED,
@@ -126,6 +126,6 @@ public class Tetrion extends JPanel {
 		if (myImage != null)
 			g2d.drawImage(myImage, myImage.getWidth(), myImage.getHeight(), this);
 	
-		System.out.println("background="+myImage.getWidth()+","+myImage.getHeight());
+//		System.out.println("background="+myImage.getWidth()+","+myImage.getHeight());
 	}
 }
