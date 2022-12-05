@@ -67,7 +67,7 @@ public class GraphicsController {
 				break;
 			}
 			
-			final Rectangle2D r = new Rectangle(width, y, width, heigth);
+			final Rectangle2D r = new Rectangle(x, y, width, heigth);
 			theGraphics2D.fill(r);
 			theGraphics2D.draw(r);
 			x += width;
