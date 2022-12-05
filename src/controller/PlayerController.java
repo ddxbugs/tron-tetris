@@ -4,6 +4,7 @@
  */
 package controller;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -13,14 +14,22 @@ import view.TetrionView;
  *	Player configuration view model controller
  */
 public class PlayerController implements KeyListener {
-	
-	// default game controller settings
-	private static final int UP = KeyEvent.VK_UP;
-	private static final int DOWN = KeyEvent.VK_DOWN;
-	private static final int LEFT = KeyEvent.VK_LEFT;
-	private static final int RIGHT = KeyEvent.VK_RIGHT;
+	/** TetrionView component string action commands */ 
+	private static final String SELECT = "select";
+	private static final String DROP = "drop";
+	private static final String ROTATE = "rotate";
+	private static final String EXIT = "exit";
+	private static final String CONFIRM = "confirm";
+	private static final String CANCEL = "cancel";
+	private static final String UP = "up";
+	private static final String LEFT = "left";
+	private static final String DOWN = "down";
+	private static final String RIGHT = "right";
+
+	// default keyboard game controller settings
 	private static final int SPACE = KeyEvent.VK_SPACE;
 	private static final int ESC = KeyEvent.VK_ESCAPE;
+	private static final int ENTER = KeyEvent.VK_ENTER;
 	private static final int W = KeyEvent.VK_W;
 	private static final int A = KeyEvent.VK_A;
 	private static final int S = KeyEvent.VK_S;
@@ -29,41 +38,52 @@ public class PlayerController implements KeyListener {
 	/**
 	 * Player configuration and settings view model controller
 	 */
-	public PlayerController(final TetrionView theTetrionView) {
+	public PlayerController() {
 		super();
-		theTetrionView.addKeyListener(this);
 	}
 	
 	/**
-	 * 
+	 * Handle TetrionView component key pressed action events
 	 */
 	@Override
-	public void keyPressed(KeyEvent e) {
-		System.out.println(e.getComponent());
+	public void keyPressed(KeyEvent theKeyEvent) {
 		
-		System.out.println(e.getKeyChar());
-		final int key = e.getKeyChar();
-		
-		switch(key) {
-		case UP : break;
-		case SPACE : break;
-		case DOWN : break;
-		case LEFT : break;
-		case RIGHT : break;
-		case ESC : break;
-		case W : break;
-		case A : break;
-		case S : break;
-		case D : break;
-		case default: break;
-		}
-
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void keyTyped(final KeyEvent theKeyEvent) {
 		// TODO Auto-generated method stub
-		
+		if (theKeyEvent.getComponent() instanceof TetrionView) {
+					
+					final int key = Character.toUpperCase(theKeyEvent.getKeyChar());	// Register lower case character values
+					final TetrionView view = (TetrionView) theKeyEvent.getComponent();	// View component listener
+					
+					switch(key) {
+					case SPACE : 
+						view.actionPerformed(new ActionEvent(view, key, DROP));	// drop
+						break;
+					case ENTER : 
+						view.actionPerformed(new ActionEvent(view, key, SELECT));	// select, confirm
+						break;
+					case ESC : 
+						view.actionPerformed(new ActionEvent(view, key, EXIT));	// escape, quit
+						break;
+					case W : 
+						view.actionPerformed(new ActionEvent(view, key, UP));	// rotate
+						break;
+					case A : 
+						view.actionPerformed(new ActionEvent(view, key, LEFT));	// left
+						break;
+					case S : 
+						// TODO drop manuever
+						view.actionPerformed(new ActionEvent(view, key, DOWN));	// down or hold drop
+						break;
+					case D : 
+						view.actionPerformed(new ActionEvent(view, key, RIGHT));	// right
+						break;
+					}
+				}
+				
 	}
 
 	@Override
