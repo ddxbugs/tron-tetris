@@ -23,7 +23,6 @@ final class Point {
 	 * @param theY
 	 */
 	protected Point(final int theX, final int theY) {
-		// TODO Auto-generated constructor stub
 		myX = theX;
 		myY = theY;
 	}
