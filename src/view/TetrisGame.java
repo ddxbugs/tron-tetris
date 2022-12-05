@@ -97,7 +97,7 @@ public class TetrisGame extends JFrame {
 		myConfig = new ConfigView();	// game options menu
 		myTetrion = new Tetrion();	// the background
 		
-		myTetrionView = new TetrionView(width, height);	// the 1-Player game board
+		myTetrionView = new TetrionView();	// the 1-Player game board
 		
 		myPreview = new PiecePreview();	// next piece 
 		myScore = new ScoreView();	// score level lines
