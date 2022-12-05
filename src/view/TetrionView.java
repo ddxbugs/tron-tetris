@@ -33,10 +33,12 @@ public class TetrionView extends JPanel implements ActionListener {
 	
 	/** Default serialVersionUID */
 	private static final long serialVersionUID = 1L;
-	/** Set Mino block scale to screen dimension */
+	
+	/** Magic number scale */
 	private static final int SCALE = 10;
-	/** Magic number 1 second delay */
-	private static final int THOUSAND = 1000;
+	
+	/** Magic number millisecond delay */
+	private static final int DELAY = 1000;
 	
 	/** Set the speed of the piece movement logic */
 	private static Timer myTimer;
@@ -49,12 +51,11 @@ public class TetrionView extends JPanel implements ActionListener {
 	/**
 	 * TetrionView UI class displays current game board or "playfield"  
 	 */
-	protected TetrionView(final int theWidth, final int theHeight) {
-		delay = THOUSAND;
+	protected TetrionView() {
+		delay = DELAY;
 //		myModel = new TetrionViewModel(theWidth, theHeight);	// TODO remove, hard code vals
-		myModel = new TetrionViewModel(10, 20);
+		myModel = new TetrionViewModel(SCALE);
 		myTimer = new Timer (delay, this);
-		
 		setFocusable(true);	// KeyListener
 		setLocation(500, 75);
 		setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED, 
@@ -71,19 +72,53 @@ public class TetrionView extends JPanel implements ActionListener {
 	@Override
 	public void paintComponent(final Graphics theGraphics) {
 		super.paintComponent(theGraphics);
+		
 		final Graphics2D g2D = (Graphics2D) theGraphics;
+		
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		GraphicsController.drawBlocks(g2D, myModel.getFrozenBlocks(), 0, 0, getWidth() / SCALE, getHeight() / SCALE);
+		
+		// TODO algorithm draw only changed blocks
+		GraphicsController.drawBlocks(g2D, 
+										myModel.getFrozenBlocks(), SCALE,
+										getWidth(), getHeight());
 	}
 	
 	@Override
 	public void actionPerformed(final ActionEvent theActionEvent) {
-//		System.out.println("TetrionView ActionEvent: " + theActionEvent);
-		Object obj = theActionEvent.getSource();
-		System.out.println(obj);
-		String cmd = theActionEvent.getActionCommand();
-		System.out.println(cmd);
 		
+//		System.out.println("TetrionView ActionEvent: " + theActionEvent);
+		
+		if (myTimer.isRunning()) {
+			myModel.down();
+			System.out.println(myModel.toString());
+			
+		}	
+		
+		if (theActionEvent.getSource() != null 
+				&& theActionEvent.getSource() instanceof TetrionView) {
+			
+			String cmd = theActionEvent.getActionCommand();
+			
+			if (myTimer.isRunning()) {
+				// switch case new game status
+				switch (cmd) {
+				case "select" : myTimer.stop();
+				case "exit" : myModel.newGame();
+				case "left": myModel.left();
+				case "right": myModel.right();
+				case "down": myModel.down();	// TODO fix me!
+				case "rotate": myModel.rotate();
+				}
+			} else {
+				// switch case game over status
+				switch(cmd) {
+				case "select": myTimer.start();	// TODO pause menu screen
+				case "exit": myModel.newGame();	// TODO menu options screen
+				}
+			}
+		}
+		
+		repaint();
 	}
 }
