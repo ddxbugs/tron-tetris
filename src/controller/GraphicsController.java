@@ -28,11 +28,15 @@ public class GraphicsController {
 	 * Color and fill the individual blocks in the game board 
 	 * @param theGraphics2D Returns corresponding piece color for the block
 	 */
-	public static void drawBlocks(final Graphics2D theGraphics2D, final Mino[] theFrozenBlocks,
-								final int theX, final int theY, final int theWidth, final int theHeight) {
-		int x = theX, y = theY;	// starting x, y position 
-		int width = theWidth;	// block rectangle width 
-		int heigth = theHeight; // block rectangle height 
+	public static void drawBlocks(final Graphics2D theGraphics2D, 
+									final Mino[] theFrozenBlocks, 
+									final int theScale, 
+									final int theWidth, 
+									final int theHeight) {
+		
+		int x = 0, y = 0;	// starting x, y position 
+		int scaleX = theWidth / theScale;	// block rectangle width scaled 1/10
+		int scaleY = theHeight / theScale; // block rectangle height scaled 1/10
 		
 		for (Mino block : theFrozenBlocks) {
 			
@@ -67,14 +71,14 @@ public class GraphicsController {
 				break;
 			}
 			
-			final Rectangle2D r = new Rectangle(x, y, width, heigth);
+			final Rectangle2D r = new Rectangle(x, y, x + scaleX, y + scaleY);
 			theGraphics2D.fill(r);
 			theGraphics2D.draw(r);
-			x += width;
+			x += scaleX;
 			// reset column counter, increment next row counter
-			if (x % width == 0) {
+			if (x % theWidth == 0) {
 				x = 0;	
-				y += heigth;
+				y += scaleY;
 			}
 		}
 	}
