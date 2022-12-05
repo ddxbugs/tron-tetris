@@ -86,37 +86,27 @@ public class TetrionView extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(final ActionEvent theActionEvent) {
-		
-//		System.out.println("TetrionView ActionEvent: " + theActionEvent);
-		
-		if (myTimer.isRunning()) {
+		if (theActionEvent.getSource() instanceof Timer 
+				&& myTimer.isRunning()) {
 			myModel.down();
+			System.out.println(theActionEvent);
 			System.out.println(myModel.toString());
 			
-		}	
-		
-		if (theActionEvent.getSource() != null 
-				&& theActionEvent.getSource() instanceof TetrionView) {
+		} else if (theActionEvent.getSource() instanceof TetrionView) {
 			
 			String cmd = theActionEvent.getActionCommand();
+			// switch case new game status
+			switch (cmd) {
+			case "exit" : myModel.newGame(); break;
+			case "select" : myTimer.restart(); break;
+			case "left": myModel.left(); break;
+			case "right": myModel.right(); break;
+			case "down": myModel.down(); break;
+			case "rotate": myModel.rotate(); break;
+			case "drop": myModel.drop(); break;
 			
-			if (myTimer.isRunning()) {
-				// switch case new game status
-				switch (cmd) {
-				case "select" : myTimer.stop();
-				case "exit" : myModel.newGame();
-				case "left": myModel.left();
-				case "right": myModel.right();
-				case "down": myModel.down();	// TODO fix me!
-				case "rotate": myModel.rotate();
-				}
-			} else {
-				// switch case game over status
-				switch(cmd) {
-				case "select": myTimer.start();	// TODO pause menu screen
-				case "exit": myModel.newGame();	// TODO menu options screen
-				}
 			}
+			System.out.println(cmd);
 		}
 		
 		repaint();
