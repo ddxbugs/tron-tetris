@@ -34,7 +34,7 @@ public class TetrionView extends JPanel implements ActionListener {
 	/** Default serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	/** Set Mino block scale to screen dimension */
-	private static final int SCALE = 0;
+	private static final int SCALE = 10;
 	/** Magic number 1 second delay */
 	private static final int THOUSAND = 1000;
 	
@@ -61,7 +61,7 @@ public class TetrionView extends JPanel implements ActionListener {
 				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
 		setBackground(ColorPalette.MEANWHILE.getColor());
 		
-		addKeyListener(new PlayerController(this));
+		addKeyListener(new PlayerController());
 //		addFocusListener();	// TODO window focus music, pause listener
 		
 	}
@@ -74,14 +74,16 @@ public class TetrionView extends JPanel implements ActionListener {
 		final Graphics2D g2D = (Graphics2D) theGraphics;
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		GraphicsController.drawBlocks(g2D, myModel.getFrozenBlocks(), 0, 0, 0, 0);
+		GraphicsController.drawBlocks(g2D, myModel.getFrozenBlocks(), 0, 0, getWidth() / SCALE, getHeight() / SCALE);
 	}
 	
 	@Override
 	public void actionPerformed(final ActionEvent theActionEvent) {
 //		System.out.println("TetrionView ActionEvent: " + theActionEvent);
-		myModel.down();
-//		repaint();
-//		System.out.println(myModel.toString());
+		Object obj = theActionEvent.getSource();
+		System.out.println(obj);
+		String cmd = theActionEvent.getActionCommand();
+		System.out.println(cmd);
+		
 	}
 }
