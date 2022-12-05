@@ -24,6 +24,8 @@ public class TetrionViewModel {
 
 	/** List of pieces currently in view */ 
 	private List<Mino[]> myFrozenBlocks;
+	/** Array of complete/incomplete rows */
+	private boolean[] myLines;
 	
 	/** Default player level 0 */
 	private Player myPlayer;
@@ -39,6 +41,7 @@ public class TetrionViewModel {
 	public TetrionViewModel(final double theScale) {
 		scale = theScale;
 		myFrozenBlocks = new LinkedList<Mino[]>();
+		myLines = new boolean[BLOCK_COL_HEIGHT];
 		myPlayer = null;
 		myCurrentPiece = nextMovablePiece();
 		
@@ -86,17 +89,17 @@ public class TetrionViewModel {
 	 * Move the Tetromino down
 	 */
 	public void down() {
-//		System.out.println(isMovable(myCurrentPiece));
-		
 		if (isMovable(myCurrentPiece)) {
-			myCurrentPiece = myCurrentPiece.down();
-		}
-		else {
 			
-			checkRows();	// TODO return boolean
-			clearLines();	// TODO if (checkRows) clearLines()
+			myCurrentPiece = myCurrentPiece.down();
+			
+		} else {
+			
+			freezeBlocks();
+			
+			if (!checkRows()) clearLines();
 		}
-		freezeBlocks();
+		
 	}
 	/**
 	 * Drop the piece instantly to the specified location
@@ -167,34 +170,38 @@ public class TetrionViewModel {
 	}
 	
 	/**
-	 * Checks the tetris board for completed lines
+	 * Checks the frozen Tetrominos for completed lines
 	 */
-	private boolean[] checkRows() {
-		boolean[] rows = new boolean[BLOCK_COL_HEIGHT];
-		boolean isEmpty = false;
+	private boolean checkRows() {
+		boolean isBlockNull = false;
+		boolean isLineClear = true;
+		
 		int i = BLOCK_COL_HEIGHT - ONE;
 		for (final Mino[] blocks : myFrozenBlocks) {
-			isEmpty = false;
+			
 			for (final Mino block : blocks) {
-				isEmpty = block == null ? true : false;
-				if (isEmpty) break;	// slightly faster implementation O(n - k - 1)
+				
+				isBlockNull = block == null ? true : false;
+				if (isBlockNull) break;	// slightly faster implementation O(n - k - 1)
 			}
-			rows[i--] = isEmpty;	// reverse order for correct board orientation
+			
+			if (!isBlockNull) isLineClear = false;	// row is complete, return to clearLines()
+			
+			myLines[i--] = isBlockNull;	// reverse order for correct board orientation
 		}
-		return rows;
+		return isLineClear;
 	}
 	
 	/**
 	 * Clear completed rows from the board
 	 */
 	private void clearLines() {
-//		for (int i = 0; i < theLines.length; i++) {
-//			if (theLines[i]) {
-//				myFrozenBlocks.remove(i);
-//				myFrozenBlocks.add(new Mino[BLOCK_ROW_WIDTH]);
-//			}
-//		}
-		// notify listeners: scoreboard, player
+		for (int i = 0; i < myLines.length; i++) {
+			if (myLines[i]) {
+				myFrozenBlocks.remove(i);
+				myFrozenBlocks.add(i, new Mino[BLOCK_ROW_WIDTH]);
+			}
+		}
 	}
 	
 	/**
