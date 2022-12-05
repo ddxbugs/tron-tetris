@@ -4,6 +4,7 @@
  */
 package controller;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -72,13 +73,14 @@ public class GraphicsController {
 			}
 			
 			final Rectangle2D r = new Rectangle(x, y, x + scaleX, y + scaleY);
+			
 			theGraphics2D.fill(r);
 			theGraphics2D.draw(r);
 			x += scaleX;
 			// reset column counter, increment next row counter
 			if (x % theWidth == 0) {
 				x = 0;	
-				y += scaleY;
+				y += scaleX;
 			}
 		}
 	}
