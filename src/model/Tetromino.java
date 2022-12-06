@@ -105,6 +105,12 @@ public class Tetromino {
 		for (final Point block : getLocalPoints()) {
 			blocks[block.getY()][block.getX()] = myTetromino.getBlock().toString();
 		}
+		for (int height = N_BLOCKS; height >= 0; height--) {
+			for (int width = 0; width < N_BLOCKS; width++) {
+				sb.append(blocks[height][width] == null ? "" : blocks[height][width]);
+			}
+			sb.append("\n");
+		}
 		return sb.toString();
 	}
 	/**
