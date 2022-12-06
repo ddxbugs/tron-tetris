@@ -89,7 +89,6 @@ public class TetrionView extends JPanel implements ActionListener {
 		if (theActionEvent.getSource() instanceof Timer 
 				&& myTimer.isRunning()) {
 			myModel.down();
-			System.out.println(theActionEvent);
 			System.out.println(myModel.toString());
 			
 		} else if (theActionEvent.getSource() instanceof TetrionView) {
@@ -106,7 +105,6 @@ public class TetrionView extends JPanel implements ActionListener {
 			case "drop": myModel.drop(); break;
 			
 			}
-			System.out.println(cmd);
 		}
 		
 		repaint();
