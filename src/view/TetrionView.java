@@ -4,16 +4,11 @@
  */
 package view;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.geom.Rectangle2D;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -22,7 +17,6 @@ import javax.swing.border.BevelBorder;
 
 import controller.GraphicsController;
 import controller.PlayerController;
-import model.Mino;
 import model.TetrionViewModel;
 import res.ColorPalette;
 
@@ -53,7 +47,6 @@ public class TetrionView extends JPanel implements ActionListener {
 	 */
 	protected TetrionView() {
 		delay = DELAY;
-//		myModel = new TetrionViewModel(theWidth, theHeight);	// TODO remove, hard code vals
 		myModel = new TetrionViewModel(SCALE);
 		myTimer = new Timer (delay, this);
 		setFocusable(true);	// KeyListener
@@ -63,7 +56,6 @@ public class TetrionView extends JPanel implements ActionListener {
 		setBackground(ColorPalette.MEANWHILE.getColor());
 		
 		addKeyListener(new PlayerController());
-//		addFocusListener();	// TODO window focus music, pause listener
 		
 	}
 	/**
