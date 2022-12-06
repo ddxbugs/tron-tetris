@@ -4,11 +4,8 @@
  */
 package model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This class model contains the pieces, handles movement logic for the game
@@ -56,9 +53,9 @@ public class TetrionViewModel {
 	
 		myFrozenBlocks.clear();	// clear the Tetris board
 		for (int i = 0; i < HEIGHT; i++) 
-			myFrozenBlocks.add(new Mino[WIDTH]);
+			myFrozenBlocks.add(new Mino[WIDTH]);	// reset block rows
 		
-		myCurrentPiece = nextMovablePiece();
+		myCurrentPiece = nextMovablePiece(); // prepare next piece
 	}
 	
 	/**
@@ -90,7 +87,7 @@ public class TetrionViewModel {
 	public void down() {
 		
 		if (isMovable(myCurrentPiece)) {
-			myCurrentPiece = myCurrentPiece.down();	// increment piece (0,-1)
+			myCurrentPiece = myCurrentPiece.down();	// transform piece (0,-1)
 			
 		} else {
 			
@@ -185,7 +182,7 @@ public class TetrionViewModel {
 				if (isBlockNull) break;	// slightly faster implementation O(n - k - 1)
 			}
 			
-			if (!isBlockNull) isLineClear = false;	// row is complete, return to clearLines()
+			if (!isBlockNull) isLineClear = false;	// false, lines not cleared, call clearLines()
 			
 			myLines[row--] = isBlockNull;	// reverse order for correct board orientation
 		}
@@ -249,7 +246,7 @@ public class TetrionViewModel {
 				if (b == null) {
 					sb.append(" ");	// empty block space on board
 				} else {
-					sb.append(b);
+					sb.append(b); // else append block char to string 
 				}
 			}	
 			sb.append("|\n");	// start new row

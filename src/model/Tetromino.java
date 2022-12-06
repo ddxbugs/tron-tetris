@@ -127,8 +127,6 @@ public class Tetromino {
 	protected Point getPosition() {
 		return myPosition;
 	}
-	
-	// TODO implement method for 'wall kicking'
 	/**
 	 * Returns new Tetromino of current type, rotation and new position
 	 * 
@@ -159,7 +157,11 @@ public class Tetromino {
 	private Point[] getLocalPoints() {
 		return getPoints(null);
 	}
-	
+	/**
+	 * Return the points of the current Tetromino
+	 * @param thePoint The current position
+	 * @return new Tetromino points on the board
+	 */
 	private Point[] getPoints(final Point thePoint) {
 		final Point[] blocks = myTetromino.getPoints();
 		// for each Point in blocks
