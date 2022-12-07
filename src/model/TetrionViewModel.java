@@ -13,11 +13,9 @@ import java.util.List;
 public class TetrionViewModel {
 	/** Magic numbers */
 	private static final int START_X = 0, START_Y = 0;
+	/** Default board width height */
 	private static final int WIDTH = 10, HEIGHT = 20;
 	private static final int ONE = 1, TWO = 2;
-	
-	/** TetrionView scale dimension default 1 : 2 */
-	private static double scale = 0;
 
 	/** List of pieces currently in view */ 
 	private List<Mino[]> myFrozenBlocks;
@@ -35,8 +33,8 @@ public class TetrionViewModel {
 	 * @param theWidth width of game board
 	 * @param theHeight height of game board
 	 */
-	public TetrionViewModel(final double theScale) {
-		scale = theScale;
+	public TetrionViewModel() {
+
 		myFrozenBlocks = new LinkedList<Mino[]>();
 		myLines = new boolean[HEIGHT];
 		myPlayer = null;
@@ -85,10 +83,10 @@ public class TetrionViewModel {
 	 * Move the Tetromino down
 	 */
 	public void down() {
-		
+		System.out.println(myCurrentPiece.getPosition());
 		if (isMovable(myCurrentPiece)) {
 			myCurrentPiece = myCurrentPiece.down();	// transform piece (0,-1)
-
+			
 		} else {
 			if (!checkRows()) clearLines();	// if lines are filled
 		}
@@ -132,8 +130,8 @@ public class TetrionViewModel {
 			if (isPoint(p)) {
 				row = myFrozenBlocks.get(p.getY());
 				row[p.getX()] = myCurrentPiece.getTetromino().getBlock();
-				myFrozenBlocks.remove(p.getY());
-				myFrozenBlocks.add(p.getY(), row);	
+				myFrozenBlocks.remove(p.getY());	// remove old frozen block row from list
+				myFrozenBlocks.add(p.getY(), row);	// replace with updated frozen block row 
 			}
 		}
 	}
@@ -194,8 +192,9 @@ public class TetrionViewModel {
 	private void clearLines() {
 		for (int i = 0; i < myLines.length; i++) {
 			if (myLines[i]) {
-				myFrozenBlocks.add(i, new Mino[WIDTH]);
 				myFrozenBlocks.remove(i);
+				myFrozenBlocks.add(i, new Mino[WIDTH]);
+				
 			}
 		}
 	}
@@ -217,7 +216,7 @@ public class TetrionViewModel {
 	public Mino[] getFrozenBlocks() {
 		Mino[] arr = new Mino[WIDTH * HEIGHT];
 		int i = 0;
-		System.out.println(myFrozenBlocks.size());
+		
 		for (Mino[] blocks : myFrozenBlocks)
 			for (Mino block : blocks) {
 				arr[i++] = block;
