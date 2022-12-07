@@ -4,7 +4,6 @@
  */
 package controller;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -30,14 +29,13 @@ public class GraphicsController {
 	 * @param theGraphics2D Returns corresponding piece color for the block
 	 */
 	public static void drawBlocks(final Graphics2D theGraphics2D, 
-									final Mino[] theFrozenBlocks, 
-									final int theScale, 
+									final Mino[] theFrozenBlocks,
 									final int theWidth, 
 									final int theHeight) {
 		
 		int x = 0, y = 0;	// starting x, y position 
-		int scaleX = theWidth / theScale;	// block rectangle width scaled 1/10
-		int scaleY = theHeight / theScale; // block rectangle height scaled 1/10
+		int incrementX = theWidth;	// block rectangle width scaled 1/10
+		int incrementY = theHeight; // block rectangle height scaled 1/10
 		
 		for (Mino block : theFrozenBlocks) {
 			
@@ -72,15 +70,16 @@ public class GraphicsController {
 				break;
 			}
 			
-			final Rectangle2D r = new Rectangle(x, y, x + scaleX, y + scaleY);
+			final Rectangle2D r = new Rectangle(x, y, x + incrementX, y + incrementY);
 			
 			theGraphics2D.fill(r);
 			theGraphics2D.draw(r);
-			x += scaleX;
-			// reset column counter, increment next row counter
+			
+			// increment column counter, reset x when x is equal to domain
+			x += incrementX;
 			if (x % theWidth == 0) {
 				x = 0;	
-				y += scaleX;
+				y += incrementY;
 			}
 		}
 	}
