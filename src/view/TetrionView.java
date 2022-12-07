@@ -28,11 +28,17 @@ public class TetrionView extends JPanel implements ActionListener {
 	/** Default serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
-	/** Magic number scale */
-	private static final int SCALE = 10;
-	
 	/** Magic number millisecond delay */
 	private static final int DELAY = 1000;
+	
+	/** Action command string constants */
+	private static final String SELECT = "select";
+	private static final String DROP = "drop";
+	private static final String ROTATE = "rotate";
+	private static final String EXIT = "exit";
+	private static final String LEFT = "left";
+	private static final String DOWN = "down";
+	private static final String RIGHT = "right";
 	
 	/** Set the speed of the piece movement logic */
 	private static Timer myTimer;
@@ -47,7 +53,7 @@ public class TetrionView extends JPanel implements ActionListener {
 	 */
 	protected TetrionView() {
 		delay = DELAY;
-		myModel = new TetrionViewModel(SCALE);
+		myModel = new TetrionViewModel();
 		myTimer = new Timer (delay, this);
 		setFocusable(true);	// KeyListener
 		setLocation(500, 75);
@@ -72,12 +78,12 @@ public class TetrionView extends JPanel implements ActionListener {
 		
 		// TODO algorithm draw only changed blocks
 		GraphicsController.drawBlocks(g2D, 
-										myModel.getFrozenBlocks(), SCALE,
-										getWidth(), getHeight());
+										myModel.getFrozenBlocks(), getWidth(), getHeight());
 	}
 	
 	@Override
 	public void actionPerformed(final ActionEvent theActionEvent) {
+		
 		if (theActionEvent.getSource() instanceof Timer 
 				&& myTimer.isRunning()) {
 			myModel.down();
@@ -86,16 +92,29 @@ public class TetrionView extends JPanel implements ActionListener {
 		} else if (theActionEvent.getSource() instanceof TetrionView) {
 			
 			String cmd = theActionEvent.getActionCommand();
-			// switch case new game status
-			switch (cmd) {
-			case "exit" : myModel.newGame(); break;
-			case "select" : myTimer.restart(); break;
-			case "left": myModel.left(); break;
-			case "right": myModel.right(); break;
-			case "down": myModel.down(); break;
-			case "rotate": myModel.rotate(); break;
-			case "drop": myModel.drop(); break;
 			
+			if (myTimer.isRunning()) {
+				
+				// switch case game on resume
+				switch(cmd) {
+				case SELECT : myTimer.stop();
+				case EXIT : myTimer.stop(); // TODO show options config
+				case LEFT : myModel.left(); break;
+				case RIGHT : myModel.right(); break;
+				case DOWN : myModel.down(); break;
+				case ROTATE : myModel.rotate(); break;
+				case DROP : myModel.drop(); break;
+				
+				}
+				
+			} else {
+				
+				// switch case game on pause
+				switch (cmd) {
+				case EXIT : myModel.newGame(); break;
+				case SELECT : myTimer.restart(); break;
+				
+				}
 			}
 		}
 		
