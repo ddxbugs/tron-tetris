@@ -88,14 +88,12 @@ public class TetrionViewModel {
 		
 		if (isMovable(myCurrentPiece)) {
 			myCurrentPiece = myCurrentPiece.down();	// transform piece (0,-1)
-			
+
 		} else {
-			
-			freezeBlocks();	// freeze current piece on board
-			
 			if (!checkRows()) clearLines();	// if lines are filled
 		}
 		
+		freezeBlocks();	// freeze current piece on board
 	}
 	/**
 	 * Drop the piece instantly to the specified location
@@ -134,6 +132,7 @@ public class TetrionViewModel {
 			if (isPoint(p)) {
 				row = myFrozenBlocks.get(p.getY());
 				row[p.getX()] = myCurrentPiece.getTetromino().getBlock();
+				myFrozenBlocks.remove(p.getY());
 				myFrozenBlocks.add(p.getY(), row);	
 			}
 		}
@@ -195,8 +194,8 @@ public class TetrionViewModel {
 	private void clearLines() {
 		for (int i = 0; i < myLines.length; i++) {
 			if (myLines[i]) {
-				myFrozenBlocks.remove(i);
 				myFrozenBlocks.add(i, new Mino[WIDTH]);
+				myFrozenBlocks.remove(i);
 			}
 		}
 	}
@@ -218,9 +217,11 @@ public class TetrionViewModel {
 	public Mino[] getFrozenBlocks() {
 		Mino[] arr = new Mino[WIDTH * HEIGHT];
 		int i = 0;
+		System.out.println(myFrozenBlocks.size());
 		for (Mino[] blocks : myFrozenBlocks)
-			for (Mino block : blocks) 
+			for (Mino block : blocks) {
 				arr[i++] = block;
+			}
 		return arr;
 	}
 	
