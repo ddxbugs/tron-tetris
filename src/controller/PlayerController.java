@@ -68,8 +68,8 @@ public class PlayerController implements KeyListener {
 					case ESC : 
 						view.actionPerformed(new ActionEvent(view, key, EXIT));	// escape, quit
 						break;
-					case W : 
-						view.actionPerformed(new ActionEvent(view, key, UP));	// rotate
+					case W: 
+						view.actionPerformed(new ActionEvent(view, key, ROTATE));	// rotate
 						break;
 					case A : 
 						view.actionPerformed(new ActionEvent(view, key, LEFT));	// left
