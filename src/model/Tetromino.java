@@ -10,7 +10,6 @@ import java.util.Objects;
  * Tetromino class with Point and Rotation
  */
 public class Tetromino {
-
 	/**
 	 * Number of block units in a Tetromino
 	 */
@@ -37,12 +36,11 @@ public class Tetromino {
 	 * @param theRotation the Tetromino initial angle
 	 */
 	public Tetromino(final ImmutableTetromino theTetromino,
-			final Point thePosition,
-			final Rotation theRotation) {
+						final Point thePosition,
+						final Rotation theRotation) {
 		myTetromino = Objects.requireNonNull(theTetromino);
 		myPosition = Objects.requireNonNull(thePosition);
 		myRotation = Objects.requireNonNull(theRotation);
-		
 	}
 	
 	/**
@@ -52,7 +50,7 @@ public class Tetromino {
 	 * @param thePosition the Tetromino position on board
 	 */
 	public Tetromino(final ImmutableTetromino theTetromino,
-			final Point thePosition) {
+						final Point thePosition) {
 		this(theTetromino, thePosition, Rotation.START);
 	}
 	
@@ -92,20 +90,28 @@ public class Tetromino {
 		return myTetromino.getBlock();
 	}
 	
-	// override class Object method toString()
+	/**
+	 * Returns the tetromino 
+	 */
 	@Override
 	public String toString() {
+		
 		final StringBuilder sb = new StringBuilder();
 		final String[][] blocks = new String[N_BLOCKS][N_BLOCKS];
+		
+		// fill empty blocks array
 		for (int height = 0; height < N_BLOCKS; height++) {
 			for (int width = 0; width < N_BLOCKS; width++) {
 				blocks[width][height] = " ";
 			}
 		}
+		
+		//fill blocks array with mino block type 
 		for (final Point block : getLocalPoints()) {
 			blocks[block.getY()][block.getX()] = myTetromino.getBlock().toString();
 		}
-		for (int height = N_BLOCKS; height >= 0; height--) {
+		
+		for (int height = N_BLOCKS - 1; height >= 0; height--) {
 			for (int width = 0; width < N_BLOCKS; width++) {
 				sb.append(blocks[height][width] == null ? "" : blocks[height][width]);
 			}
@@ -169,19 +175,29 @@ public class Tetromino {
 			
 			final Point block = blocks[i];
 			
-			// case: myRotation current state
+			// switch case rotation current state
 			switch(myRotation) {
-			// TODO bug tetromino 'O' rotation 
-				case QUARTER: blocks[i] = new Point(block.getY(),
-						myTetromino.getWidth() - block.getX() - 1);
+			// TODO bug tetromino 'O' rotation offset (+1, 0) 
+				case QUARTER: 
+					
+					blocks[i] = new Point(block.getY(), 
+											myTetromino.getWidth() - block.getX() - 1);
 					break;
-				case HALF: blocks[i] = new Point(myTetromino.getWidth() - block.getX() - 1,
-						myTetromino.getWidth() - block.getY() - 1);
+					
+				case HALF: 
+					
+					blocks[i] = new Point(myTetromino.getWidth() - block.getX() - 1, 
+											myTetromino.getWidth() - block.getY() - 1);
 					break;
-				case THREEQUARTER: blocks[i] = new Point(myTetromino.getWidth() - block.getY() - 1,
-						block.getX());
+					
+				case THREEQUARTER:
+					
+					blocks[i] = new Point(myTetromino.getWidth() - block.getY() - 1, 
+											block.getX());
 					break;
-				default: 
+					
+				default:
+					
 					break;
 			}
 		}
