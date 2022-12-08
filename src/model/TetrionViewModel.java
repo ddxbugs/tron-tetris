@@ -54,6 +54,7 @@ public class TetrionViewModel {
 			myFrozenBlocks.add(new Mino[WIDTH]);	// reset block rows
 		
 		myCurrentPiece = nextMovablePiece(); // prepare next piece
+		System.out.println(myCurrentPiece.getPosition());
 	}
 	
 	/**
@@ -83,14 +84,13 @@ public class TetrionViewModel {
 	 * Move the Tetromino down
 	 */
 	public void down() {
-		System.out.println(myCurrentPiece.getPosition());
+		
 		if (isMovable(myCurrentPiece)) {
 			myCurrentPiece = myCurrentPiece.down();	// transform piece (0,-1)
 			
 		} else {
-			if (!checkRows()) clearLines();	// if lines are filled
+			if (!checkRows()) clearLines();	// if any myLines row is true
 		}
-		
 		freezeBlocks();	// freeze current piece on board
 	}
 	/**
@@ -106,11 +106,13 @@ public class TetrionViewModel {
 	 * Wallkicks offset Tetromino points' positions
 	 */
 	public void rotate() {
+		
 		// TODO if(ImmutableTetromino.O) rotate()
 		final Tetromino piece = myCurrentPiece.rotate();
 		final Point[] offsets = Wallkick.getOffset(piece.getTetromino(),
-				myCurrentPiece.getRotation(),
-				piece.getRotation());
+													myCurrentPiece.getRotation(),
+													piece.getRotation());
+		
 		for (final Point p : offsets) {
 			final Point offset = piece.getPosition().transform(p);
 			final Tetromino t = piece.setPosition(offset);
@@ -160,7 +162,7 @@ public class TetrionViewModel {
 	private boolean isPoint(final Point thePoint) {
 		
 		return thePoint != null && thePoint.getX() >= 0 && thePoint.getX() < WIDTH
-				&& thePoint.getY() >= 0 && thePoint.getY() < HEIGHT;
+				&& thePoint.getY() >= 0;
 	}
 	
 	/**
@@ -179,7 +181,7 @@ public class TetrionViewModel {
 				if (isBlockNull) break;	// slightly faster implementation O(n - k - 1)
 			}
 			
-			if (!isBlockNull) isLineClear = false;	// false, lines not cleared, call clearLines()
+			if (!isBlockNull) isLineClear = false;	// false, lines not cleared, calls clearLines()
 			
 			myLines[row--] = isBlockNull;	// reverse order for correct board orientation
 		}
@@ -194,7 +196,6 @@ public class TetrionViewModel {
 			if (myLines[i]) {
 				myFrozenBlocks.remove(i);
 				myFrozenBlocks.add(i, new Mino[WIDTH]);
-				
 			}
 		}
 	}
@@ -205,7 +206,7 @@ public class TetrionViewModel {
 	 */
 	private Tetromino nextMovablePiece() {
 		return new Tetromino(ImmutableTetromino.getRandomPiece(), 
-				new Point( (START_X + WIDTH) / TWO, START_Y), 
+				new Point( WIDTH / TWO, START_Y), 
 				Rotation.START);
 	}
 	
@@ -232,9 +233,26 @@ public class TetrionViewModel {
 	public String toString() {
 		
 		final StringBuilder sb = new StringBuilder();
-		// TODO sb.append(function: create ceiling buffer)
 		
-		// for each row
+		// sb.append(buffer)
+		for (int row = 0; row < 5; row++) {
+			sb.append('|');
+			for (int col = 0; col < WIDTH; col++) {
+				sb.append(' ');
+			}
+			sb.append('|');
+			sb.append("\n");
+		}
+		
+		// sb.append(ceil)
+		sb.append(' ');
+		for (int ceil=0; ceil < WIDTH; ceil++) {
+			sb.append("_");
+		}
+		
+		sb.append("\n");
+		
+		// sb.append(board)
 		for (int row = HEIGHT - 1; row >= 0; row--) {
 			
 			final Mino[] blocks = myFrozenBlocks.get(row);
@@ -252,8 +270,11 @@ public class TetrionViewModel {
 			sb.append("|\n");	// start new row
 		}
 		
-		// TODO sb.append(function: create floor)
-		
+		// sb.append(floor)
+		sb.append(' ');
+		for (int floor = 0; floor < WIDTH; floor++) {
+			sb.append("_");
+		}
 		return sb.toString();
 	}
 }
