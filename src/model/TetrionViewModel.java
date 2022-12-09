@@ -87,10 +87,12 @@ public class TetrionViewModel {
 		
 		if (isMovable(myCurrentPiece)) {
 			myCurrentPiece = myCurrentPiece.down();	// transform piece (0,-1)
-			
+			System.out.println(myCurrentPiece.getPosition());
 		} else {
+			
 			if (!checkRows()) clearLines();	// if any myLines row is true
 		}
+		// TODO update board pieces
 		freezeBlocks();	// freeze current piece on board
 	}
 	/**
@@ -123,7 +125,6 @@ public class TetrionViewModel {
 	}
 	/**
 	 * Set current piece position rotation
-	 * Add to list of current game pieces
 	 * Timer action event method caller
 	 */
 	private void freezeBlocks() {
@@ -143,6 +144,7 @@ public class TetrionViewModel {
 	 * @return Returns true if the piece is able to move in the specified direction
 	 */
 	private boolean isMovable(final Tetromino theTetromino) {
+		
 		Mino b;
 		boolean isMovable = false;
 		
@@ -151,6 +153,7 @@ public class TetrionViewModel {
 			b = myFrozenBlocks.get(p.getY())[p.getX()];	// block should be null, else collision detected at point p
 
 			isMovable = b == null && isPoint(p) ? true : false; // within board dimension and no collision detected
+			
 		}
 		return isMovable;
 	}
@@ -160,11 +163,10 @@ public class TetrionViewModel {
 	 * @return Returns true if the point is within the boundaries
 	 */
 	private boolean isPoint(final Point thePoint) {
-		
+
 		return thePoint != null && thePoint.getX() >= 0 && thePoint.getX() < WIDTH
 				&& thePoint.getY() >= 0;
 	}
-	
 	/**
 	 * Checks the frozen Tetrominos for completed lines
 	 */
@@ -187,7 +189,6 @@ public class TetrionViewModel {
 		}
 		return isLineClear;
 	}
-	
 	/**
 	 * Clear completed rows from the board
 	 */
@@ -199,7 +200,6 @@ public class TetrionViewModel {
 			}
 		}
 	}
-	
 	/**
 	 * Prepare the next random tetromino in play
 	 * @return Returns a random tetromino default start position and rotation
@@ -223,6 +223,14 @@ public class TetrionViewModel {
 				arr[i++] = block;
 			}
 		return arr;
+	}
+	
+	public int getWidth() {
+		return WIDTH;
+	}
+	
+	public int getHeight() {
+		return HEIGHT;
 	}
 	
 	/**
@@ -253,7 +261,7 @@ public class TetrionViewModel {
 		sb.append("\n");
 		
 		// sb.append(board)
-		for (int row = HEIGHT - 1; row >= 0; row--) {
+		for (int row = 0; row < HEIGHT; row++) {
 			
 			final Mino[] blocks = myFrozenBlocks.get(row);
 			sb.append('|');	// left border
