@@ -30,12 +30,13 @@ public class GraphicsController {
 	 */
 	public static void drawBlocks(final Graphics2D theGraphics2D, 
 									final Mino[] theFrozenBlocks,
-									final int theWidth, 
-									final int theHeight) {
+									final int theBlockWidth,
+									final int theRowWidth) {
 		
 		int x = 0, y = 0;	// starting x, y position 
-		int incrementX = theWidth;	// block rectangle width scaled 1/10
-		int incrementY = theHeight; // block rectangle height scaled 1/10
+		int incrementX = theBlockWidth;	// block rectangle width scaled 1/10
+		int incrementY = theBlockWidth; // block rectangle height scaled 1/10
+		int width = theRowWidth; // Tetrion board width default 300px
 		
 		for (Mino block : theFrozenBlocks) {
 			
@@ -63,7 +64,7 @@ public class GraphicsController {
 				theGraphics2D.setColor(ColorPalette.TRON_BLUE.getColor()); 
 				break;
 			case Z: 
-				theGraphics2D.setColor(ColorPalette.WIPE_OUT.getColor()); 
+				theGraphics2D.setColor(ColorPalette.ORANGE_TRON_LEGACY.getColor()); 
 				break;
 			default: 
 				theGraphics2D.setColor(Color.RED);	// Debug, remove me
@@ -73,11 +74,12 @@ public class GraphicsController {
 			final Rectangle2D r = new Rectangle(x, y, x + incrementX, y + incrementY);
 			
 			theGraphics2D.fill(r);
+			theGraphics2D.setBackground(ColorPalette.PANE.getColor());
 			theGraphics2D.draw(r);
 			
-			// increment column counter, reset x when x is equal to domain
+			// increment column counter, resets x % width 
 			x += incrementX;
-			if (x % theWidth == 0) {
+			if (x % width == 0) {
 				x = 0;	
 				y += incrementY;
 			}
