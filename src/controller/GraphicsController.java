@@ -26,9 +26,9 @@ public class GraphicsController {
 	
 	/**
 	 * Color and fill the individual blocks in the game board 
-	 * @param theGraphics2D Returns corresponding piece color for the block
+	 * @param theG2D Returns corresponding piece color for the block
 	 */
-	public static void drawBlocks(final Graphics2D theGraphics2D, 
+	public static void drawBlocks(final Graphics2D theG2D, 
 									final Mino[] theFrozenBlocks,
 									final int theBlockWidth,
 									final int theRowWidth) {
@@ -45,37 +45,37 @@ public class GraphicsController {
 			switch(block) {
 			
 			case EMPTY:
-				theGraphics2D.setColor(ColorPalette.MEANWHILE.getColor());
+				theG2D.setColor(ColorPalette.MEANWHILE.getColor());
 			case I: 
-				theGraphics2D.setColor(ColorPalette.BASESTAR.getColor()); 
+				theG2D.setColor(ColorPalette.BASESTAR.getColor()); 
 				break;
 			case J: 
-				theGraphics2D.setColor(ColorPalette.PANE.getColor()); 
+				theG2D.setColor(ColorPalette.PANE.getColor()); 
 				break;
-			case L: theGraphics2D.setColor(ColorPalette.SWEET_YELLOW.getColor()); 
+			case L: theG2D.setColor(ColorPalette.SWEET_YELLOW.getColor()); 
 				break;
 			case O: 
-				theGraphics2D.setColor(ColorPalette.FAR_AWAY_SKY.getColor()); 
+				theG2D.setColor(ColorPalette.FAR_AWAY_SKY.getColor()); 
 				break;
 			case S: 
-				theGraphics2D.setColor(ColorPalette.DEAD_BABY.getColor()); 
+				theG2D.setColor(ColorPalette.DEAD_BABY.getColor()); 
 				break;
 			case T: 
-				theGraphics2D.setColor(ColorPalette.TRON_BLUE.getColor()); 
+				theG2D.setColor(ColorPalette.TRON_BLUE.getColor()); 
 				break;
 			case Z: 
-				theGraphics2D.setColor(ColorPalette.ORANGE_TRON_LEGACY.getColor()); 
+				theG2D.setColor(ColorPalette.ORANGE_TRON_LEGACY.getColor()); 
 				break;
 			default: 
-				theGraphics2D.setColor(Color.RED);	// Debug, remove me
+				theG2D.setColor(Color.RED);	// Debug, remove me
 				break;
 			}
 			
 			final Rectangle2D r = new Rectangle(x, y, x + incrementX, y + incrementY);
 			
-			theGraphics2D.fill(r);
-			theGraphics2D.setBackground(ColorPalette.PANE.getColor());
-			theGraphics2D.draw(r);
+			theG2D.fill(r);
+			theG2D.setBackground(ColorPalette.PANE.getColor());
+			theG2D.draw(r);
 			
 			// increment column counter, resets x % width 
 			x += incrementX;
@@ -84,6 +84,8 @@ public class GraphicsController {
 				y += incrementY;
 			}
 		}
+		
+		theG2D.dispose();
 	}
 
 }
