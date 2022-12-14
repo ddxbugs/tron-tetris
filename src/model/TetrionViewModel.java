@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class TetrionViewModel {
 	/** Magic numbers */
-	private static final int START_X = 0, START_Y = 0;
+	private static final int START_X = 0, START_Y = 7;
 	/** Default board width height */
 	private static final int WIDTH = 10, HEIGHT = 20;
 	private static final int ONE = 1, TWO = 2;
@@ -53,8 +54,8 @@ public class TetrionViewModel {
 		for (int i = 0; i < HEIGHT; i++) 
 			myFrozenBlocks.add(new Mino[WIDTH]);	// reset block rows
 		
+		Arrays.fill(myLines, true);	// set line counter true 
 		myCurrentPiece = nextMovablePiece(); // prepare next piece
-		System.out.println(myCurrentPiece.getPosition());
 	}
 	
 	/**
@@ -63,6 +64,9 @@ public class TetrionViewModel {
 	 */
 	public void gameOver() {
 		myPlayer = null;
+		myLines = null;
+		myFrozenBlocks = null;
+		myCurrentPiece = null;
 	}
 	/**
 	 * Moves the Tetromino left
@@ -87,10 +91,9 @@ public class TetrionViewModel {
 		
 		if (isMovable(myCurrentPiece)) {
 			myCurrentPiece = myCurrentPiece.down();	// transform piece (0,-1)
-			System.out.println(myCurrentPiece.getPosition());
 		} else {
-			
-			if (!checkRows()) clearLines();	// if any myLines row is true
+			// TODO bug false,..., 
+			if (!checkRows()) clearLines();	// if any myLines row is false=filled
 		}
 		// TODO update board pieces
 		freezeBlocks();	// freeze current piece on board
@@ -168,7 +171,10 @@ public class TetrionViewModel {
 				&& thePoint.getY() >= 0;
 	}
 	/**
-	 * Checks the frozen Tetrominos for completed lines
+	 * Checks the frozen Tetrominos for completed lines by row
+	 * Checks each block by column for completed lines,
+	 * break for loop if empty space found (incomplete row)
+	 *  
 	 */
 	private boolean checkRows() {
 		boolean isBlockNull = false;
@@ -183,7 +189,7 @@ public class TetrionViewModel {
 				if (isBlockNull) break;	// slightly faster implementation O(n - k - 1)
 			}
 			
-			if (!isBlockNull) isLineClear = false;	// false, lines not cleared, calls clearLines()
+			if (!isBlockNull) isLineClear = false;	// false => need to clear entire frozen blocks row at i
 			
 			myLines[row--] = isBlockNull;	// reverse order for correct board orientation
 		}
@@ -194,7 +200,8 @@ public class TetrionViewModel {
 	 */
 	private void clearLines() {
 		for (int i = 0; i < myLines.length; i++) {
-			if (myLines[i]) {
+			if (myLines[i] == true) {
+				System.out.println(i);
 				myFrozenBlocks.remove(i);
 				myFrozenBlocks.add(i, new Mino[WIDTH]);
 			}
