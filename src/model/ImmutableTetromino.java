@@ -86,7 +86,7 @@ enum ImmutableTetromino {
 		myWidth = theWidth;
 		myHeight = theHeight;
 		myBlock = theBlock;
-		myPoints = Objects.requireNonNull(thePoints).clone();
+		myPoints = Objects.requireNonNull(thePoints);
 	}
 	
 	/**
