@@ -29,7 +29,7 @@ public class TetrionView extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
 	/** Magic number millisecond delay */
-	private static final int DELAY = 1000;
+	private static final int DELAY = 5000;
 	
 	/** Action command string constants */
 	private static final String SELECT = "select";
@@ -75,10 +75,11 @@ public class TetrionView extends JPanel implements ActionListener {
 		
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		
-		// TODO algorithm draw only changed blocks
+		// TODO algorithm optimize static draw blocks
 		GraphicsController.drawBlocks(g2D, 
-										myModel.getFrozenBlocks(), getWidth(), getHeight());
+										myModel.getFrozenBlocks(),
+										getWidth() / myModel.getWidth(),
+										getWidth());
 	}
 	
 	@Override
@@ -86,8 +87,10 @@ public class TetrionView extends JPanel implements ActionListener {
 		
 		if (theActionEvent.getSource() instanceof Timer 
 				&& myTimer.isRunning()) {
+			
 			myModel.down();
-			System.out.println(myModel.toString());
+			
+//			System.out.println(myModel.toString());
 			
 		} else if (theActionEvent.getSource() instanceof TetrionView) {
 			
@@ -97,8 +100,8 @@ public class TetrionView extends JPanel implements ActionListener {
 				
 				// switch case game on resume
 				switch(cmd) {
-				case SELECT : myTimer.stop();
-				case EXIT : myTimer.stop(); // TODO show options config
+				case SELECT : myTimer.stop(); break;
+				case EXIT : myTimer.stop(); break; // TODO show options config
 				case LEFT : myModel.left(); break;
 				case RIGHT : myModel.right(); break;
 				case DOWN : myModel.down(); break;
