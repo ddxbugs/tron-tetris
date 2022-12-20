@@ -6,18 +6,21 @@ package view;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 import model.PiecePreviewModel;
+import model.Tetromino;
 import res.ColorPalette;
 
 /**
  * PiecePreview class displays next tetromino on board
  */
-public class PiecePreview extends JPanel {
+public class PiecePreview extends JPanel implements ActionListener {
 	
 	private PiecePreviewModel myModel;
 	/**
@@ -43,5 +46,14 @@ public class PiecePreview extends JPanel {
 		final Graphics2D g2d = (Graphics2D) theGraphics;
 		// select tetromino 
 		// fill and draw the rects
+	}
+
+	@Override
+	public void actionPerformed(final ActionEvent theActionEvent) {
+		// TODO Auto-generated method stub
+		if (theActionEvent.getSource() instanceof Tetromino) {
+			repaint();
+		}
+		
 	}
 }
