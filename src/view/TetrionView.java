@@ -47,6 +47,10 @@ public class TetrionView extends JPanel implements ActionListener {
 	
 	/** View model represent current game board piece position and logic */
 	private TetrionViewModel myModel;
+	/** Next Tetromino preview window */
+	private PiecePreview myPreview;
+	/** Current game score tracker */
+	private ScoreView myScore;
 	
 	/**
 	 * TetrionView UI class displays current game board or "playfield"  
@@ -54,12 +58,18 @@ public class TetrionView extends JPanel implements ActionListener {
 	protected TetrionView() {
 		delay = DELAY;
 		myModel = new TetrionViewModel();
+		myPreview = new PiecePreview();
+		myScore = new ScoreView();	// score level lines
 		myTimer = new Timer (delay, this);
+		
 		setFocusable(true);	// KeyListener
 		setLocation(500, 75);
 		setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED, 
 				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
 		setBackground(ColorPalette.MEANWHILE.getColor());
+		
+		myPreview.setSize(200, 200);	// small window
+		myScore.setSize(400, 100);	// transparent row line
 		
 		addKeyListener(new PlayerController());
 		
