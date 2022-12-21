@@ -10,10 +10,10 @@ import model.ConfigViewModel;
 /**
  * Game menu and configuration settings UI class
  */
-public class ConfigView extends JPanel {
+public class MenuOptionView extends JPanel {
 	private ConfigViewModel myModel;
 	
-	protected ConfigView() {
+	public MenuOptionView() {
 		setVisible(false);
 	}
 }
