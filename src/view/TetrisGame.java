@@ -45,12 +45,7 @@ public class TetrisGame extends JFrame {
 	/** Dynamic changing background */
 	private static Tetrion myTetrion;
 	/** Configuration settings menu option */
-	private static ConfigView myConfig;
-	
-	/** Next Tetromino preview window */
-	private PiecePreview myPreview;
-	/** Current game score tracker */
-	private ScoreView myScore;
+	private static MenuOptionView myConfig;
 	/** Tetris board container view */
 	private TetrionView myTetrionView;
 
@@ -94,16 +89,12 @@ public class TetrisGame extends JFrame {
 	private void initialize() {
 		myLayeredPane = new JLayeredPane(); // layered pane
 		
-		myConfig = new ConfigView();	// game options menu
+		myConfig = new MenuOptionView();	// game options menu
+				
+		
+		
 		myTetrion = new Tetrion();	// the background
-		
 		myTetrionView = new TetrionView();	// the 1-Player game board
-		
-		myPreview = new PiecePreview();	// next piece 
-		myScore = new ScoreView();	// score level lines
-		
-		// TODO initialize window focus listener, keyboard listener, mouse listener
-		
 	}
 	
 	private void setUp() {
@@ -111,15 +102,14 @@ public class TetrisGame extends JFrame {
 		myConfig.setSize(500, 500);	// medium window
 		myTetrion.setSize(getMaximumSize());	// full screen w h
 		myTetrionView.setSize(300, 600);	// half dimension
-		myPreview.setSize(200, 200);	// small window
-		myScore.setSize(400, 100);	// transparent row line
 		
+				
 		// add components to layered pane
 		myLayeredPane.add(myConfig, JLayeredPane.MODAL_LAYER);
 		myLayeredPane.add(myTetrion, JLayeredPane.DEFAULT_LAYER);
 		myLayeredPane.add(myTetrionView, JLayeredPane.POPUP_LAYER);
-		myLayeredPane.add(myPreview, JLayeredPane.POPUP_LAYER);
-		myLayeredPane.add(myScore, JLayeredPane.POPUP_LAYER);
+//		myLayeredPane.add(myPreview, JLayeredPane.POPUP_LAYER);
+//		myLayeredPane.add(myScore, JLayeredPane.POPUP_LAYER);
 		
 		// add layered pane to this frame
 		add(myLayeredPane);
