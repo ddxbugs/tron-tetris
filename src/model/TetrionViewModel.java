@@ -27,9 +27,6 @@ public class TetrionViewModel {
 	/** Array of complete/incomplete rows */
 	private boolean[] myLines;
 	
-	/** Default player level 0 */
-	private Player myPlayer;
-	
 	/** The current Tetromino in play */
 	private Tetromino myCurrentPiece;	
 	
@@ -42,7 +39,6 @@ public class TetrionViewModel {
 
 		myFrozenBlocks = new LinkedList<Mino[]>();
 		myLines = new boolean[HEIGHT];
-		myPlayer = null;
 		myCurrentPiece = null;
 		
 	}
@@ -51,8 +47,6 @@ public class TetrionViewModel {
 	 * Reset the game variables
 	 */
 	public void newGame() {
-		myPlayer = new Player();	// new player
-//		myPlayer = new Player(name);	// TODO persistence player model
 	
 		myFrozenBlocks.clear();	// clear the Tetris board
 		for (int i = 0; i < HEIGHT; i++) 
@@ -67,7 +61,6 @@ public class TetrionViewModel {
 	 * Close variables
 	 */
 	public void gameOver() {
-		myPlayer = null;
 		myLines = null;
 		myFrozenBlocks = null;
 		myCurrentPiece = null;
@@ -95,14 +88,12 @@ public class TetrionViewModel {
 		
 		if (isCurrentPieceMovable()) 
 			myCurrentPiece = myCurrentPiece.down();	// transform piece (0,-1)
-			
-		else if (!checkRows()) clearLines();
+		else if (checkRows())
+			freezeBlocks();	// freeze current piece on board
+		else 
+			clearLines();
 		
-		freezeBlocks();	// freeze current piece on board
-		
-		System.out.println(myCurrentPiece.getPosition());
-		System.out.println(myCurrentPiece.toString());
-		System.out.println(toString());
+		// TODO event queue dispatch thread update graphics controller
 	}
 	/**
 	 * Drop the piece instantly to the specified location
@@ -118,12 +109,11 @@ public class TetrionViewModel {
 	 */
 	public void rotate() {
 		
-		// TODO if(ImmutableTetromino.O) rotate()
+		// TODO if(ImmutableTetromino.O) rotate() phantom wallkick bug
 		final Tetromino piece = myCurrentPiece.rotate();
 		final Point[] offsets = Wallkick.getOffset(piece.getTetromino(),
 													myCurrentPiece.getRotation(),
 													piece.getRotation());
-		
 		for (final Point p : offsets) {
 			final Point offset = piece.getPosition().transform(p);
 			final Tetromino t = piece.setPosition(offset);
@@ -132,7 +122,7 @@ public class TetrionViewModel {
 	}
 	/**
 	 * Set current piece position rotation
-	 * Timer action event method caller
+	 * Timer event queue thread dispatch
 	 */
 	private void freezeBlocks() {
 		Mino[] row;
@@ -188,8 +178,6 @@ public class TetrionViewModel {
 		
 		int row = HEIGHT - 1;
 		for (final Mino[] blocks : myFrozenBlocks) {
-			
-			
 			
 			for (final Mino block : blocks) {
 				
@@ -276,7 +264,6 @@ public class TetrionViewModel {
 		sb.append("\n");
 		
 		// sb.append(board)
-//		for (int row = 0; row < HEIGHT; row++) {	// TODO Remove me!
 		for (int row = HEIGHT - 1; row >= 0; row--) {
 			
 			final Mino[] blocks = myFrozenBlocks.get(row);
