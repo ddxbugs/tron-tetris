@@ -6,7 +6,7 @@ package controller;
 
 import javax.swing.JPanel;
 
-import model.ConfigViewModel;
+import model.MenuViewModel;
 import view.MenuOptionView;
 
 /**
@@ -17,7 +17,7 @@ public class MenuController {
 	private static final String CONFIG_FILE = "config.ini";
 	/** Configuration settings menu option */
 	private static MenuOptionView view;
-	private static ConfigViewModel model;
+	private static MenuViewModel model;
 	/**
 	 * 
 	 */
@@ -25,7 +25,7 @@ public class MenuController {
 		// TODO Auto-generated constructor stub
 		super();
 		view = new MenuOptionView();	// game options menu
-		model = new ConfigViewModel();
+		model = new MenuViewModel();
 		
 		view.setSize(500,500);
 	}
