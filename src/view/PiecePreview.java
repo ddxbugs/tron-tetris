@@ -59,7 +59,8 @@ public class PiecePreview extends JPanel implements ActionListener, PropertyChan
 		
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		GraphicsController.drawBlocks(g2d, myNextTetromino, getHeight(), getWidth());
+		if (myNextTetromino != null)
+			GraphicsController.drawBlocks(g2d, myNextTetromino, getHeight(), getWidth());
 	}
 
 	@Override
@@ -68,8 +69,8 @@ public class PiecePreview extends JPanel implements ActionListener, PropertyChan
 		if (theActionEvent.getSource() instanceof Mino[]) {
 			final Mino[] nextTetromino = (Mino[]) theActionEvent.getSource();
 			myNextTetromino = nextTetromino;
-			repaint();
 		}
+		repaint();
 		
 	}
 
