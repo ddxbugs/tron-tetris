@@ -3,10 +3,8 @@
  */
 package controller;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import model.Player;
+import model.TetrionViewModel;
 import view.PiecePreview;
 import view.ScoreView;
 import view.TetrionView;
@@ -20,6 +18,8 @@ public class TetrionController {
 	
 	/** Current Tetrion board */
 	private TetrionView view;
+	private TetrionViewModel model;
+	
 	/** Next Tetromino preview window */
 	private PiecePreview preview;
 	/** Current game score tracker */
@@ -62,9 +62,16 @@ public class TetrionController {
 		
 		view.addPropertyChangeListener(STRING, preview);
 		view.addPropertyChangeListener(STRING, score);
+		
 	}
 
 	private void updateScore() {
 		// TODO update player score view jlabel
+		int level = player.getLevel();
+		player.levelUp();
+		
+		int currentScore = 0;
+		score.firePropertyChange(STRING, currentScore, currentScore);
+		
 	}
 }
