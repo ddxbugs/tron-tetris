@@ -9,6 +9,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -23,14 +25,15 @@ import res.ColorPalette;
 /**
  * The view model class displays the current board
  */
-public class TetrionView extends JPanel implements ActionListener {
+public class TetrionView extends JPanel implements ActionListener, PropertyChangeListener {
 	
 	/** Default serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
 	/** Magic number millisecond delay */
 	private static final int DELAY = 5000;
-	
+	// TODO refactor string placeholder
+	private static final String STRING = "string";
 	/** Action command string constants */
 	private static final String SELECT = "select";
 	private static final String DROP = "drop";
@@ -47,19 +50,14 @@ public class TetrionView extends JPanel implements ActionListener {
 	
 	/** View model represent current game board piece position and logic */
 	private TetrionViewModel myModel;
-	/** Next Tetromino preview window */
-	private PiecePreview myPreview;
-	/** Current game score tracker */
-	private ScoreView myScore;
 	
 	/**
 	 * TetrionView UI class displays current game board or "playfield"  
 	 */
-	protected TetrionView() {
+	public TetrionView() {
 		delay = DELAY;
 		myModel = new TetrionViewModel();
-		myPreview = new PiecePreview();
-		myScore = new ScoreView();	// score level lines
+		
 		myTimer = new Timer (delay, this);
 		
 		setFocusable(true);	// KeyListener
@@ -68,11 +66,8 @@ public class TetrionView extends JPanel implements ActionListener {
 				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
 		setBackground(ColorPalette.MEANWHILE.getColor());
 		
-		myPreview.setSize(200, 200);	// small window
-		myScore.setSize(400, 100);	// transparent row line
-		
-		addKeyListener(new PlayerController());
-		
+		addKeyListener(new PlayerController());	// dispatch user keyboard input action event thread 
+		addPropertyChangeListener(this);	// change this view components property graphics
 	}
 	/**
 	 * Draw each individual Tetromino Mino blocks on the playfield
@@ -91,27 +86,30 @@ public class TetrionView extends JPanel implements ActionListener {
 										getWidth() / myModel.getWidth(),
 										getWidth());
 	}
-	
+	/**
+	 * Timer action event dispatch threads perform game graphic mechanics   
+	 */
 	@Override
 	public void actionPerformed(final ActionEvent theActionEvent) {
 		
+		// case timer new game start running
 		if (theActionEvent.getSource() instanceof Timer 
 				&& myTimer.isRunning()) {
 			
-			myModel.down();
+			myModel.down();	// timer delay dependent 
 			
-//			System.out.println(myModel.toString());
+			System.out.println(myModel.toString());
 			
 		} else if (theActionEvent.getSource() instanceof TetrionView) {
 			
-			String cmd = theActionEvent.getActionCommand();
+			String cmd = theActionEvent.getActionCommand();	// The key cmd pressed
 			
 			if (myTimer.isRunning()) {
-				
+				// TODO Fix key listener logics
 				// switch case game on resume
 				switch(cmd) {
 				case SELECT : myTimer.stop(); break;
-				case EXIT : myTimer.stop(); break; // TODO show options config
+				case EXIT : myTimer.stop(); break; 
 				case LEFT : myModel.left(); break;
 				case RIGHT : myModel.right(); break;
 				case DOWN : myModel.down(); break;
@@ -121,7 +119,7 @@ public class TetrionView extends JPanel implements ActionListener {
 				}
 				
 			} else {
-				
+				// TODO Fix key listener logic
 				// switch case game on pause
 				switch (cmd) {
 				case EXIT : myModel.newGame(); break;
@@ -131,6 +129,21 @@ public class TetrionView extends JPanel implements ActionListener {
 			}
 		}
 		
-		repaint();
+		repaint();	// repaint game display
+	}
+	/**
+	 * Property change view component graphic ui effects
+	 */
+	@Override
+	public void propertyChange(final PropertyChangeEvent theEvent) {
+		// TODO update border size (PvP) style color effects
+		final String property = theEvent.getPropertyName();
+		switch (property) {
+		case STRING : 
+			setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED, 
+				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor())); break;
+		default : break;	
+		}
+		
 	}
 }
