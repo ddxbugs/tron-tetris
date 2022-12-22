@@ -10,6 +10,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,13 +23,12 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-import model.Player;
 import res.ColorPalette;
 
 /**
  * Background class displays Tron Legacy images
  */
-public class Tetrion extends JPanel {
+public class Tetrion extends JPanel implements PropertyChangeListener {
 	/** Default serial version UID */
 	private static final long serialVersionUID = 1L;
 	
@@ -65,7 +66,7 @@ public class Tetrion extends JPanel {
 //	}
 	
 	/**
-	 * @param layout
+	 * Tetrion default view layer constructor class
 	 */
 	protected Tetrion() {
 		super();
@@ -104,7 +105,6 @@ public class Tetrion extends JPanel {
 				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
 		panel.setSize(myImage.getWidth(), FONT_PT_24 * TWO);
 		panel.setBackground(ColorPalette.MEANWHILE.getColor());
-//		panel.setOpaque(false);
 		
 		panel.add(myTronLabel);
 		panel.add(myGameLabel);
@@ -127,5 +127,11 @@ public class Tetrion extends JPanel {
 			g2d.drawImage(myImage, myImage.getWidth(), myImage.getHeight(), this);
 	
 //		System.out.println("background="+myImage.getWidth()+","+myImage.getHeight());
+	}
+
+	@Override
+	public void propertyChange(final PropertyChangeEvent theEvent) {
+		// TODO update background/text image icon label properties
+		
 	}
 }
