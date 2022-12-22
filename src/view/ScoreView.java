@@ -4,7 +4,6 @@
  */
 package view;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +13,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.ScoreViewModel;
 import res.ColorPalette;
 
 /**
@@ -41,6 +41,10 @@ public class ScoreView extends JPanel implements ActionListener, PropertyChangeL
 	 * Default serialVersionUID
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/** The persistent score view model */
+	private ScoreViewModel myModel;
+	
 	/** The score label */
 	private JLabel myScoreLabel;
 	/** The level label */
@@ -59,15 +63,17 @@ public class ScoreView extends JPanel implements ActionListener, PropertyChangeL
 	public ScoreView() {
 		super();
 		
-		myScoreLabel = new JLabel(SCORE);
-		myLevelLabel = new JLabel(LEVEL);
-		myLinesLabel = new JLabel(LINES);
+		myModel = new ScoreViewModel();	// score view model 
 		
-		myCurrentScore = new JLabel();
-		myCurrentLevel = new JLabel();
-		myCurrentLines = new JLabel();
+		myScoreLabel = new JLabel(SCORE);	// score jlabel
+		myLevelLabel = new JLabel(LEVEL);	// level jlabel
+		myLinesLabel = new JLabel(LINES);	// line jlabel
 		
-		setLocation(800, 100);
+		myCurrentScore = new JLabel();	// current score
+		myCurrentLevel = new JLabel();	// current level
+		myCurrentLines = new JLabel();	// current lines
+		
+		setLocation(800, 100);	// top right quadrant
 		
 		// set font style
 		myScoreLabel.setFont(new Font(REGULAR, Font.TRUETYPE_FONT, FONT_PT_14));
@@ -92,15 +98,24 @@ public class ScoreView extends JPanel implements ActionListener, PropertyChangeL
 		add(myLevelLabel);
 		add(myLinesLabel);
 	}
-	
+	/**
+	 * Update the String score label
+	 * @param theUpdatedScore The current score
+	 */
 	private void updateScore(final String theUpdatedScore) {
 		myCurrentScore.setText(theUpdatedScore);
 	}
-	
+	/**
+	 * Update the String level label
+	 * @param theNewLevel The new level
+	 */
 	private void updateLevel(final String theNewLevel) {
 		myCurrentLevel.setText(theNewLevel);
 	}
-	
+	/**
+	 * Update the String line label
+	 * @param theLinesCompleted The lines completed
+	 */
 	private void updateLines(final String theLinesCompleted) {
 		myCurrentLines.setText(theLinesCompleted);
 	}
@@ -119,6 +134,7 @@ public class ScoreView extends JPanel implements ActionListener, PropertyChangeL
 			System.out.println(id);
 			switch (cmd) {
 			// TODO SCORE
+			
 			// TODO LEVEL
 			// TODO LINES
 			default: break;
