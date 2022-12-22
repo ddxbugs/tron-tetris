@@ -17,9 +17,10 @@ public class TetrionViewModel {
 	/** Default board width height */
 	private static final int WIDTH = 10, HEIGHT = 20;
 	/** Magic numbers */
-	private static final int ONE = 1, TWO = 2;
+	private static final int ONE = 1, TWO = 2, FIVE = 5;
+	private static final int BUFFER = FIVE;
 	/** Start position */
-	private static final int START_X = WIDTH / TWO, START_Y = 0;
+	private static final int START_X = WIDTH / TWO, START_Y = -(TWO);
 	
 
 	/** List of pieces currently in view */ 
@@ -43,22 +44,22 @@ public class TetrionViewModel {
 		
 	}
 	/**
-	 * Creates a new tetris game instance
-	 * Reset the game variables
+	 * Create new tetris game object
 	 */
 	public void newGame() {
 	
-		myFrozenBlocks.clear();	// clear the Tetris board
+		myFrozenBlocks.clear();	// clear the tetromino block list
+		
 		for (int i = 0; i < HEIGHT; i++) 
-			myFrozenBlocks.add(new Mino[WIDTH]);	// reset block rows
+			myFrozenBlocks.add(new Mino[WIDTH]);	// reset block row empty
 		
 		Arrays.fill(myLines, true);	// set line counter true 
+		
 		myCurrentPiece = nextMovablePiece(); // prepare next piece
 	}
 	
 	/**
 	 * End the current tetris game
-	 * Close variables
 	 */
 	public void gameOver() {
 		myLines = null;
@@ -246,7 +247,7 @@ public class TetrionViewModel {
 		final StringBuilder sb = new StringBuilder();
 		
 		// sb.append(buffer)
-		for (int row = 0; row < 5; row++) {
+		for (int row = 0; row < BUFFER; row++) {
 			sb.append('|');
 			for (int col = 0; col < WIDTH; col++) {
 				sb.append(' ');
@@ -272,11 +273,12 @@ public class TetrionViewModel {
 			// for each column
 			for (int col = 0; col < WIDTH; col++) {
 				final Mino b = blocks[col];
-				if (b == null) {
-					sb.append(" ");	// empty block space on board
-				} else {
-					sb.append(b); // else append block char to string 
-				}
+				sb.append(b == null ? " " : b);
+//				if (b == null) {
+//					sb.append(" ");	// empty block space on board
+//				} else {
+//					sb.append(b); // else append block char to string 
+//				}
 			}	
 			sb.append("|\n");	// start new row
 		}
@@ -286,6 +288,7 @@ public class TetrionViewModel {
 		for (int floor = 0; floor < WIDTH; floor++) {
 			sb.append("_");
 		}
+		
 		return sb.toString();
 	}
 }
