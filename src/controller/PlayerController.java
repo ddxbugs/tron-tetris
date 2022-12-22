@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import model.Player;
 import view.TetrionView;
 
 /**
@@ -35,11 +36,17 @@ public class PlayerController implements KeyListener {
 	private static final int S = KeyEvent.VK_S;
 	private static final int D = KeyEvent.VK_D;
 	
+	private Player myPlayer;
+	
+	public PlayerController(final String thePlayerInitials) {
+		myPlayer = new Player(thePlayerInitials);
+	}
 	/**
 	 * Player configuration and settings view model controller
 	 */
 	public PlayerController() {
 		super();
+		myPlayer = new Player();
 	}
 	
 	/**
