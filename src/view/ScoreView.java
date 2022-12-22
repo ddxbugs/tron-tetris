@@ -6,17 +6,20 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import model.Player;
 import res.ColorPalette;
 
 /**
  *	Display the current game score
  */
-public class ScoreView extends JPanel {
+public class ScoreView extends JPanel implements ActionListener, PropertyChangeListener {
 	// TODO decompose literal string
 	/** CrNNtn-regular font family name */
 	private static final String REGULAR = "CRRNTN-Regular";
@@ -30,15 +33,13 @@ public class ScoreView extends JPanel {
 	 * Default serialVersionUID
 	 */
 	private static final long serialVersionUID = 1L;
-	private Player myPlayer;
 	private JLabel myScore;
 	private JLabel myLevel;
 	private JLabel myLines;
 	
-	protected ScoreView() {
+	public ScoreView() {
 		super();
 		
-		myPlayer = new Player();
 		myScore = new JLabel("SCORE");
 		myLevel = new JLabel("LEVEL");
 		myLines = new JLabel("LINES");
@@ -60,20 +61,24 @@ public class ScoreView extends JPanel {
 		add(myLevel);
 		add(myLines);
 	}
-	
-	private void update() {
-		// update score label
-		// check player level++ and update max_score
-		// update level label
-		// update lines cleared label
-	}
-	
+
 	private void reset() {
 		// TODO reset the lines cleared label
 		// TODO reset the score label
 		// TODO reset the level label
-		
-		// TODO close pointer
-		myPlayer = null;
+		// TODO close pointers
 	}
+
+	@Override
+	public void actionPerformed(final ActionEvent theActionEvent) {
+		// TODO action event dispatch threading  
+		
+	}
+
+	@Override
+	public void propertyChange(final PropertyChangeEvent theEvent) {
+		// TODO score view component property change event 
+		
+	}
+
 }
