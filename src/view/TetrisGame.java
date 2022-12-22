@@ -7,15 +7,13 @@ package view;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-import javax.swing.Timer;
 
-import model.TetrionViewModel;
+import controller.TetrionController;
+import model.Player;
 
 /**
  *	Tetris Frame
@@ -24,12 +22,13 @@ public class TetrisGame extends JFrame {
 	
 	// TODO add MIDI and OST sound
 	
-	/** */
+	/** Default serial version uid */
 	private static final long serialVersionUID = 1L;
 	
 	/** String file path to game image files */
 	private static final String ICON = "src/res/icon.jpg";
-	
+
+	/** Display window width height dimension */
 	private static int width;
 	private static int height;
 	
@@ -45,10 +44,15 @@ public class TetrisGame extends JFrame {
 	/** Dynamic changing background */
 	private static Tetrion myTetrion;
 	/** Configuration settings menu option */
-	private static MenuOptionView myConfig;
+	private static MenuOptionView myMenuOption;
+	
 	/** Tetris board container view */
 	private TetrionView myTetrionView;
-
+	private PiecePreview myPreview;
+	private ScoreView myScore;
+	
+	/** Tetrion model view controlller class */
+	private TetrionController myController;
 	
 	/**
 	 * @throws HeadlessException
@@ -67,6 +71,7 @@ public class TetrisGame extends JFrame {
 		width = (int) myDimension.getWidth();
 		height = (int) myDimension.getHeight();
 		
+		// JFrame property values
 		setMaximumSize(myDimension);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
@@ -76,11 +81,11 @@ public class TetrisGame extends JFrame {
 	 * Invokes new Runnable configuration
 	 */
 	public void start() {
-		initialize();
-		setUp();
-		pack();
-		setSize(myDimension);
-		setVisible(true);
+		initialize();	// initialize model view components
+		setUpComponents();	// set up model view component properties
+		pack();	// pack frame components
+		setSize(myDimension);	// set default window dimension size
+		setVisible(true);	// display gui
 	}
 	
 	/** 
@@ -89,31 +94,38 @@ public class TetrisGame extends JFrame {
 	private void initialize() {
 		myLayeredPane = new JLayeredPane(); // layered pane
 		
-		myConfig = new MenuOptionView();	// game options menu
+		myMenuOption = new MenuOptionView();	// game options menu
 				
-		
-		
 		myTetrion = new Tetrion();	// the background
+		
 		myTetrionView = new TetrionView();	// the 1-Player game board
+		myPreview = new PiecePreview();	// next tetris view component  
+		myScore = new ScoreView();		// currrent score view component
+		// Tetrion model view controller
+		myController = new TetrionController(myTetrionView, 
+												myPreview, 
+												myScore);
 	}
-	
-	private void setUp() {
-		// TODO remove hard coded values
-		myConfig.setSize(500, 500);	// medium window
+	/**
+	 * Set up view component properties
+	 */
+	private void setUpComponents() {
+		addPropertyChangeListener(myTetrion);
+		
+		myMenuOption.setSize(500, 500);	// medium window
 		myTetrion.setSize(getMaximumSize());	// full screen w h
 		myTetrionView.setSize(300, 600);	// half dimension
-		
+		myPreview.setSize(200, 200);	// small square
+		myScore.setSize(400, 100);	// medium text label 
 				
 		// add components to layered pane
-		myLayeredPane.add(myConfig, JLayeredPane.MODAL_LAYER);
+		myLayeredPane.add(myMenuOption, JLayeredPane.MODAL_LAYER);
 		myLayeredPane.add(myTetrion, JLayeredPane.DEFAULT_LAYER);
 		myLayeredPane.add(myTetrionView, JLayeredPane.POPUP_LAYER);
-//		myLayeredPane.add(myPreview, JLayeredPane.POPUP_LAYER);
-//		myLayeredPane.add(myScore, JLayeredPane.POPUP_LAYER);
+		myLayeredPane.add(myPreview, JLayeredPane.POPUP_LAYER);
+		myLayeredPane.add(myScore, JLayeredPane.POPUP_LAYER);
 		
 		// add layered pane to this frame
 		add(myLayeredPane);
-		
-		// TODO add window focus, keyboard, mouse, property change event handler
 	}	
 }
