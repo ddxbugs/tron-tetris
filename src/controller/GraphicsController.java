@@ -16,6 +16,7 @@ import res.ColorPalette;
  *	Graphics controller utility class 
  */
 public class GraphicsController {
+	
 	/**
 	 * private utility class default constructor
 	 */
@@ -85,7 +86,7 @@ public class GraphicsController {
 			}
 		}
 		
-		theG2D.dispose();
+//		theG2D.dispose();
 	}
 
 }
