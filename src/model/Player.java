@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.Objects;
+
 /**
  * Persistence player class model 
  */
@@ -23,11 +25,22 @@ public class Player {
 	 * protected player default class constructor
 	 */
 	public Player() {
-		myCurrentLevel = 0;
-		myHighestScore = 0;
-		myLines = 0;
-		myInitials = new char[INITIALS_ARR_SIZE];
+		myCurrentLevel = 0;	// default level
+		myHighestScore = 0;	// default score
+		myLines = 0;	// default lines
+		myInitials = new char[INITIALS_ARR_SIZE];	// initialize new char array
 	}
+	/**
+	 * Persistent player primary class constructor
+	 * @param theInitials The player initials
+	 */
+	public Player(final String theInitials) {
+		// TODO fetch persistent player accessor method score level data  
+		myInitials = theInitials.substring(0, INITIALS_ARR_SIZE)
+						.toUpperCase()
+						.toCharArray();
+	}
+	
 	/**
 	 * Returns Player current game level
 	 * @return Player level 0-999
@@ -68,17 +81,19 @@ public class Player {
 	 * @return The player post game initials
 	 */
 	protected String getInitials() {
-		return myInitials.toString().toUpperCase();
+		return myInitials != null ? myInitials.toString().toUpperCase() : "";
 	}
 	/**
 	 * Save persistent player initials
 	 * @param theInitials Player initials
 	 */
 	protected void setInitials(final char[] theInitials) {
-		char[] initials = new char[INITIALS_ARR_SIZE];
-		for (int i = 0; i < initials.length; i++) {
-			initials[i] = theInitials[i];
+		if (myInitials != null) {
+			for (int i = 0; i < myInitials.length; i++) {
+				myInitials[i] = Character.toUpperCase(theInitials[i]);	// upper case initials 
+			}
 		}
+		
 	}
 	
 }
