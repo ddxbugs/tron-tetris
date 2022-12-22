@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 
 import controller.GraphicsController;
 import controller.PlayerController;
@@ -140,9 +141,11 @@ public class TetrionView extends JPanel implements ActionListener, PropertyChang
 		final String property = theEvent.getPropertyName();
 		switch (property) {
 		case STRING : 
-			setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED, 
-				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor())); break;
-		default : break;	
+			setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED, 
+				ColorPalette.ORANGE_TRON_LEGACY.getColor(), ColorPalette.SWEET_YELLOW.getColor())); 
+			break;
+		default : 
+			break;	
 		}
 		
 	}
