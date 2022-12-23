@@ -58,34 +58,26 @@ public class Tetrion extends JPanel implements PropertyChangeListener {
 	private static JLabel myGameLabel;
 	/** Background image decoration */
 	private static JLabel myBackgroundLabel;
-	/** */
+	private static JPanel myLabelPanel;
+	/** Tetrion background layered pane */
 	private static JLayeredPane myLayeredPane;
 	
-//	protected Tetrion(TetrionView theTetrionView, PiecePreview thePreview, ScoreView theScore, Player thePlayer) {
+//	protected Tetrion(TetrionView theTetrionView, Preview thePreview, ScoreView theScore, Player thePlayer) {
 //		
 //	}
 	
 	/**
 	 * Tetrion default view layer constructor class
 	 */
-	protected Tetrion() {
+	public Tetrion() {
 		super();
+		
 		setBackground(Color.BLACK);
 		
-		try {
-			myImage = ImageIO.read(new File(IMG_FILE_PATH));
-			myBackgroundLabel = new JLabel(new ImageIcon(myImage));
-			myBackgroundLabel.setBounds(ZERO, ZERO, myImage.getWidth(), myImage.getHeight());
-			myBackgroundLabel.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED,
-					ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
-			
-		} catch (IOException e) {
-			System.err.println("IOException:" + e);
-			e.printStackTrace();
-		}
+		setBackground(IMG_FILE_PATH);	// default background image
 		
-		myTronLabel = new JLabel(TRON_LEGACY);
-		myGameLabel = new JLabel(VERSION_TITLE);
+		myTronLabel = new JLabel(TRON_LEGACY);	// "Disney's TRON: Legacy"
+		myGameLabel = new JLabel(VERSION_TITLE);	// "Super Tetris"
 				
 		myTronLabel.setSize(myImage.getWidth(), FONT_PT_24 + PAD_Y * TWO);
 		myGameLabel.setSize(myImage.getWidth(), FONT_PT_24 + PAD_Y * TWO);
@@ -100,16 +92,17 @@ public class Tetrion extends JPanel implements PropertyChangeListener {
 		myLayeredPane.setPreferredSize(new Dimension(myImage.getWidth(), myImage.getHeight()));
 		
 		// TODO create menu option bar class
-		JPanel panel = new JPanel();	// add the game labels
-		panel.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED, 
+		myLabelPanel = new JPanel();	
+		myLabelPanel.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED, 
 				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
-		panel.setSize(myImage.getWidth(), FONT_PT_24 * TWO);
-		panel.setBackground(ColorPalette.MEANWHILE.getColor());
+		myLabelPanel.setSize(myImage.getWidth(), FONT_PT_24 * TWO);
+		myLabelPanel.setBackground(ColorPalette.MEANWHILE.getColor());
 		
-		panel.add(myTronLabel);
-		panel.add(myGameLabel);
+		// add the game labels
+		myLabelPanel.add(myTronLabel);
+		myLabelPanel.add(myGameLabel);
 		
-		myLayeredPane.add(panel, JLayeredPane.PALETTE_LAYER);
+		myLayeredPane.add(myLabelPanel, JLayeredPane.PALETTE_LAYER);
 		myLayeredPane.add(myBackgroundLabel, JLayeredPane.DEFAULT_LAYER);
 
 		add(myLayeredPane);
@@ -125,13 +118,42 @@ public class Tetrion extends JPanel implements PropertyChangeListener {
 		final Graphics2D g2d = (Graphics2D) theGraphics;
 		if (myImage != null)
 			g2d.drawImage(myImage, myImage.getWidth(), myImage.getHeight(), this);
-	
-//		System.out.println("background="+myImage.getWidth()+","+myImage.getHeight());
 	}
-
+	/**
+	 * Set Tetrion component ui graphic effects on score level update
+	 */
 	@Override
 	public void propertyChange(final PropertyChangeEvent theEvent) {
 		// TODO update background/text image icon label properties
+		final String propertyName = theEvent.getPropertyName();
+		final Object source = theEvent.getSource();
 		
+		if (theEvent != null) {
+			if (source instanceof File && "image".equals(propertyName)) {
+				setBackground( (String) theEvent.getNewValue());	// TODO Fix me
+			} else if (source instanceof JLabel && "label".equals(propertyName)) {
+				// TODO display menu options/pause game
+				myTronLabel.setForeground(ColorPalette.PANE.getColor());
+				myGameLabel.setForeground(ColorPalette.FAR_AWAY_SKY.getColor());
+			} 
+		}
+		repaint();
+	}
+	/**
+	 * Dynamically set the Tetrion background image
+	 * @param theFilePath The image file path
+	 */
+	private void setBackground(final String theFilePath) {
+		try {
+			myImage = ImageIO.read(new File(theFilePath));
+			myBackgroundLabel = new JLabel(new ImageIcon(myImage));
+			myBackgroundLabel.setBounds(ZERO, ZERO, myImage.getWidth(), myImage.getHeight());
+			myBackgroundLabel.setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED,
+					ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
+			
+		} catch (IOException e) {
+			System.err.println("IOException:" + e);
+			e.printStackTrace();
+		}
 	}
 }
