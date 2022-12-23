@@ -213,6 +213,15 @@ public class TetrionViewModel {
 				new Point( START_X, START_Y), 
 				Rotation.START);
 	}
+	/**
+	 * Show the next piece in Preview
+	 * @return Return the current p
+	 */
+	public Tetromino getCurrentPiece() {
+		return new Tetromino(myCurrentPiece.getTetromino(),
+				myCurrentPiece.getPosition(),
+				myCurrentPiece.getRotation());
+	}
 	
 	/**
 	 * Returns the current board as array object
