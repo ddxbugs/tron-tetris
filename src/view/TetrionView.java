@@ -61,6 +61,7 @@ public class TetrionView extends JPanel implements ActionListener, PropertyChang
 		
 		myTimer = new Timer (delay, this);
 		
+//		setSize(300, 600);	// full height
 		setFocusable(true);	// KeyListener
 		setLocation(500, 75);
 		setBorder(BorderFactory.createSoftBevelBorder(BevelBorder.RAISED, 
