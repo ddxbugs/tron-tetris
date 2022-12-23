@@ -1,5 +1,5 @@
 /*
- * MenuOptionView.java
+ * MenuView.java
  * @author ddxbugs 
  */
 package model;
