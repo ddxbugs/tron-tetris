@@ -52,7 +52,7 @@ public class TetrisGame extends JFrame {
 	private ScoreView myScore;
 	
 	/** Tetrion model view controlller class */
-	private TetrionController myController;
+	private TetrionController myTetrionController;
 	
 	/**
 	 * @throws HeadlessException
@@ -95,16 +95,18 @@ public class TetrisGame extends JFrame {
 		myLayeredPane = new JLayeredPane(); // layered pane
 		
 		myMenuOption = new MenuOptionView();	// game options menu
-				
 		myTetrion = new Tetrion();	// the background
+		myMenuController = new MenuController(myMenuOption, myTetrion);
 		
 		myTetrionView = new TetrionView();	// the 1-Player game board
 		myPreview = new PiecePreview();	// next tetris view component  
 		myScore = new ScoreView();		// currrent score view component
 		// Tetrion model view controller
-		myController = new TetrionController(myTetrionView, 
+		myTetrionController = new TetrionController(myTetrionView, 
 												myPreview, 
 												myScore);
+		
+		
 	}
 	/**
 	 * Set up view component properties
