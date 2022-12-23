@@ -72,11 +72,13 @@ public class GraphicsController {
 				break;
 			}
 			
-			final Rectangle2D r = new Rectangle(x, y, x + incrementX, y + incrementY);
+			final Rectangle2D r2D = new Rectangle(x, y, x + incrementX, y + incrementY);
+			final Color fill = theG2D.getColor();
 			
-			theG2D.fill(r);
-			theG2D.setBackground(ColorPalette.PANE.getColor());
-			theG2D.draw(r);
+			theG2D.fill(r2D);
+			theG2D.setColor(ColorPalette.DEAD_BABY.getColor());
+			theG2D.draw(r2D);
+			theG2D.setColor(fill);
 			
 			// increment column counter, resets x % width 
 			x += incrementX;
