@@ -12,8 +12,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
+import controller.MenuController;
 import controller.TetrionController;
-import model.Player;
 
 /**
  *	Tetris Frame
@@ -44,11 +44,13 @@ public class TetrisGame extends JFrame {
 	/** Dynamic changing background */
 	private static Tetrion myTetrion;
 	/** Configuration settings menu option */
-	private static MenuOptionView myMenuOption;
+	private static MenuView myMenuOption;
+	
+	private static MenuController myMenuController;
 	
 	/** Tetris board container view */
 	private TetrionView myTetrionView;
-	private PiecePreview myPreview;
+	private Preview myPreview;
 	private ScoreView myScore;
 	
 	/** Tetrion model view controlller class */
@@ -94,31 +96,35 @@ public class TetrisGame extends JFrame {
 	private void initialize() {
 		myLayeredPane = new JLayeredPane(); // layered pane
 		
-		myMenuOption = new MenuOptionView();	// game options menu
+		// Background Menu Option Components
+		myMenuOption = new MenuView();	// game options menu
 		myTetrion = new Tetrion();	// the background
-		myMenuController = new MenuController(myMenuOption, myTetrion);
+		// Background Menu Option Controller
+		myMenuController = new MenuController(myTetrion, myMenuOption);
 		
+		// Tetrion View Components
 		myTetrionView = new TetrionView();	// the 1-Player game board
-		myPreview = new PiecePreview();	// next tetris view component  
+		
+		// TODO fix me null class reference pointers 
+		myPreview = new Preview();	// next tetris view component  
 		myScore = new ScoreView();		// currrent score view component
 		// Tetrion model view controller
 		myTetrionController = new TetrionController(myTetrionView, 
 												myPreview, 
 												myScore);
-		
-		
 	}
 	/**
 	 * Set up view component properties
 	 */
 	private void setUpComponents() {
-		addPropertyChangeListener(myTetrion);
+		myTetrionView.addPropertyChangeListener(myTetrion); 
+		// TODO update background image on level progression
 		
 		myMenuOption.setSize(500, 500);	// medium window
 		myTetrion.setSize(getMaximumSize());	// full screen w h
 		myTetrionView.setSize(300, 600);	// half dimension
-		myPreview.setSize(200, 200);	// small square
-		myScore.setSize(400, 100);	// medium text label 
+		myPreview.setSize(150, 150);	// small square
+		myScore.setSize(300, 50);	// medium text label 
 				
 		// add components to layered pane
 		myLayeredPane.add(myMenuOption, JLayeredPane.MODAL_LAYER);
