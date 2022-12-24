@@ -35,18 +35,23 @@ public class PlayerController implements KeyListener {
 	private static final int A = KeyEvent.VK_A;
 	private static final int S = KeyEvent.VK_S;
 	private static final int D = KeyEvent.VK_D;
+	/**
+	 * The current player
+	 */
+//	private Player myPlayer;
 	
-	private Player myPlayer;
-	
-	public PlayerController(final String thePlayerInitials) {
-		myPlayer = new Player(thePlayerInitials);
-	}
+//	/**
+//	 * Default public player constructor api
+//	 */
+//	public PlayerController(final Player thePlayer) {
+//		super();
+//		myPlayer = thePlayer;
+//	}
 	/**
 	 * Player configuration and settings view model controller
 	 */
 	public PlayerController() {
 		super();
-		myPlayer = new Player();
 	}
 	
 	/**
