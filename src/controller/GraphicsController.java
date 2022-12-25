@@ -37,7 +37,7 @@ public class GraphicsController {
 		int x = 0, y = 0;	// starting x, y position 
 		int incrementX = theBlockWidth;	// block rectangle width scaled 1/10
 		int incrementY = theBlockWidth; // block rectangle height scaled 1/10
-		int width = theRowWidth; // Tetrion board width default 300px
+		int width = theRowWidth; // TetrionGrid board width default 300px
 		
 		for (Mino block : theFrozenBlocks) {
 			
@@ -46,12 +46,13 @@ public class GraphicsController {
 			switch(block) {
 			
 			case EMPTY:
-				theG2D.setColor(ColorPalette.MEANWHILE.getColor());
+				theG2D.setColor(ColorPalette.DEAD_BABY.getColor());
+				break;
 			case I: 
-				theG2D.setColor(ColorPalette.BASESTAR.getColor()); 
+				theG2D.setColor(ColorPalette.ANNOYING_WITH.getColor()); 
 				break;
 			case J: 
-				theG2D.setColor(ColorPalette.PANE.getColor()); 
+				theG2D.setColor(ColorPalette.NOW_EVEN_MORE.getColor()); 
 				break;
 			case L: theG2D.setColor(ColorPalette.SWEET_YELLOW.getColor()); 
 				break;
@@ -59,10 +60,10 @@ public class GraphicsController {
 				theG2D.setColor(ColorPalette.FAR_AWAY_SKY.getColor()); 
 				break;
 			case S: 
-				theG2D.setColor(ColorPalette.DEAD_BABY.getColor()); 
+				theG2D.setColor(ColorPalette.WIPE_OUT.getColor()); 
 				break;
 			case T: 
-				theG2D.setColor(ColorPalette.TRON_BLUE.getColor()); 
+				theG2D.setColor(ColorPalette.VOLUME_CONTROL.getColor()); 
 				break;
 			case Z: 
 				theG2D.setColor(ColorPalette.ORANGE_TRON_LEGACY.getColor()); 
@@ -76,7 +77,7 @@ public class GraphicsController {
 			final Color fill = theG2D.getColor();
 			
 			theG2D.fill(r2D);
-			theG2D.setColor(ColorPalette.DEAD_BABY.getColor());
+			theG2D.setColor(ColorPalette.MEANWHILE.getColor());
 			theG2D.draw(r2D);
 			theG2D.setColor(fill);
 			
