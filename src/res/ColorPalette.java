@@ -22,7 +22,9 @@ public enum ColorPalette {
 	WIPE_OUT(52, 96, 141),	// @source https://www.colourlovers.com/palette/1526474/Tron 
 	DEAD_BABY(13, 12, 28),	// @source https://www.colourlovers.com/palette/1526474/Tron 
 	SIX_SOUND_CHOICES(213, 203, 177),	// @source https://www.colourlovers.com/palette/969512/Annoy-A-Tron_2.0 
-	VOLUME_CONTROL(182, 185, 165);	// @source https://www.colourlovers.com/palette/969512/Annoy-A-Tron_2.0
+	VOLUME_CONTROL(182, 185, 165),	// @source https://www.colourlovers.com/palette/969512/Annoy-A-Tron_2.0
+	NOW_EVEN_MORE (36, 167, 216), // @source https://www.colourlovers.com/palette/969512/Annoy-A-Tron_2.0
+	ANNOYING_WITH (42, 153, 120); // @source https://www.colourlovers.com/palette/969512/Annoy-A-Tron_2.0
 	/** Red 0-255 */
 	private final int myR; 
 	/** Green 0-255 */
