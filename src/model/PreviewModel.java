@@ -10,15 +10,15 @@ public class PreviewModel {
 	private static final int HEIGHT = 5;
 	
 	private List<Mino[]> myPreviewBlocks;
-	private Tetromino myNextPiece;
+	private Mino myMino;
 	
 	public PreviewModel() {
 		myPreviewBlocks = new LinkedList<Mino[]>();
-		myNextPiece = null;
+		myMino = null;
 	}
 	
-	public void setNextTetromino(final Tetromino theNextTetromino) {
-		myNextPiece = Objects.requireNonNull(theNextTetromino);
+	public void setNextTetromino(final Mino theMinoType) {
+		myMino = Objects.requireNonNull(theMinoType);
 	}
 	
 	public Mino[] getPreviewBlocks() {
