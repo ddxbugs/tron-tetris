@@ -8,6 +8,11 @@ package model;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.EventListenerList;
 
 /**
  * This class model contains the pieces, handles movement logic for the game
@@ -17,10 +22,10 @@ public class TetrionViewModel {
 	/** Default board width height */
 	private static final int WIDTH = 10, HEIGHT = 20;
 	/** Magic numbers */
-	private static final int ONE = 1, TWO = 2, FIVE = 5;
+	private static final int ZERO = 0, ONE = 1, TWO = 2, FIVE = 5;
 	private static final int BUFFER = FIVE;
 	/** Start position */
-	private static final int START_X = WIDTH / TWO, START_Y = 0;
+	private static final int START_X = WIDTH / TWO, START_Y = HEIGHT;
 	
 
 	/** List of pieces currently in view */ 
@@ -30,7 +35,11 @@ public class TetrionViewModel {
 	
 	/** The current Tetromino in play */
 	private Tetromino myCurrentPiece;	
+	/** The next Tetromino */
+	private Tetromino myNextPiece;
 	
+	private ChangeEvent changeEvent;
+	private ChangeListener changeListener;
 	/**
 	 * Primary TetrionViewModel constructor
 	 * @param theWidth width of game board
@@ -41,7 +50,10 @@ public class TetrionViewModel {
 		myFrozenBlocks = new LinkedList<Mino[]>();
 		myLines = new boolean[HEIGHT];
 		myCurrentPiece = null;
+		myNextPiece = null;
 		
+		changeEvent = new ChangeEvent(this);
+		changeListener = null;
 	}
 	/**
 	 * Create new tetris game object
@@ -55,7 +67,8 @@ public class TetrionViewModel {
 		
 		Arrays.fill(myLines, true);	// set line counter true 
 		
-		myCurrentPiece = nextMovablePiece(); // prepare next piece
+		myCurrentPiece = nextTetromino(); // current piece
+		myNextPiece = nextTetromino();	// next piece
 	}
 	
 	/**
@@ -65,6 +78,7 @@ public class TetrionViewModel {
 		myLines = null;
 		myFrozenBlocks = null;
 		myCurrentPiece = null;
+		myNextPiece = null;
 	}
 	/**
 	 * Moves the Tetromino left
@@ -79,7 +93,7 @@ public class TetrionViewModel {
 	 */
 	public void right() {
 		if (isCurrentPieceMovable()) {
-			myCurrentPiece = myCurrentPiece.right();	
+			myCurrentPiece = myCurrentPiece.right();
 		}
 	}
 	/**
@@ -87,16 +101,19 @@ public class TetrionViewModel {
 	 */
 	public void down() {
 		
-		if (isCurrentPieceMovable()) 
+		if (isCurrentPieceMovable()) {
+			
 			myCurrentPiece = myCurrentPiece.down();	// transform piece (0,-1)
-		
-		else if (!checkRows())
-			clearLines();
-//			System.out.println(Arrays.toString(myLines));
-		else 
-			System.out.println(myCurrentPiece.getPosition());
-		// TODO event queue dispatch thread update graphics controller
-		freezeBlocks();	// freeze current piece on board
+			
+		} else {
+			
+			freezeBlocks();
+			
+			if (!checkRows()) clearLines();
+			
+			myCurrentPiece = nextTetromino();
+			myNextPiece = nextTetromino();
+		}
 	}
 	/**
 	 * Drop the piece instantly to the specified location
@@ -137,7 +154,7 @@ public class TetrionViewModel {
 				myFrozenBlocks.add(p.getY(), row);	// replace with updated frozen block row 
 			}
 		}
-	}
+	}	
 	/**
 	 * Checks the current piece movement logic for collision, freeze, boundaries
 	 * @param theTetromino Current piece in play
@@ -146,17 +163,21 @@ public class TetrionViewModel {
 	private boolean isCurrentPieceMovable() {
 		
 		Mino b;
+		
 		boolean isMovable = false;
 		
-		for (final Point p : myCurrentPiece.getBoardPoints()) {
+		for (final Point p : myCurrentPiece.getBoardPoints()) {	// compare current piece with frozen blocks
 			
 			b = myFrozenBlocks.get(p.getY())[p.getX()];	// block should be null, else collision detected at point p
 			
-			isMovable = b == null && isPointOnBoard(p) ? true : false; // within board dimension and no collision detected
+			isMovable = (b == null && isPointOnBoard(p)) ? true : false; // within board dimension and no collision detected
 			
-//			if (!isMovable) break;	// if any block is not null, not movable 
-			
+			if (!isMovable) break;	// if block is not null or not on the board at x, y break, slightly faster implementation
+		
 		}
+		
+		if (isMovable) changeListener.stateChanged(changeEvent);
+		
 		return isMovable;
 	}
 	/**
@@ -168,6 +189,7 @@ public class TetrionViewModel {
 
 		return thePoint != null && thePoint.getX() >= 0 && thePoint.getX() < WIDTH
 				&& thePoint.getY() >= 0;
+				
 	}
 	/**
 	 * Checks the frozen Tetrominos for completed lines by row
@@ -176,10 +198,10 @@ public class TetrionViewModel {
 	 *  
 	 */
 	private boolean checkRows() {
-		boolean isBlockNull = false;
+		boolean isBlockNull = false;	
 		boolean isLineClear = true;
 		
-		int row = HEIGHT - 1;
+		int row = HEIGHT - ONE;
 		for (final Mino[] blocks : myFrozenBlocks) {
 			
 			for (final Mino block : blocks) {
@@ -192,6 +214,7 @@ public class TetrionViewModel {
 			
 			myLines[row--] = isBlockNull;	// reverse order for correct board orientation
 		}
+		
 		return isLineClear;
 	}
 	/**
@@ -200,9 +223,8 @@ public class TetrionViewModel {
 	private void clearLines() {
 		for (int i = 0; i < myLines.length; i++) {
 			if (myLines[i] == false) {
-				System.out.println(i);
 				myFrozenBlocks.remove(i);
-				myFrozenBlocks.add(i, new Mino[WIDTH]);
+				// TODO shift blocks down n lines	
 			}
 		}
 	}
@@ -210,7 +232,7 @@ public class TetrionViewModel {
 	 * Prepare the next random tetromino in play
 	 * @return Returns a random tetromino default start position and rotation
 	 */
-	private Tetromino nextMovablePiece() {
+	private Tetromino nextTetromino() {
 		return new Tetromino(ImmutableTetromino.getRandomPiece(), 
 				new Point( START_X, START_Y), 
 				Rotation.START);
@@ -254,6 +276,13 @@ public class TetrionViewModel {
 	}
 	
 	/**
+	 * Register the view change listener
+	 * @param theChangeListener The change listener class
+	 */
+	public void addChangeListener(final ChangeListener theChangeListener) {
+		changeListener = theChangeListener;
+	}
+	/**
 	 * Returns the board as a string
 	 * @return current tetris board string representation
 	 */
@@ -268,24 +297,20 @@ public class TetrionViewModel {
 			for (int col = 0; col < WIDTH; col++) {
 				sb.append(' ');
 			}
-			sb.append('|');
-			sb.append("\n");
+			sb.append("|\n");
 		}
 		
 		// sb.append(ceil)
 		sb.append(' ');
 		for (int ceil=0; ceil < WIDTH; ceil++) {
 			sb.append("_");
-		}
-		
+		}	
 		sb.append("\n");
-		
+	
 		// sb.append(board)
+		final Mino[] blocks = getFrozenBlocks();
 		for (int row = 0; row < HEIGHT ; row++) {
-			
-			final Mino[] blocks = myFrozenBlocks.get(row);
 			sb.append('|');	// left border
-			
 			// for each column
 			for (int col = 0; col < WIDTH; col++) {
 				final Mino b = blocks[col];
