@@ -14,38 +14,44 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.Timer;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import controller.GraphicsController;
 import controller.PlayerController;
+import model.ColorPalette;
+import model.Player;
 import model.TetrionViewModel;
-import res.ColorPalette;
 
 /**
  * The view model class displays the current board
  */
-public class TetrionView extends JPanel implements ActionListener, PropertyChangeListener {
+public class TetrionView extends JPanel implements ActionListener, PropertyChangeListener, ChangeListener {
 	
 	/** Default serialVersionUID */
 	private static final long serialVersionUID = 1L;
 	
+	// TODO refactor string placeholder for property change value
+	private static final String STRING = "STRING";
+	
 	/** Magic number millisecond delay */
-	private static final int DELAY = 5000;
-	// TODO refactor string placeholder
-	private static final String STRING = "string";
+	private static final int DELAY = 1000;
+	
 	/** Action command string constants */
-	private static final String SELECT = "select";
-	private static final String DROP = "drop";
-	private static final String ROTATE = "rotate";
-	private static final String EXIT = "exit";
-	private static final String LEFT = "left";
-	private static final String DOWN = "down";
-	private static final String RIGHT = "right";
+	private static final String SELECT = "SELECT";
+	private static final String DROP = "DROP";
+	private static final String ROTATE = "ROTATE";
+	private static final String EXIT = "EXIT";
+	private static final String LEFT = "LEFT";
+	private static final String DOWN = "DOWN";
+	private static final String RIGHT = "RIGHT";
 	
 	/** Set the speed of the piece movement logic */
-	private static Timer myTimer;
+	private static Timer myActionTimer;
 	/** Game timer move sequence delay */
 	private static int delay;
 	
@@ -56,10 +62,13 @@ public class TetrionView extends JPanel implements ActionListener, PropertyChang
 	 * TetrionView UI class displays current game board or "playfield"  
 	 */
 	public TetrionView() {
-		delay = DELAY;
-		myModel = new TetrionViewModel();
 		
-		myTimer = new Timer (delay, this);
+		// control timer
+		delay = DELAY;
+		myActionTimer = new Timer (delay, this);
+		
+		myModel = new TetrionViewModel();
+		myModel.addChangeListener(this);
 		
 //		setSize(300, 600);	// full height
 		setFocusable(true);	// KeyListener
@@ -68,8 +77,7 @@ public class TetrionView extends JPanel implements ActionListener, PropertyChang
 				ColorPalette.PANE.getColor(), ColorPalette.TRON_BLUE.getColor()));
 		setBackground(ColorPalette.MEANWHILE.getColor());
 		
-		addKeyListener(new PlayerController());	// dispatch user keyboard input action event thread 
-		addPropertyChangeListener(this);	// change this view components property graphics
+		addKeyListener(new PlayerController(new Player()));	// dispatch user keyboard input action event thread 		
 	}
 	/**
 	 * Draw each individual Tetromino Mino blocks on the playfield
@@ -95,23 +103,22 @@ public class TetrionView extends JPanel implements ActionListener, PropertyChang
 	public void actionPerformed(final ActionEvent theActionEvent) {
 		
 		// case timer new game start running
-		if (theActionEvent.getSource() instanceof Timer 
-				&& myTimer.isRunning()) {
-			
+		if (theActionEvent.getSource() instanceof Timer) { 
+
 			myModel.down();	// timer delay dependent 
 			
 			System.out.println(myModel.toString());
 			
 		} else if (theActionEvent.getSource() instanceof TetrionView) {
 			
-			String cmd = theActionEvent.getActionCommand();	// The key cmd pressed
+			String cmd = theActionEvent.getActionCommand().toUpperCase();	// The key cmd pressed
 			
-			if (myTimer.isRunning()) {
-				// TODO Fix key listener logics
-				// switch case game on resume
+			if (myActionTimer.isRunning()) {
+				
 				switch(cmd) {
-				case SELECT : myTimer.stop(); break;
-				case EXIT : myTimer.stop(); break; 
+				
+				case SELECT : myActionTimer.stop(); break;
+				case EXIT : myModel.gameOver(); break;
 				case LEFT : myModel.left(); break;
 				case RIGHT : myModel.right(); break;
 				case DOWN : myModel.down(); break;
@@ -121,11 +128,11 @@ public class TetrionView extends JPanel implements ActionListener, PropertyChang
 				}
 				
 			} else {
-				// TODO Fix key listener logic
-				// switch case game on pause
-				switch (cmd) {
-				case EXIT : myModel.newGame(); break;
-				case SELECT : myTimer.restart(); break;
+				
+				switch(cmd) {
+
+				case SELECT : myModel.newGame(); break;
+				case EXIT : myActionTimer.restart(); break;
 				
 				}
 			}
@@ -148,6 +155,12 @@ public class TetrionView extends JPanel implements ActionListener, PropertyChang
 		default : 
 			break;	
 		}
-		
+	}
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		// TODO Auto-generated method stub
+//		repaint();
+		System.out.println(e.getSource());
+		System.out.println(e.getClass());
 	}
 }
