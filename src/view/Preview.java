@@ -17,9 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 import controller.GraphicsController;
+import model.ColorPalette;
 import model.PreviewModel;
 import model.Tetromino;
-import res.ColorPalette;
 
 /**
  * Preview class displays next tetromino on board
@@ -29,7 +29,6 @@ public class Preview extends JPanel implements ActionListener, PropertyChangeLis
 	/**	Default serial version id */
 	private static final long serialVersionUID = 1L;
 
-//	private PreviewModel myModel;
 	private PreviewModel myModel;
 	private Tetromino myNextTetromino;
 	
@@ -78,7 +77,7 @@ public class Preview extends JPanel implements ActionListener, PropertyChangeLis
 			final Tetromino nextTetromino = (Tetromino) theActionEvent.getSource();
 			myNextTetromino = nextTetromino;
 		}
-		repaint();
+//		repaint();
 		
 	}
 
@@ -86,6 +85,6 @@ public class Preview extends JPanel implements ActionListener, PropertyChangeLis
 	public void propertyChange(PropertyChangeEvent evt) {
 
 		// TODO change border, font, color on player level property change event 
-		repaint();
+//		repaint();
 	}
 }
