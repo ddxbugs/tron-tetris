@@ -16,16 +16,16 @@ import view.TetrionView;
  */
 public class PlayerController implements KeyListener {
 	/** TetrionView component string action commands */ 
-	private static final String SELECT = "select";
-	private static final String DROP = "drop";
-	private static final String ROTATE = "rotate";
-	private static final String EXIT = "exit";
-	private static final String CONFIRM = "confirm";
-	private static final String CANCEL = "cancel";
-	private static final String UP = "up";
-	private static final String LEFT = "left";
-	private static final String DOWN = "down";
-	private static final String RIGHT = "right";
+	private static final String SELECT = "SELECT";
+	private static final String DROP = "DROP";
+	private static final String ROTATE = "ROTATE";
+	private static final String EXIT = "EXIT";
+	private static final String CONFIRM = "CONFIRM";
+	private static final String CANCEL = "CANCEL";
+	private static final String UP = "UP";
+	private static final String LEFT = "LEFT";
+	private static final String DOWN = "DOWN";
+	private static final String RIGHT = "RIGHT";
 
 	// default keyboard game controller settings
 	private static final int SPACE = KeyEvent.VK_SPACE;
@@ -38,20 +38,21 @@ public class PlayerController implements KeyListener {
 	/**
 	 * The current player
 	 */
-//	private Player myPlayer;
+	private Player myPlayer;
 	
-//	/**
-//	 * Default public player constructor api
-//	 */
-//	public PlayerController(final Player thePlayer) {
-//		super();
-//		myPlayer = thePlayer;
-//	}
 	/**
-	 * Player configuration and settings view model controller
+	 * Default public player constructor api
 	 */
-	public PlayerController() {
+	public PlayerController(final Player thePlayer) {
 		super();
+		myPlayer = thePlayer;
+	}
+	
+	/**
+	 * Private constructor
+	 */
+	private PlayerController() {
+		throw new IllegalStateException();
 	}
 	
 	/**
