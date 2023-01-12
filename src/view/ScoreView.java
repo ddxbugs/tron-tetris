@@ -13,8 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import model.ColorPalette;
 import model.ScoreViewModel;
-import res.ColorPalette;
 
 /**
  *	Display the current game score
