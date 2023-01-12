@@ -3,29 +3,35 @@
  */
 package controller;
 
-import model.Player;
-import model.TetrionViewModel;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import view.Preview;
 import view.ScoreView;
 import view.TetrionView;
 
 /**
- *	1-Player Tetrion view model controller class
+ *	1-Player TetrionGrid view model controller class
  */
 public class TetrionController {
 	// TODO refactor name
 	private static final String STRING = "string";
 	
-	/** Current Tetrion board */
+	private static Timer myActionTimer;
+	/** Current TetrionGrid board view */
 	private TetrionView view;
-	private TetrionViewModel model;
-	
-	/** Next Tetromino preview window */
+	/** Next Tetromino preview panel view */
 	private Preview preview;
 	/** Current game score tracker */
 	private ScoreView score;
-	/** Persistent player game model */;
-	private Player player;
+	
+	private ChangeEvent changeEvent;
+	private ChangeListener changeListener;
 	
 	/** 
 	 * Primary public class constructor 
@@ -34,12 +40,13 @@ public class TetrionController {
 		view = View;	// tetris view panel
 		preview = Preview;	// tetromino preview panel
 		score = Score;	// score level lines view label
-		player = null;	//	persistent player model
 		
-		// TODO add listener 
+		changeEvent = new ChangeEvent(view);
+		
+		// view update preview and score property  
 		view.addPropertyChangeListener(STRING, preview);
 		view.addPropertyChangeListener(STRING, score);
-	
+		
 		// TODO implement action event listener methods: timer, next piece, update score
 		// TODO implement property change event listener methods: update border and text effects
 	}
@@ -52,12 +59,8 @@ public class TetrionController {
 	}
 
 	private void updateScore() {
-		// TODO update player score view jlabel
-		int level = player.getLevel();
-		player.levelUp();
-		
-		int currentScore = 0;
-		score.firePropertyChange(STRING, currentScore, currentScore);
-		
+		// TODO update player score view jlabel, upon level fire property change event
+//		int currentScore = score.getScore();
+//		score.firePropertyChange(STRING, value);
 	}
 }
