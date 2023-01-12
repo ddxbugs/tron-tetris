@@ -23,7 +23,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-import res.ColorPalette;
+import model.ColorPalette;
 
 /**
  * Background class displays Tron Legacy images
