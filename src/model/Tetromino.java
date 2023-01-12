@@ -26,7 +26,6 @@ public class Tetromino {
 	 * Tetromino current rotation angle
 	 */
 	private final Rotation myRotation;
-	
 	/**
 	 * Tetromino constructor allows creation
 	 * of movable pieces set to the specified enum
@@ -38,11 +37,10 @@ public class Tetromino {
 	public Tetromino(final ImmutableTetromino theTetromino,
 						final Point thePosition,
 						final Rotation theRotation) {
-		myTetromino = Objects.requireNonNull(theTetromino);
-		myPosition = Objects.requireNonNull(thePosition);
-		myRotation = Objects.requireNonNull(theRotation);
-	}
-	
+		myTetromino = theTetromino;
+		myPosition = thePosition;
+		myRotation = theRotation;
+	}	
 	/**
 	 * Default initial Tetromino constructor starting
 	 * rotation and position on the board
@@ -53,7 +51,6 @@ public class Tetromino {
 						final Point thePosition) {
 		this(theTetromino, thePosition, Rotation.START);
 	}
-	
 	/**
 	 * Return the absolute height of the moving Tetromino
 	 * @return the Tetromino block height difference
@@ -154,6 +151,7 @@ public class Tetromino {
 	 * @return an array of Points 
 	 */
 	protected Point[] getBoardPoints() {
+		System.out.println(myPosition);
 		return getPoints(myPosition);
 	}
 	/**
@@ -200,7 +198,13 @@ public class Tetromino {
 					
 					break;
 			}
+			
+			// Transform the block at i
+			if (thePoint != null) {
+				blocks[i] = blocks[i].transform(thePoint);
+			}
 		}
+		
 		return blocks;
 	}
 	
@@ -212,7 +216,7 @@ public class Tetromino {
 	 * Rotate the tetromino clockwise 90 degrees
 	 * @return new rotated tetromino
 	 */
-	protected Tetromino rotate() { 
+	protected Tetromino rotate() {
 		return new Tetromino(myTetromino, myPosition, myRotation.clockwise());
 	}
 	/**
@@ -227,7 +231,7 @@ public class Tetromino {
 	 * @return new tetromino shifted to right 
 	 */
 	protected Tetromino right() {
-		return new Tetromino(myTetromino, myPosition.transform(1, 0), myRotation);
+		return new Tetromino(myTetromino, myPosition.transform(+1, 0), myRotation);
 	}
 	/**
 	 * Moves the tetromino down 1 unit
