@@ -91,10 +91,12 @@ public class TetrionView extends JPanel implements ActionListener, PropertyChang
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		// TODO algorithm optimize static draw blocks
+		final int modelWidth = getWidth() / myModel.getWidth();
+		final int viewWidth = getWidth();
 		GraphicsController.drawBlocks(g2D, 
 										myModel.getFrozenBlocks(),
-										getWidth() / myModel.getWidth(),
-										getWidth());
+										modelWidth,
+										viewWidth);
 	}
 	/**
 	 * Timer action event dispatch threads perform game graphic mechanics   
@@ -117,13 +119,14 @@ public class TetrionView extends JPanel implements ActionListener, PropertyChang
 				
 				switch(cmd) {
 				
-				case SELECT : myActionTimer.stop(); break;
-				case EXIT : myModel.gameOver(); break;
-				case LEFT : myModel.left(); break;
-				case RIGHT : myModel.right(); break;
-				case DOWN : myModel.down(); break;
-				case ROTATE : myModel.rotate(); break;
-				case DROP : myModel.drop(); break;
+				case SELECT : myActionTimer.stop();
+				case EXIT : myModel.gameOver();
+				case LEFT : myModel.left();
+				case RIGHT : myModel.right();
+				case DOWN : myModel.down();
+				case ROTATE : myModel.rotate();
+				case DROP : myModel.drop();
+				default: break;
 				
 				}
 				
@@ -156,11 +159,16 @@ public class TetrionView extends JPanel implements ActionListener, PropertyChang
 			break;	
 		}
 	}
+	
+	/** 
+	 * Update tetrion view graphic controller
+	 */
 	@Override
-	public void stateChanged(ChangeEvent e) {
+	public void stateChanged(final ChangeEvent theChangeEvent) {
 		// TODO Auto-generated method stub
-//		repaint();
-		System.out.println(e.getSource());
-		System.out.println(e.getClass());
+		
+		repaint();
+		System.out.println(theChangeEvent.getSource());
+		System.out.println(theChangeEvent.getClass());
 	}
 }
