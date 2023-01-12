@@ -49,7 +49,7 @@ public class TetrisGame extends JFrame {
 	private static MenuController myMenuController;
 	
 	/** Tetris board container view */
-	private TetrionView myTetrionView;
+	private TetrionView myTetrion;
 	private Preview myPreview;
 	private ScoreView myScore;
 	
@@ -94,22 +94,17 @@ public class TetrisGame extends JFrame {
 	 * Initialize JComponent and event handlers
 	 */
 	private void initialize() {
+		
 		myLayeredPane = new JLayeredPane(); // layered pane
 		
-		// Background Menu Option Components
-		myMenuOption = new MenuView();	// game options menu
-		myGrid = new TetrionGrid();	// the background
-		// Background Menu Option Controller
-		myMenuController = new MenuController(myGrid, myMenuOption);
-		
 		// TetrionGrid View Components
-		myTetrionView = new TetrionView();	// the 1-Player game board
-		
-		// TODO fix me null class reference pointers 
+		myGrid = new TetrionGrid();	// the background
+		myTetrion = new TetrionView();	// the 1-Player game board 
 		myPreview = new Preview();	// next tetris view component  
 		myScore = new ScoreView();		// currrent score view component
-		// TetrionGrid model view controller
-		myTetrionController = new TetrionController(myTetrionView, 
+		
+		// Tetrion model view controller
+		myTetrionController = new TetrionController(myTetrion, 
 												myPreview, 
 												myScore);
 	}
@@ -117,19 +112,16 @@ public class TetrisGame extends JFrame {
 	 * Set up view component properties
 	 */
 	private void setUpComponents() {
-		myTetrionView.addPropertyChangeListener(myGrid); 
-		// TODO update background image on level progression
 		
-		myMenuOption.setSize(500, 500);	// medium window
 		myGrid.setSize(getMaximumSize());	// full screen w h
-		myTetrionView.setSize(300, 600);	// half dimension
+		myTetrion.setSize(300, 600);	// half dimension
 		myPreview.setSize(150, 150);	// small square
 		myScore.setSize(300, 50);	// medium text label 
 				
 		// add components to layered pane
-		myLayeredPane.add(myMenuOption, JLayeredPane.MODAL_LAYER);
+//		myLayeredPane.add(myMenuOption, JLayeredPane.MODAL_LAYER);
 		myLayeredPane.add(myGrid, JLayeredPane.DEFAULT_LAYER);
-		myLayeredPane.add(myTetrionView, JLayeredPane.POPUP_LAYER);
+		myLayeredPane.add(myTetrion, JLayeredPane.POPUP_LAYER);
 		myLayeredPane.add(myPreview, JLayeredPane.POPUP_LAYER);
 		myLayeredPane.add(myScore, JLayeredPane.POPUP_LAYER);
 		
