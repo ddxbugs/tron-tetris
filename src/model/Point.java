@@ -60,8 +60,7 @@ final class Point {
 	 * @return
 	 */
 	public Point transform(final Point thePoint) {
-		return transform(myX + thePoint.getX(),
-				myY + thePoint.getY());
+		return transform(thePoint.getX(), thePoint.getY());
 	}
 	
 	/**
