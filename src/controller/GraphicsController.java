@@ -41,13 +41,14 @@ public class GraphicsController {
 	 */
 	public static void drawBlocks(final Graphics2D theG2D, 
 									final Mino[] theFrozenBlocks,
-									final int theBlockWidth,
-									final int theRowWidth) {
+									final int theModelScale,
+									final int theViewScale) {
 		
-		int x = 0, y = 0;	// starting x, y position 
-		int incrementX = theBlockWidth;	// block rectangle width scaled 1/10
-		int incrementY = theBlockWidth; // block rectangle height scaled 1/10
-		int width = theRowWidth; // TetrionGrid board width default 300px
+		
+		int startX = 0, startY = 0;	// starting x, y position 
+		int incrementX = theModelScale;	// block rectangle width scaled 1/10
+		int incrementY = theModelScale; // block rectangle height scaled 1/10
+		int width = theViewScale; // TetrionGrid board width default 300px
 		
 		for (Mino block : theFrozenBlocks) {
 			
@@ -83,7 +84,7 @@ public class GraphicsController {
 				break;
 			}
 			
-			final Rectangle2D r2D = new Rectangle(x, y, x + incrementX, y + incrementY);
+			final Rectangle2D r2D = new Rectangle(startX, startY, startX + incrementX, startY + incrementY);
 			final Color fill = theG2D.getColor();
 			
 			theG2D.fill(r2D);
@@ -92,10 +93,10 @@ public class GraphicsController {
 			theG2D.setColor(fill);
 			
 			// increment column counter, resets x % width 
-			x += incrementX;
-			if (x % width == 0) {
-				x = 0;	
-				y += incrementY;
+			startX += incrementX;
+			if (startX % width == 0) {
+				startX = 0;	
+				startY += incrementY;
 			}
 		}
 		
