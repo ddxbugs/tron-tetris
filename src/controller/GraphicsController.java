@@ -9,13 +9,23 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.Timer;
+
+import model.ColorPalette;
 import model.Mino;
-import res.ColorPalette;
+import model.PreviewModel;
+import model.ScoreViewModel;
+import model.TetrionViewModel;
+import view.Preview;
+import view.ScoreView;
+import view.TetrionView;
 
 /**
- *	Graphics controller utility class 
+ *	Game graphics model view controller class 
  */
 public class GraphicsController {
+	// TODO refactor placeholder name
+	private static final String STRING = "STRING";
 	
 	/**
 	 * private utility class default constructor
@@ -77,7 +87,7 @@ public class GraphicsController {
 			final Color fill = theG2D.getColor();
 			
 			theG2D.fill(r2D);
-			theG2D.setColor(ColorPalette.MEANWHILE.getColor());
+			theG2D.setColor(ColorPalette.MEANWHILE.getColor());	// create the outline
 			theG2D.draw(r2D);
 			theG2D.setColor(fill);
 			
